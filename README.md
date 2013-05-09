@@ -518,7 +518,7 @@ ApiResultEnum Playnomics.instance.invitationResponse(
     <tbody>
         <tr>
             <td>invitationId</td>
-            <td>string</td>s
+            <td>long</td>
             <td>The ID of the corresponding <code>invitationSent</code> event.</td>
         </tr>
         <tr>
@@ -535,11 +535,11 @@ Example calls for a user’s invitation and the recipient’s acceptance:
 var invitationId = 112345675;
 var recipientUserId = 10000013;
 
-Playnomics.instance.invitationSent(invitationId, recipientUserId, null, null); 
+Playnomics.instance.invitationSent(invitationId, recipientUserId, null, null);
 
 //later on the recipient accepts the invitation
 
-Playnomics.instance.invitationResponse(invitationId, recipientUserId, "accepted"); 
+Playnomics.instance.invitationResponse(invitationId, recipientUserId, "accepted");
 ```
 
 ## Custom Event Tracking
@@ -550,7 +550,7 @@ Each time a user reaches a milestone, track it with this call:
 
 ```javascript
 ApiResultEnum Playnomics.instance.milestone(
-    long milestoneId, 
+    long milestoneId,
     string milestoneName);
 ```
 
@@ -581,23 +581,23 @@ Example client-side calls for a player reaching a milestone, with generated IDs:
 
 ```csharp
 long GetRandomLong(){
-  var rnd = new System.Random();        
+  var rnd = new System.Random();
     var buffer = new byte[8];
-    rnd.NextBytes(buffer);      
+    rnd.NextBytes(buffer);
     return BitConverter.ToInt64(buffer, 0);
 }
 
 //...
 //...
 //...
- 
+
 //when the player completes the tutorial
-var milestoneTutorialId = GetRandomLong(); 
+var milestoneTutorialId = GetRandomLong();
 pnMilestone(milestoneTutorialId, "TUTORIAL");
- 
+
 //when milestone CUSTOM2 is reached
-var milestoneCustom2Id = GetRandomLong(); 
-pnMilestone(milestoneCustom2Id, "CUSTOM2"); 
+var milestoneCustom2Id = GetRandomLong();
+pnMilestone(milestoneCustom2Id, "CUSTOM2");
 ```
 
 Messaging Integration
@@ -606,7 +606,7 @@ Before you start working with messaging, you'll need to complete the installatio
 
 The coordinate system for drawing a frame is 2D plane the the origin at the top-left of the screen, *x* going positive right, *y* going positive down.
 
-<img style="margin-left:auto;margin-right:auto;display:block;" src="http://www.playnomics.com/integration/img/ad-layout.png"/>
+<img style="margin-left:auto;margin-right:auto;display:block;" src="http://www.playnomics.com/integration/img/mobile-ad-layout.png"/>
 
 Each frame can be positioned at a *fixed* location, based on a static *x* and *y* location, or *dynamic* location, based on a 3x3 grid defined by horizontal and vertical justification parameters. If the location is *dynamic*, PlayRM is able to calculate the origin (top-left corner starting point) of the real-estate based on the screen size.
 
@@ -682,15 +682,23 @@ To configure a **frame**, email <a href="mailto:support@playnomics.com">support@
     </thead>
     <tbody>
         <tr>
+            <td>Name of the application</td>
             <td>
-                Name of the application
-            </td>
-            <td>
-                
+
             </td>
             <td>
                 N/A
             </td>
+        </tr>
+        <tr>
+            <td>Name of the frame</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>N/A</td>
         </tr>
     </tbody>
 </table>
