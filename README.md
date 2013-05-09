@@ -7,7 +7,7 @@ This guide showcases the features of the PlayRM Unity SDK and shows how to integ
 * Retain their current audience
 * Ultimately generate more revenue for their games
 
-<img src="http://www.playnomics.com/integration/img/60-Day-Plan.png"/>
+<img style="margin-left:auto;margin-right:auto;display:block;" src="http://www.playnomics.com/integration/img/60-Day-Plan.png"/>
 
 The Playnomics Unity SDK supports Unity games built for Web Browsers, iOS, Android, PCs and Macs. Integration of the PlayRM SDK into an existing or brand new Unity game involves registering your game with the PlayRM service and properly configuring the SDK. The SDK communicates with the PlayRM RESTful API, and the events are processed and aggregated for your PlayRM Dashboard in the control panel.
 
@@ -66,7 +66,7 @@ Basic Integration
 ## Installing the SDK
 You can download the SDK package from downloading the *PlaynomicsSDK.unitypackage* file included in the *build* folder of this repo, or you can also install the SDK files directly from the <a href="https://www.assetstore.unity3d.com/#/content/6179" target="_blank">Unity Asset Store</a>. If you download the package file from the repo, go to *Assets > Import New Asset ... > Custom Package * to import the package.
 
-<img src="http://www.playnomics.com/integration/img/unity/prefab.png"/>
+<img style="margin-left:auto;margin-right:auto;display:block;" src="http://www.playnomics.com/integration/img/unity/prefab.png"/>
 
 The package has a prefab with everything you need to work with the SDK. Simply drag the prefab into your first game scene and this will make the SDK available to your game. The `GameObject` for this is called "Playnomics." You only need to do this once.
 
@@ -602,11 +602,13 @@ pnMilestone(milestoneCustom2Id, "CUSTOM2");
 
 Messaging Integration
 =====================
-Before you start working with messaging, you'll need to complete the installation process. PlayRM messaging real estate is called a **frame** and is responsible for delivering segment-based messages.
+Before you start working with messaging, you'll need to complete the installation process. PlayRM messaging real estate is called a **frame** and its responsible for delivering segment-based messages to players.
 
-The coordinate system for drawing a frame, the origin at the top-left of the screen, *x* going positive right, *y* going positive down. In Unity, each frame can be positioned at a *fixed* or *dynamic* location, based on a 3 x 3 grid. 
+The coordinate system for drawing a frame is 2D plane the the origin at the top-left of the screen, *x* going positive right, *y* going positive down.
 
-The *dynamic* grid is defined by horizontal and vertical justification parameters:
+<img style="margin-left:auto;margin-right:auto;display:block;" src="http://www.playnomics.com/integration/img/ad-layout.png"/>
+
+Each frame can be positioned at a *fixed* location, based on a static *x* and *y* location, or *dynamic* location, based on a 3x3 grid defined by horizontal and vertical justification parameters. If the location is *dynamic*, PlayRM is able to calculate the origin (top-left corner starting point) of the real-estate based on the screen size.
 
 <table>
     <thead>
@@ -648,34 +650,60 @@ The *dynamic* grid is defined by horizontal and vertical justification parameter
             <td>The bottom-edge of the frame will be at the maximum of the y-axis.</td>
         </tr>
     </tbody>
-</table> 
-
-If the location is *dynamic*, PlayRM is able to calculate the origin (top-left corner starting point) of the real-estate based on the screen size. 
-
-If you prefer the location to be *fixed* you'll provide Playnomnics with absolute x and y parameters.
+</table>
 
 **Important!**
-
-Before releasing the messaging integration to production: you will need to log into the <a href="https://controlpanel.playnomics.com/signin/" target="_blank">control panel</a> and ensure that you have uploaded the creatives/messages or placeholders. **A frame always needs to have a default creative before it can be launched.**
+<hr/>
+Before releasing the messaging integration to production, you will need to log into the <a href="https://controlpanel.playnomics.com/signin/" target="_blank">control panel</a> and ensure that you have uploaded the creatives/messages or placeholders. **A frame always needs to have a default creative before it can be launched.**
 
 ## Setting up a Frame
+Each opportunity for unique messaging, should have its own **frame** configuration.
 
-PlayRM defaults mage with a close button in the upper right of the image.  
-* PNG, JPG, GIF, GIF89a formats are accepted
-    * GIF and GIF89a are not currently supported on Unity
-* Image size must be less than 512kB
+PlayRM Messaging for Unity supports images:
+* PNG or JPG image format
+* Size must be less than 512kB
 * Conditional images are not supported
 
-To configure iframes, email <a href="mailto:support@playnomics.com">support@playnomics.com</a> the following information for each `iframe`:
-* Name of app
-* Name of frame (i.e. "Top Banner", "Sidebar", or "Box1")
+To configure a **frame**, email <a href="mailto:support@playnomics.com">support@playnomics.com</a> the following information for each **frame**:
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Variable
+            </th>
+            <th>
+                Explanation
+            </th>
+            <th>
+                Default Value
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Name of the application
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                N/A
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+Name of app
+Name of frame (i.e. "Top Banner", "Sidebar", or "Box1")
 * Height in pixels (eg "90")
 * Width in pixels (eg "760")
 
-Order in which frames appear in the control panel from top down. Once the frame has been configured, Playnomics will provide you with a `<PLAYRM-FRAMEID>`.
+
+Once the frame has been configured, Playnomics will provide you with a `<PLAYRM-FRAMEID>`.
 
 ## SDK Integration
-
 
 Support Issues
 ==============
