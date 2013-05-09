@@ -602,11 +602,11 @@ pnMilestone(milestoneCustom2Id, "CUSTOM2");
 
 Messaging Integration
 =====================
-PlayRM messaging real estate is called a **frame**. 
+Before you start working with messaging, you'll need to complete the installation process. PlayRM messaging real estate is called a **frame** and is responsible for delivering segment-based messages.
 
-In Unity, each frame can be positioned at a *fixed* or *dynamic* location, based on a 3 x 3 grid. The cartesian coordinate system for drawing a frame, the origin at the top-left of the screen, *x* going positive right, *y* going positive down. 
+The coordinate system for drawing a frame, the origin at the top-left of the screen, *x* going positive right, *y* going positive down. In Unity, each frame can be positioned at a *fixed* or *dynamic* location, based on a 3 x 3 grid. 
 
-The grid is defined by horizontal and vertical justification parameters.
+The *dynamic* grid is defined by horizontal and vertical justification parameters:
 
 <table>
     <thead>
@@ -620,7 +620,7 @@ The grid is defined by horizontal and vertical justification parameters.
         <tr>
             <td>Left</td>
             <td>Horizontal</td>
-            <td>The left-edge of the frame will be at 0 along the x-axis. </td>
+            <td>The left-edge of the frame will be at 0 along the x-axis.</td>
         </tr>
         <tr>
             <td>Center</td>
@@ -635,17 +635,17 @@ The grid is defined by horizontal and vertical justification parameters.
         <tr>
             <td>Top</td>
             <td>Vertical</td>
-            <td></td>
+            <td>The top-edge of the frame will be at 0 of the y-axis.</td>
         </tr>
         <tr>
-            <td>Top</td>
+            <td>Center</td>
             <td>Vertical</td>
-            <td></td>
+            <td>The frame will be centered along the y-axis</td>
         </tr>
         <tr>
-            <td>Top</td>
+            <td>Bottom</td>
             <td>Vertical</td>
-            <td></td>
+            <td>The bottom-edge of the frame will be at the maximum of the y-axis.</td>
         </tr>
     </tbody>
 </table> 
@@ -654,21 +654,15 @@ If the location is *dynamic*, PlayRM is able to calculate the origin (top-left c
 
 If you prefer the location to be *fixed* you'll provide Playnomnics with absolute x and y parameters.
 
-Before you start working with messaging, you'll need to complete the installation process.
-
-
-
 **Important!**
 
-Before releasing the integration to production you will need to log into the <a href="https://controlpanel.playnomics.com/signin/" target="_blank">control panel</a> and ensure that you have uploaded the creatives/messages or placeholders. **A frame always needs to have a default creative before it can be launched.**
+Before releasing the messaging integration to production: you will need to log into the <a href="https://controlpanel.playnomics.com/signin/" target="_blank">control panel</a> and ensure that you have uploaded the creatives/messages or placeholders. **A frame always needs to have a default creative before it can be launched.**
 
 ## Setting up a Frame
 
-A *frame* occupies a set piece of real estate in the canvas of the game and is responsible for delivering segment-based messages.
-
 PlayRM defaults mage with a close button in the upper right of the image.  
 * PNG, JPG, GIF, GIF89a formats are accepted
-    * GIF and GIF89a are not currently supported on Android or Unity
+    * GIF and GIF89a are not currently supported on Unity
 * Image size must be less than 512kB
 * Conditional images are not supported
 
@@ -678,7 +672,7 @@ To configure iframes, email <a href="mailto:support@playnomics.com">support@play
 * Height in pixels (eg "90")
 * Width in pixels (eg "760")
 
-Order in which frames appear in the control panel from top down. Once the frame has been configured, Playnomics will provide you with a `<PLAYRM_FRAMEID>`.
+Order in which frames appear in the control panel from top down. Once the frame has been configured, Playnomics will provide you with a `<PLAYRM-FRAMEID>`.
 
 ## SDK Integration
 
