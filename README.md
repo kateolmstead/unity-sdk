@@ -7,7 +7,7 @@ This guide showcases the features of the PlayRM Unity SDK and shows how to integ
 * Retain their current audience
 * Ultimately generate more revenue for their games
 
-<img style="margin-left:auto;margin-right:auto;display:block;" src="http://www.playnomics.com/integration/img/60-Day-Plan.png"/>
+<img src="http://www.playnomics.com/integration/img/60-Day-Plan.png"/>
 
 The Playnomics Unity SDK supports Unity games built for Web Browsers, iOS, Android, PCs and Macs. Integration of the PlayRM SDK into an existing or brand new Unity game involves registering your game with the PlayRM service and properly configuring the SDK. The SDK communicates with the PlayRM RESTful API, and the events are processed and aggregated for your PlayRM Dashboard in the control panel.
 
@@ -606,7 +606,7 @@ Before you start working with messaging, you'll need to complete the installatio
 
 The coordinate system for drawing a frame is 2D plane the the origin at the top-left of the screen, *x* going positive right, *y* going positive down.
 
-<img style="margin-left:auto;margin-right:auto;display:block;" src="http://www.playnomics.com/integration/img/mobile-ad-layout.png"/>
+<img src="http://www.playnomics.com/integration/img/mobile-ad-layout.png"/>
 
 Each frame can be positioned at a *fixed* location, based on a static *x* and *y* location, or *dynamic* location, based on a 3x3 grid defined by horizontal and vertical justification parameters. If the location is *dynamic*, PlayRM is able to calculate the origin (top-left corner starting point) of the real-estate based on the screen size.
 
