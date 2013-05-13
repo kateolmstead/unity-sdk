@@ -1,6 +1,6 @@
 Playnomics PlayRM Unity SDK Integration Guide
 =============================================
-This guide showcases the features of the PlayRM Unity SDK and shows how to integrate the SDK with your game. Our SDK provides game developers with tools for tracking player behavior and engagement so that they can:
+This guide showcases the features of the PlayRM Unity SDK and shows how to integrate the SDK with your game. Our SDK provides game publishers with tools for tracking player behavior and engagement so that they can:
 
 * Better understand and segment their audience
 * Reach out to new like-minded players
@@ -604,7 +604,7 @@ Messaging Integration
 =====================
 Before you start working with messaging, you'll need to complete the installation process. PlayRM messaging real estate is called a **frame** and its responsible for delivering segment-based messages to players.
 
-The coordinate system for drawing a frame is 2D plane the the origin at the top-left of the screen, *x* going positive right, *y* going positive down.
+The coordinate system for drawing a frame is 2D plane with the the origin at the top-left of the screen, **x** going positive right, **y** going positive down.
 
 <img src="http://www.playnomics.com/integration/img/mobile-ad-layout.png"/>
 
@@ -622,32 +622,32 @@ Each frame can be positioned at a *fixed* location, based on a static *x* and *y
         <tr>
             <td>Left</td>
             <td>Horizontal</td>
-            <td>The left-edge of the frame will be at 0 along the x-axis.</td>
+            <td>The left-edge of the frame will be anchored to the left of the game canvas.</td>
         </tr>
         <tr>
             <td>Center</td>
             <td>Horizontal</td>
-            <td>The frame will be centered along the x-axis.</td>
+            <td>The frame will be centered horizontally.</td>
         </tr>
         <tr>
             <td>Right</td>
             <td>Horizontal</td>
-            <td>The right-edge of the frame will be at the maximum of the x-axis.</td>
+            <td>The right-edge of the frame will be archored to the right of the game canvas.</td>
         </tr>
         <tr>
             <td>Top</td>
             <td>Vertical</td>
-            <td>The top-edge of the frame will be at 0 of the y-axis.</td>
+            <td>The top-edge of the frame will be anchored to the top of the game canvas.</td>
         </tr>
         <tr>
             <td>Center</td>
             <td>Vertical</td>
-            <td>The frame will be centered along the y-axis</td>
+            <td>The frame will be centered vertically.</td>
         </tr>
         <tr>
             <td>Bottom</td>
             <td>Vertical</td>
-            <td>The bottom-edge of the frame will be at the maximum of the y-axis.</td>
+            <td>The bottom-edge of the frame will anchored to the bottom of the game canvas.</td>
         </tr>
     </tbody>
 </table>
@@ -682,18 +682,25 @@ To configure a **frame**, email <a href="mailto:support@playnomics.com">support@
     </thead>
     <tbody>
         <tr>
+            <td colspan="3">Your Application</td>
+        </tr>
+        <tr>
             <td>Name of the application</td>
-            <td>
-
-            </td>
-            <td>
-                N/A
-            </td>
+            <td>The name of your application.</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>Application ID</td>
+            <td>The name of your application.</td>
+            <td>N/A</td>
         </tr>
         <tr>
             <td>Name of the frame</td>
-            <td></td>
-            <td></td>
+            <td>A name describing the location or use-case of the frame. (i.e. "Top Banner", "Sidebar", or "Box1")</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td colspan="3">Background Component of the Frame - </td>
         </tr>
         <tr>
             <td></td>
