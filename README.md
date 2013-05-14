@@ -41,10 +41,8 @@ Core Concepts
 * [Messaging Integration](#messaging-integration)
     * [Setting up a Frame](#setting-up-a-frame)
     * [SDK Integration](#sdk-integration)
-    * [Enabling Click-to-JS](#enabling-click-to-js)
+    * [Using Code Callbacks](#using-code-callbacks)
 * [Support Issues](#support-issues)
-    * [Troubleshooting](#troubleshooting)
-
 
 Prerequisites
 =============
