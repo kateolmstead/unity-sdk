@@ -634,7 +634,7 @@ Frames are loaded asynchronously to keep your game responsive. The `initMessagin
 
 If a frame or its image components cannot be loaded, the SDK will attempt to reloaded the frame.
 
-Frames are destroyed on a scene transition and when closed.
+Frames are destroyed on a scene transition or when closed.
 
 In the example below, we initialize the frame when a behavior script is loaded for the first time. In the update loop, we poll for the frame asking if it can be shown loading and then show it. In practice, a frame can be loaded in a variety of ways.
 
@@ -683,9 +683,9 @@ All of this setup, takes place at the the time of the messaging campaign configu
 
 Here are three common use cases for frames and a messaging campaigns
 
-* [A frame shown when the player first starts the game](#game-start-frame)
-* [A frame shown when a particular event occurrs](#game-start-frame), for instance, when the player is running low on premium currency
-* [A frame shown at the completion of a level or challenge](#completion-frame)
+* [Game Start Frame](#game-start-frame)
+* [Event Driven Frame - Open the Store](#event-driven-frame-open-the-store) for instance, when the player is running low on premium currency
+* [Event Driven Frame - Level Completion](#event-driven-drame-level-completion)
 
 ### Game Start Frame
 
@@ -711,9 +711,8 @@ In this use-case, you want to configure a frame that is always shown to players 
     <tbody>
         <tr>
             <td>
-                <img src="http://www.playnomics.com/integration-dev/img/messaging/at_risk_small.png"/>
                 At-Risk
-            </td>
+                 </td>
             <td>
                 1st
             </td>
@@ -721,14 +720,13 @@ In this use-case, you want to configure a frame that is always shown to players 
                 In this case, we're be worried that one once-active players are now in danger of leaving the game. We might offer them <strong>50 Gold Coins</strong> to bring them back.
             </td>
             <td>
-                
+
             </td>
-            
         </tr>
         <tr>
             <td>
                 Lapsed 7 or more days
-            </td>
+                </td>
             <td>2nd</td>
             <td>
                 In this case, we want to thank the player from coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 Gold Coins</strong> to increase their engagement and loyalty.
@@ -752,16 +750,42 @@ In this use-case, you want to configure a frame that is always shown to players 
     </tbody>
 </table>
 
+### Event Driven Frame - Open the Store
 
+<table>
+    <thead>
+        <tr>
+            <th>
+                Segment
+            </th>
+            <th>
+                Priority
+            </th>
+            <th>
+                Code Callback
+            </th>
+            <th>
+                Creative
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Default - all players, because this message is intended for any one playing the game.
+            </td>
+            <td>1st</td>
+            <td>
+                You notice that the player's in-game, premium currency drops below a certain threshold, now you can prompt them to reup with this message.
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-
-
-### Open the Store Frame
-
-### Completion Frame
-
-
-For example, let's assume that you want to configure a message which will open your in-game store when pressed. This message will appear for *recent monetizers* in a frame that has appeared after a level or challenge has been completed. 
+For this example, the Default message is 
 
 You would create a script to handle the code callback, and attach it to the `GameObject` called **ClickHandler**:
 
@@ -778,6 +802,55 @@ public class MessageClickHandler : MonoBehavior {
 
 ```
 The related message would be configured in the Control Panel to use this callback by placing this in the **Target URL** : `pna://ClickHandler.onStoreFrameClicked`.
+
+### Event Driven Frame - Level Completion
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Segment
+            </th>
+            <th>
+                Priority
+            </th>
+            <th>
+                Code Callback
+            </th>
+            <th>
+                Creative
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Non-monetizers, in their 5th day of game play
+            </td>
+            <td>1st</td>
+            <td>
+                Show them a 3rd party ad, because they are unlikely monetize.
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Default: everyone else
+            </td>
+            <td>2nd</td>
+            <td>
+                You simply congratulate them on completing the level and grant them some attention currency, 
+                "Energy" for completeing the level.
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 
 Support Issues
 ==============
