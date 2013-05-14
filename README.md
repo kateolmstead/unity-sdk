@@ -711,7 +711,7 @@ In this use-case, you want to configure a frame that is always shown to players 
     <tbody>
         <tr>
             <td>
-                <img src="http://www.playnomics.com/integration-dev/img/messaging/at_risk_big.png"/>
+                <img src="http://www.playnomics.com/integration-dev/img/messaging/at_risk_small.png"/>
                 At-Risk
             </td>
             <td>
