@@ -66,11 +66,11 @@ You can download the SDK package from downloading the *PlaynomicsSDK.unitypackag
 
 <img style="margin-left:auto;margin-right:auto;display:block;" src="http://www.playnomics.com/integration/img/unity/prefab.png"/>
 
-The package has a prefab with everything you need to work with the SDK. Simply drag the prefab into your first game scene and this will make the SDK available to your game. The `GameObject` for this is called "Playnomics." You only need to do this once.
+The package has a prefab with everything you need to work with the SDK. Simply drag the prefab into your first game scene and this will make the SDK available to your game. The `GameObject` for this is called **Playnomics**. You only need to do this once.
 
 ### Interacting with PlayRM in Your Game
 
-All calls are made through a single `MonoBehavior` script that persists throughout the game (<a href="http://en.wikipedia.org/wiki/Singleton_pattern" target="_blank">singleton</a>). The static instance of the script is accessible throughout your game using this property `Playnomics.instance`. It is instantiated in the `Awake` event.
+All calls are made through a single `MonoBehavior` script that persists throughout the game (<a href="http://en.wikipedia.org/wiki/Singleton_pattern" target="_blank">singleton</a>). The static instance of the script is accessible throughout your game using this property `Playnomics.instance`. It is instantiated in the `Awake` event of the `Playnomics` script.
 
 When working with the SDK, you'll need to import the SDK namespace to work with the PlayRM SDK in your scripts:
 
@@ -83,7 +83,9 @@ using PlaynomicsPlugin;
 import PlaynomicsPlugin;
 ```
 
-All public methods return an enumeration `ApiResultEnum` with a value of `NotStarted` or `Success`. `NotStarted` indicates that the PlayRM session has not been started, covered in the next section.
+All public methods, except for messaging specific calls, return an enumeration `ApiResultEnum` with a value of `NotStarted` or `Success`. `NotStarted` indicates that the PlayRM session has not been started, covered in the next section. 
+
+**You always need to start a session before 
 
 ### Starting a Player Session
 
@@ -638,7 +640,7 @@ In the example below, we initialize the frame when a behavior script is loaded f
 
 ```csharp
 using PlaynomicsPlugin;
-using UntiyEngine;
+using UnityEngine;
  
 public class Scene : MonoBehavior {
     private MessagingFrame frame;
@@ -667,17 +669,97 @@ public class Scene : MonoBehavior {
 
 ## Using Code Callbacks
 
-Depending on your configuration, a variety of actions can take place when the frame message is pressed or clicked:
+Depending on your configuration, a variety of actions can take place when a frame's message is pressed or clicked:
 
-* Redirect the user to a web URL in the browser, outside of the application
+* Redirect the player to a web URL in the platform's browser application
 * Firing a code callback in your game
-* In the simplest case, just close, provided that the Close Button has been configured correctly.
+* Or in the simplest case, just close the frame, provided that the Close Button has been configured correctly.
 
-All of this setup, at the the time of the messaging campaign configuration. However, all code callbacks need to be configured before PlayRM can interact with it. The SDK uses Unity's messaging passing framework for callbacks, so a code callback must be:
+All of this setup, takes place at the the time of the messaging campaign configuration. However, all code callbacks need to be configured before PlayRM can interact with it. The SDK uses Unity's messaging passing framework for callbacks, so a code callback must be:
 
 * In a script attached to a singular, uniquely-named `GameObject`
 * The script method should have no parameters
 * The method should return `void`
+
+Here are three common use cases for frames and a messaging campaigns
+
+* [A frame shown when the player first starts the game](#game-start-frame)
+* [A frame shown when a particular event occurrs](#game-start-frame), for instance, when the player is running low on premium currency
+* [A frame shown at the completion of a level or challenge](#completion-frame)
+
+### Game Start Frame
+
+In this use-case, you want to configure a frame that is always shown to players when they start playing a new game. In this example, the message shown to the player may change based on the configured segments:
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Segment
+            </th>
+            <th>
+                Priority
+            </th>
+            <th>
+                Code Callback
+            </th>
+            <th>
+                Creative
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <img src="http://www.playnomics.com/integration-dev/img/messaging/at_risk_big.png"/>
+                At-Risk
+            </td>
+            <td>
+                1st
+            </td>
+            <td>
+                In this case, we're be worried that one once-active players are now in danger of leaving the game. We might offer them <strong>50 Gold Coins</strong> to bring them back.
+            </td>
+            <td>
+                
+            </td>
+            
+        </tr>
+        <tr>
+            <td>
+                Lapsed 7 or more days
+            </td>
+            <td>2nd</td>
+            <td>
+                In this case, we want to thank the player from coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 Gold Coins</strong> to increase their engagement and loyalty.
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Default - players who don't fall into either segment.
+            </td>
+            <td>3rd</td>
+            <td>
+                In this case, we want to thank the player from coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 Gold Coins</strong> to increase their engagement and loyalty.
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+### Open the Store Frame
+
+### Completion Frame
+
 
 For example, let's assume that you want to configure a message which will open your in-game store when pressed. This message will appear for *recent monetizers* in a frame that has appeared after a level or challenge has been completed. 
 
