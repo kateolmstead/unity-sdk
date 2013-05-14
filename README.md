@@ -548,13 +548,11 @@ Milestones may be defined in a number of ways.  They may be defined at certain k
 
 Each time a user reaches a milestone, track it with this call:
 
-```javascript
+```csharp
 ApiResultEnum Playnomics.instance.milestone(
     long milestoneId,
     string milestoneName);
 ```
-
-These parameters should be replaced:
 <table>
     <thead>
         <tr>
@@ -602,123 +600,104 @@ pnMilestone(milestoneCustom2Id, "CUSTOM2");
 
 Messaging Integration
 =====================
-Before you start working with messaging, you'll need to complete the installation process. PlayRM messaging real estate is called a **frame** and its responsible for delivering segment-based messages to players.
+This guide assumes you're already familiar with the concept of frames and messaging, and that you have all of the relevant `frames` setup for your application.
 
-The coordinate system for drawing a frame is 2D plane with the the origin at the top-left of the screen, **x** going positive right, **y** going positive down.
+If you are new to PlayRM's messaging feature, please refer to <a href="http://integration.playnomics.com" target="_blank">integration documentation</a>.
 
-<img src="http://www.playnomics.com/integration/img/mobile-ad-layout.png"/>
-
-Each frame can be positioned at a *fixed* location, based on a static *x* and *y* location, or *dynamic* location, based on a 3x3 grid defined by horizontal and vertical justification parameters. If the location is *dynamic*, PlayRM is able to calculate the origin (top-left corner starting point) of the real-estate based on the screen size.
-
-<table>
-    <thead>
-        <tr>
-            <th>Justification</th>
-            <th>Axis</th>
-            <th>Frame Effect</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Left</td>
-            <td>Horizontal</td>
-            <td>The left-edge of the frame will be anchored to the left of the game canvas.</td>
-        </tr>
-        <tr>
-            <td>Center</td>
-            <td>Horizontal</td>
-            <td>The frame will be centered horizontally.</td>
-        </tr>
-        <tr>
-            <td>Right</td>
-            <td>Horizontal</td>
-            <td>The right-edge of the frame will be archored to the right of the game canvas.</td>
-        </tr>
-        <tr>
-            <td>Top</td>
-            <td>Vertical</td>
-            <td>The top-edge of the frame will be anchored to the top of the game canvas.</td>
-        </tr>
-        <tr>
-            <td>Center</td>
-            <td>Vertical</td>
-            <td>The frame will be centered vertically.</td>
-        </tr>
-        <tr>
-            <td>Bottom</td>
-            <td>Vertical</td>
-            <td>The bottom-edge of the frame will anchored to the bottom of the game canvas.</td>
-        </tr>
-    </tbody>
-</table>
-
-**Important!**
-<hr/>
-Before releasing the messaging integration to production, you will need to log into the <a href="https://controlpanel.playnomics.com/signin/" target="_blank">control panel</a> and ensure that you have uploaded the creatives/messages or placeholders. **A frame always needs to have a default creative before it can be launched.**
-
-## Setting up a Frame
-Each opportunity for unique messaging, should have its own **frame** configuration.
-
-PlayRM Messaging for Unity supports images:
-* PNG or JPG image format
-* Size must be less than 512kB
-* Conditional images are not supported
-
-To configure a **frame**, email <a href="mailto:support@playnomics.com">support@playnomics.com</a> the following information for each **frame**:
-
-<table>
-    <thead>
-        <tr>
-            <th>
-                Variable
-            </th>
-            <th>
-                Explanation
-            </th>
-            <th>
-                Default Value
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td colspan="3">Your Application</td>
-        </tr>
-        <tr>
-            <td>Name of the application</td>
-            <td>The name of your application.</td>
-            <td>N/A</td>
-        </tr>
-        <tr>
-            <td>Application ID</td>
-            <td>The name of your application.</td>
-            <td>N/A</td>
-        </tr>
-        <tr>
-            <td>Name of the frame</td>
-            <td>A name describing the location or use-case of the frame. (i.e. "Top Banner", "Sidebar", or "Box1")</td>
-            <td>N/A</td>
-        </tr>
-        <tr>
-            <td colspan="3">Background Component of the Frame - </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td>N/A</td>
-        </tr>
-    </tbody>
-</table>
-
-Name of app
-Name of frame (i.e. "Top Banner", "Sidebar", or "Box1")
-* Height in pixels (eg "90")
-* Width in pixels (eg "760")
-
-
-Once the frame has been configured, Playnomics will provide you with a `<PLAYRM-FRAMEID>`.
+Once you have all of your frames created with their associated `<PLAYRM-FRAME-ID>`s, you can start the integration process.
 
 ## SDK Integration
+
+Loading frames through the SDK:
+
+```csharp
+MessagingFrame Playnomics.instance.initMessagingFrame(string frameId);
+```
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>frameId</td>
+            <td>string</td>
+            <td>Unique identifier for the frame.</td>
+        </tr>
+    </tbody>
+</table>
+
+Frames are loaded asynchronously to keep your game responsive. The `initMessagingFrame` call begins the frame loading process. However, until you call `show` on the frame, the frame will not be drawn in the UI. This gives you control over when a frame will appear.
+
+If a frame or its image components cannot be loaded, the SDK will attempt to reloaded the frame.
+
+Frames are destroyed on a scene transition and when closed.
+
+In the example below, we initialize the frame when a behavior script is loaded for the first time. In the update loop, we poll for the frame asking if it can be shown loading and then show it. In practice, a frame can be loaded in a variety of ways.
+
+```csharp
+using PlaynomicsPlugin;
+using UntiyEngine;
+ 
+public class Scene : MonoBehavior {
+    private MessagingFrame frame;
+    private bool shown;  
+ 
+    private void Awake(){
+        //Playnomics.instance.start has already been called before we call this method
+        const string frameId = "<PLAYRM-FRAME-ID>";
+        MessagingFrame frame = Playnomics.instance.initMessagingFrame(frameId);
+        //enabled code callbacks, eg PNA   
+        frame.EnableAdCode = true;  
+    }
+
+    private void Update(){
+
+        if(frame.FrameState == FrameStateEnum.Loaded && !shown){
+            //the frame is ready and has never been shown
+
+            shown = true;
+            //render the frame
+            frame.show();
+        }
+    }
+}
+```
+
+## Using Code Callbacks
+
+Depending on your configuration, a variety of actions can take place when the frame message is pressed or clicked:
+
+* Redirect the user to a web URL in the browser, outside of the application
+* Firing a code callback in your game
+* In the simplest case, just close, provided that the Close Button has been configured correctly.
+
+All of this setup, at the the time of the messaging campaign configuration. However, all code callbacks need to be configured before PlayRM can interact with it. The SDK uses Unity's messaging passing framework for callbacks, so a code callback must be:
+
+* In a script attached to a singular, uniquely-named `GameObject`
+* The script method should have no parameters
+* The method should return `void`
+
+For example, let's assume that you want to configure a message which will open your in-game store when pressed. This message will appear for *recent monetizers* in a frame that has appeared after a level or challenge has been completed. 
+
+You would create a script to handle the code callback, and attach it to the `GameObject` called **ClickHandler**:
+
+```csharp
+using UnityEngine;
+
+public class MessageClickHandler : MonoBehavior {
+    
+    public void onStoreFrameClicked(){
+        //open the game store after the click has occurred
+        store.open();
+    } 
+}
+
+```
+The related message would be configured in the Control Panel to use this callback by placing this in the **Target URL** : `pna://ClickHandler.onStoreFrameClicked`.
 
 Support Issues
 ==============
