@@ -690,7 +690,6 @@ Here are three common use cases for frames and a messaging campaigns
 
 For each of the examples, we will create a script to handle the code callback, and attach it to the `GameObject` called **ClickHandler**.
 
-
 ### Game Start Frame
 
 In this use-case, we want to configure a frame that is always shown to players when they start playing a new game. The message shown to the player may change based on the desired segments:
@@ -757,6 +756,9 @@ using UnityEngine;
 
 public class MessageClickHandler : MonoBehavior {
     
+    //...
+    //...
+
     public void grant10MonsterBucks(){
         //grant 10 MonsterBucks
     }
@@ -768,14 +770,22 @@ public class MessageClickHandler : MonoBehavior {
     public void grantBazooka(){
         //grant a bazooka
     }
+
+    //...
+    //...
 }
 ```
+The related messages would be configured in the Control Panel to use this callback by placing this in the **Target URL** for each message :
+
+* **At-Risk Message** : `pna://ClickHandler.grant50MonsterBucks`
+* **Lapsed 7 or more days** : `pna://ClickHandler.grant10MonsterBucks`
+* **Default** : `pna://ClickHandler.grantBazooka`
 
 ### Event Driven Frame - Open the Store
 
-An advantage of a *dynamic* frame, is that it can be triggered based on an in-game event. Another use case, 
+An advantage of a *dynamic* frame, is that it can be triggered based on an in-game event. For each in-game event you would configure a separate frame. While segmentation maybe helpful in deciding what message you show, it may be sufficient to show the same message to all players.
 
-In this use-case, we want to configure a frame that is always shown to players when they start playing a new game. The message shown to the player may change based on the configured segments:
+In particular one event, a player may spend through their premium currency and you want to remind them that they can re-up through your store. In the context, we show the same message to all players.
 
 <table>
     <thead>
@@ -797,7 +807,7 @@ In this use-case, we want to configure a frame that is always shown to players w
     <tbody>
         <tr>
             <td>
-                Default - all players, because this message is intended for any one playing the game.
+                Default - all players, because this message is intended for anyone playing the game.
             </td>
             <td>1st</td>
             <td>
@@ -810,10 +820,6 @@ In this use-case, we want to configure a frame that is always shown to players w
     </tbody>
 </table>
 
-For this example, the Default message is 
-
-You would create a script to handle the code callback, and attach it to the `GameObject` called **ClickHandler**:
-
 ```csharp
 using UnityEngine;
 
@@ -823,7 +829,7 @@ public class MessageClickHandler : MonoBehavior {
     //...
 
     public void openStore(){
-        //open the game store after the click has occurred
+        //open the game store after the press or click has occurred
         store.open();
     }
 
@@ -832,9 +838,12 @@ public class MessageClickHandler : MonoBehavior {
 }
 ```
 
-The related message would be configured in the Control Panel to use this callback by placing this in the **Target URL** : `pna://ClickHandler.openStore`.
+The Default message would be configured in the Control Panel to use this callback by placing this in the **Target URL** for the message : `pna://ClickHandler.openStore`.
 
 ### Event Driven Frame - Level Completion
+
+Another in-game event, we want to show a segmented message to players after they complete a level or challenge. In this case, we're trying to receive some revenue from players unlikely to monetized.
+
 <table>
     <thead>
         <tr>
@@ -878,6 +887,26 @@ The related message would be configured in the Control Panel to use this callbac
     </tbody>
 </table>
 
+```csharp
+using UnityEngine;
+
+public class MessageClickHandler : MonoBehavior {
+    
+    //...
+    //...
+
+    public void grantMana(){
+        //grant mana to the user
+    }
+
+    //...
+    //... 
+}
+```
+The related messages would be configured in the Control Panel to use this callback by placing this in the **Target URL** for each message :
+
+* **Non-monetizers, in their 5th day of game play** : `HTTP URL for Third Party Ad`
+* **Default** : `pna://ClickHandler.grantMana`
 
 Support Issues
 ==============
