@@ -383,16 +383,16 @@ Playnomics.instance.transaction(transactionId, TransactionType.CurrencyConvert, 
 ### Purchases of Items with Real Currency
 
 ```csharp
-//player purchases a "Vaporizer" for $.99 USD
+//player purchases a "Monster Trap" for $.99 USD
 
-var vaporizerItemId = "Vaporizer"
-var quantityVaporizer = 1;
-var priceOfVaporizer = .99;
+var trapItemId = "Monster Trap"
+var quantity = 1;
+var price = .99;
 
 TransactionCurrency[] currencies = new TransactionCurrency[1]; 
-currencies[0] = TransactionCurrency.createReal(priceOfVaporizer, CurrencyType.USD);
+currencies[0] = TransactionCurrency.createReal(price, CurrencyType.USD);
 
-Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currencies, vaporizerItemId, quantityVaporizer, null);
+Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currencies, trapItemId, quantity, null);
 ```
 
 ### Purchases of Items with Premium Currency
