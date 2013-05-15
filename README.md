@@ -373,50 +373,18 @@ ApiResultEnum Playnomics.instance.invitationSent(
   string method)
 
 ```
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>invitationId</code></td>
-            <td>long</td>
-            <td>
-                A unique 64-bit integer identifier for this invitation. 
 
-                If no identifier is available this could be a hash/MD5/SHA1 of the sender's and neighbor's IDs concatenated. <strong>The resulting identifier can not be personally identifiable.</strong>
-            </td>
-        </tr>
-        <tr>
-            <td><code>recipientUserId</code></td>
-            <td>string</td>
-            <td>This can be a hash/MD5/SHA1 of the recipient's Facebook ID, their Facebook 3rd Party ID or an internal ID. It cannot be a personally identifiable ID.</td>
-        </tr>
-        <tr>
-            <td><code>recipientAddress</code></td>
-            <td>string</td>
-            <td>
-                An optional way to identify the recipient, for example the <strong>hashed email address</strong>. When using <code>recipientUserId</code> this can be <code>null</code>.
-            </td>
-        </tr>
-        <tr>
-            <td><code>method</code></td>
-            <td>string</td>
-            <td>
-                The method of the invitation request will include one of the following:
-                <ul>
-                    <li>facebookRequest</li>
-                    <li>email</li>
-                    <li>twitter</li>
-                </ul>
-            </td>
-        </tr>
-    </tbody>
-</table>
+| Name                    | Type                 | Description                        |
+| ----------------------- | :----: | ---------------------------------- |
+| `invitationId`          | long   |  A unique 64-bit integer identifier for this invitation. 
+If no identifier is available this could be a hash/MD5/SHA1 of the sender's and neighbor's IDs concatenated. **The resulting identifier can not be personally identifiable.**  |
+| `recipientUserId`       | string |  This can be a hash/MD5/SHA1 of the recipient's Facebook ID, their Facebook 3rd Party ID or an internal ID. It cannot be a personally identifiable ID. |
+| `recipientAddress`      | string |  An optional way to identify the recipient, for example the **hashed email address**. When using `recipientUserId` this can be `null`. |
+| `method`                | string |  The method of the invitation request will include one of the following:
+* facebookRequest
+* email
+* twitter |
+
 
 You can then track each invitation acceptance. The important thing to note is that you will need to pass the invitationId through the invitation link.
 
