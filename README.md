@@ -187,19 +187,54 @@ ApiResultEnum Playnomics.instance.userInfo(
 ```
 If any of the parameters are not available, you should pass `null`.
 
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>country</code></td>
+            <td>string</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>subdivision</code></td>
+            <td>string</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>birthyear</code></td>
+            <td>short?</td>
+            <td>4-digit year, such as 1980</td>
+        </tr>
+        <tr>
+            <td><code>source</code></td>
+            <td>string</td>
+            <td>source of the user, such as "FacebookAds", "UserReferral", "Playnomics", etc. These are only suggestions, any 16-character or shorter string is acceptable.</td>
+        </tr>
+        <tr>
+            <td><code>sourceCampaign</code></td>
+            <td>string</td>
+            <td>any 16-character or shorter string to help identify specific campaigns</td>
+        </tr>
+        <tr>
+            <td><code>sourceUser</code></td>
+            <td>strings</td>
+            <td>if the user was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this user into the game</td>
+        </tr>
+        <tr>
+            <td><code>installTime</code></td>
+            <td>long?</td>
+            <td>unix epoch time in seconds when the user originally installed the game</td>
+        </tr>
+    </tbody>
+</table>
 
-| Name             | Type      | Description                        |
-| ---------------- | :-------: | ---------------------------------- |
-| `country`        | string    | Deprecated, should be left `null`. |
-| `subdivision`    | string    | Deprecated, should be left `null`. |
-| `birthyear`      | short?    | 4-digit year, such as 1980         |
-| `source`         | string    | Source of the user, such as "FacebookAds", "UserReferral", "Playnomics", etc. These are only suggestions, any 16-character or shorter string is acceptable. |
-| `sourceCampaign` | string    | If the user was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this user into the game |
-| `sourceUser`     | string    | If the user was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this user into the game |
-| `installTime`    | long?     | Unix epoch time in seconds when the user originally installed the game |
-
-
-Since PlayRM uses the game client’s IP address to determine geographic location, country and subdivision should be set to `null`.
+Since PlayRM uses the game client’s IP address to determine geographic location, country and subdivision are often set to null.
 
 ```csharp
 void Start()
@@ -238,27 +273,75 @@ ApiResultEnum Playnomics.instance.transaction(
     int? quantity,
     string otherUserId)
 ```
-| Name                    | Type                 | Description                        |
-| ----------------------- | :------------------: | ---------------------------------- |
-| `transactionId`         | long                 | A unique identifier for this transaction. If you don't have a transaction ID from payments system, you can genenate large random number. |
-| `transactionType`       | TransactionType      | The type of transaction occurring: 
-* BuyItem: A purchase of virtual item. The `quantity` is added to the user's inventory
-* SellItem: A sale of a virtual item to another user. The item is removed from the user's inventory. Note: a sale of an item will result in two events with the same `transactionId`, one for the sale with type SellItem, and one for the receipt of that sale, with type BuyItem.
-* ReturnItem: A return of a virtual item to the store. The item is removed from the user's inventory
-* BuyService: A purchase of a service, e.g., VIP membership
-* SellService: The sale of a service to another user
-* ReturnService:  The return of a service
-* CurrencyConvert: An conversion of currency from one form to another, usually in the form of real currency (e.g., US dollars) to virtual currency.  If the type of a transaction is CurrencyConvert, then there should be at least 2 elements in the `transactionCurrencies` array
-* Initial: An initial allocation of currency and/or virtual items to a new user
-* Free: Free currency or item given to a user by the application
-* Reward: Currency or virtual item given by the application as a reward for some action by the user
-* GiftSend: A virtual item sent from one user to another. Note: a virtual gift should result in two transaction events with the same `transactionId`, one with the type GiftSend, and another with the type GiftReceive
-    * GiftReceive: A virtual good received by a user. See note for GiftSend type |
-| `transactionCurrencies`  | TransactionCurrency[] | An array of `TransactionCurrency`, describing the different types of currency used in this transaction. |
-| `itemId`                 | string                | If applicable, an identifier for the item. The identifier should be consistent.                         |
-| `quantity`               | int?                  | If applicable, the number of items being purchased.                                                     |
-| `otherUserId`            | string                | If applicable, the other user involved in the transaction. A contextual example is a user sending a gift to another user |
-
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>transactionId</code></td>
+            <td>long</td>
+            <td>A unique identifier for this transaction. If you don't have a transaction ID from payments system, you can genenate large random number.</td>
+        </tr>
+        <tr>
+            <td><code>transactionType<code></td>
+            <td>TransactionType</td>
+            <td>
+                The type of transaction occurring:
+                <ul>
+                    <li>BuyItem: A purchase of virtual item. The <code>quantity</code> is added to the user's inventory</li>
+                    <li>
+                        SellItem: A sale of a virtual item to another user. The item is removed from the user's inventory. Note: a sale of an item will result in two events with the same <code>transactionId</code>, one for the sale with type SellItem, and one for the receipt of that sale, with type BuyItem.
+                    </li>
+                    <li>
+                        ReturnItem: A return of a virtual item to the store. The item is removed from the user's inventory
+                    </li>
+                    <li>BuyService: A purchase of a service, e.g., VIP membership </li>
+                    <li>SellService: The sale of a service to another user</li>
+                    <li>ReturnService:  The return of a service</li>
+                    <li>
+                        CurrencyConvert: An conversion of currency from one form to another, usually in the form of real currency (e.g., US dollars) to virtual currency.  If the type of a transaction is CurrencyConvert, then there should be at least 2 elements in the <code>transactionCurrencies</code> array
+                    </li>
+                    <li>Initial: An initial allocation of currency and/or virtual items to a new user</li>
+                    <li>Free: Free currency or item given to a user by the application</li>
+                    <li>
+                        Reward: Currency or virtual item given by the application as a reward for some action by the user
+                    </li>
+                    <li>
+                        GiftSend: A virtual item sent from one user to another. Note: a virtual gift should result in two transaction events with the same <code>transactionId</code>, one with the type GiftSend, and another with the type GiftReceive
+                    </li>
+                    <li>GiftReceive: A virtual good received by a user. See note for GiftSend type</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><code>transactionCurrencies</code></td>
+            <td>TransactionCurrency[]</td>
+            <td>An array of <code>TransactionCurrency</code>, describing the different types of currency used in this transaction.</td>
+        </tr>
+        <tr>
+            <td><code>itemId</code></td>
+            <td>string</td>
+            <td>If applicable, an identifier for the item. The identifier should be consistent.</td>
+        </tr>
+        <tr>
+            <td><code>quantity</code></td>
+            <td>int?</td>
+            <td>If applicable, the number of items being purchased.</td>
+        </tr>
+        <tr>
+            <td><code>otherUserId</code></td>
+            <td>string</td>
+            <td>
+               If applicable, the other user involved in the transaction. A contextual example is a user sending a gift to another user.
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 The `TransactionCurrency` class encapsulates the type of currency that was used in the transaction. We provide static constructors for common types of currency.
 
@@ -373,18 +456,50 @@ ApiResultEnum Playnomics.instance.invitationSent(
   string method)
 
 ```
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>invitationId</code></td>
+            <td>long</td>
+            <td>
+                A unique 64-bit integer identifier for this invitation. 
 
-| Name                    | Type                 | Description                        |
-| ----------------------- | :----: | ---------------------------------- |
-| `invitationId`          | long   |  A unique 64-bit integer identifier for this invitation. 
-If no identifier is available this could be a hash/MD5/SHA1 of the sender's and neighbor's IDs concatenated. **The resulting identifier can not be personally identifiable.**  |
-| `recipientUserId`       | string |  This can be a hash/MD5/SHA1 of the recipient's Facebook ID, their Facebook 3rd Party ID or an internal ID. It cannot be a personally identifiable ID. |
-| `recipientAddress`      | string |  An optional way to identify the recipient, for example the **hashed email address**. When using `recipientUserId` this can be `null`. |
-| `method`                | string |  The method of the invitation request will include one of the following:
-* facebookRequest
-* email
-* twitter |
-
+                If no identifier is available this could be a hash/MD5/SHA1 of the sender's and neighbor's IDs concatenated. <strong>The resulting identifier can not be personally identifiable.</strong>
+            </td>
+        </tr>
+        <tr>
+            <td><code>recipientUserId</code></td>
+            <td>string</td>
+            <td>This can be a hash/MD5/SHA1 of the recipient's Facebook ID, their Facebook 3rd Party ID or an internal ID. It cannot be a personally identifiable ID.</td>
+        </tr>
+        <tr>
+            <td><code>recipientAddress</code></td>
+            <td>string</td>
+            <td>
+                An optional way to identify the recipient, for example the <strong>hashed email address</strong>. When using <code>recipientUserId</code> this can be <code>null</code>.
+            </td>
+        </tr>
+        <tr>
+            <td><code>method</code></td>
+            <td>string</td>
+            <td>
+                The method of the invitation request will include one of the following:
+                <ul>
+                    <li>facebookRequest</li>
+                    <li>email</li>
+                    <li>twitter</li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 You can then track each invitation acceptance. The important thing to note is that you will need to pass the invitationId through the invitation link.
 
