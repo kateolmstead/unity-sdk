@@ -55,8 +55,9 @@ Visit <a href="https://controlpanel.playnomics.com/signup" target="_blank">https
 ## Register Your Game
 After receiving a registration confirmation email, login to the <a href="https://controlpanel.playnomics.com" target="_blank">control panel</a>. Select the "Applications" tab and create a new application. Your application will be granted an Application ID (`<APPID>`) and an API KEY.
 
-## Considerations for Cross-Platform Games
+**Considerations for Cross-Platform Games**
 
+If you want to deploy your game to multiple platforms (eg: iOS and the Unity Web player), you'll need to create a separate Playnomics Applications in the control panel. Each application will have a separate `<APPID>` along with frames so that creatives are sized appropriately.
 
 Basic Integration
 =================
@@ -715,27 +716,25 @@ In this use-case, we want to configure a frame that is always shown to players w
         <tr>
             <td>
                 At-Risk
-                 </td>
-            <td>
-                1st
             </td>
+            <td>1st</td>
             <td>
                 In this case, we're be worried that one once-active players are now in danger of leaving the game. We might offer them <strong>50 MonsterBucks</strong> to bring them back.
             </td>
             <td>
-
+                <img src="http://playnomics.com/integration-dev/img/messaging/50-free-monster-bucks.png"/>
             </td>
         </tr>
         <tr>
             <td>
                 Lapsed 7 or more days
-                </td>
+            </td>
             <td>2nd</td>
             <td>
                 In this case, we want to thank the player from coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 MonsterBucks</strong> to increase their engagement and loyalty.
             </td>
             <td>
-                
+                <img src="http://playnomics.com/integration-dev/img/messaging/10-free-monster-bucks.png"/>
             </td>
         </tr>
         <tr>
@@ -747,7 +746,7 @@ In this use-case, we want to configure a frame that is always shown to players w
                 In this case, we can offer a special item to them for returning to the grame.
             </td>
             <td>
-                
+                <img src="http://playnomics.com/integration-dev/img/messaging/bfb.png"/>
             </td>
         </tr>
     </tbody>
@@ -758,23 +757,23 @@ using UnityEngine;
 
 public class MessageClickHandler : MonoBehavior {
     
-    public void grant10Coins(){
-        //grant 50 coins
+    public void grant10MonsterBucks(){
+        //grant 10 MonsterBucks
     }
 
-    public void grant50Coins(){
-       //grant 10 coins
+    public void grant50MonsterBucks(){
+        //grant 50 MonsterBucks
     } 
 
-    public void grantSpecialItem(){
-        //grant a single special item to the player
+    public void grantBazooka(){
+        //grant a bazooka
     }
 }
 ```
 
 ### Event Driven Frame - Open the Store
 
-An advantage of a *dynamic* frame, is that it can be triggered based on an in-game event. Another use case,
+An advantage of a *dynamic* frame, is that it can be triggered based on an in-game event. Another use case, 
 
 In this use-case, we want to configure a frame that is always shown to players when they start playing a new game. The message shown to the player may change based on the configured segments:
 
@@ -805,7 +804,7 @@ In this use-case, we want to configure a frame that is always shown to players w
                 You notice that the player's in-game, premium currency drops below a certain threshold, now you can prompt them to re-up with this <strong>message</strong>.
             </td>
             <td>
-                
+                <img src="http://playnomics.com/integration-dev/img/messaging/running-out-of-monster-bucks.png"/>
             </td>
         </tr>
     </tbody>
@@ -820,14 +819,20 @@ using UnityEngine;
 
 public class MessageClickHandler : MonoBehavior {
     
-    public void onStoreFrameClicked(){
+    //...
+    //...
+
+    public void openStore(){
         //open the game store after the click has occurred
         store.open();
-    } 
+    }
+
+    //...
+    //... 
 }
 ```
 
-The related message would be configured in the Control Panel to use this callback by placing this in the **Target URL** : `pna://ClickHandler.onStoreFrameClicked`.
+The related message would be configured in the Control Panel to use this callback by placing this in the **Target URL** : `pna://ClickHandler.openStore`.
 
 ### Event Driven Frame - Level Completion
 
@@ -854,11 +859,9 @@ The related message would be configured in the Control Panel to use this callbac
                 Non-monetizers, in their 5th day of game play
             </td>
             <td>1st</td>
+            <td>Show them a 3rd party ad, because they are unlikely to monetize.</td>
             <td>
-                Show them a 3rd party ad, because they are unlikely monetize.
-            </td>
-            <td>
-                
+                <img src="http://playnomics.com/integration-dev/img/messaging/third-party-ad.png"/>
             </td>
         </tr>
         <tr>
@@ -867,11 +870,10 @@ The related message would be configured in the Control Panel to use this callbac
             </td>
             <td>2nd</td>
             <td>
-                You simply congratulate them on completing the level and grant them some attention currency, 
-                "Mana" for completeing the level.
+                You simply congratulate them on completing the level and grant them some attention currency, "Mana" for completeing the level.
             </td>
             <td>
-                
+                <img src="http://playnomics.com/integration-dev/img/messaging/darn-good-job.png"/>
             </td>
         </tr>
     </tbody>
