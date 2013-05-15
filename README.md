@@ -721,7 +721,7 @@ In this use-case, we want to configure a frame that is always shown to players w
             <td>
                 In this case, we're be worried that one once-active players are now in danger of leaving the game. We might offer them <strong>50 MonsterBucks</strong> to bring them back.
             </td>
-            <td style="width:250px;">
+            <td>
                 <img src="http://playnomics.com/integration-dev/img/messaging/50-free-monster-bucks.png"/>
             </td>
         </tr>
@@ -733,7 +733,7 @@ In this use-case, we want to configure a frame that is always shown to players w
             <td>
                 In this case, we want to thank the player from coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 MonsterBucks</strong> to increase their engagement and loyalty.
             </td>
-            <td style="width:250px;"> 
+            <td> 
                 <img src="http://playnomics.com/integration-dev/img/messaging/10-free-monster-bucks.png"/>
             </td>
         </tr>
@@ -745,7 +745,7 @@ In this use-case, we want to configure a frame that is always shown to players w
             <td>
                 In this case, we can offer a special item to them for returning to the grame.
             </td>
-            <td style="width:250px;">
+            <td>
                 <img src="http://playnomics.com/integration-dev/img/messaging/free-bfb.png"/>
             </td>
         </tr>
@@ -835,7 +835,6 @@ public class MessageClickHandler : MonoBehavior {
 The related message would be configured in the Control Panel to use this callback by placing this in the **Target URL** : `pna://ClickHandler.openStore`.
 
 ### Event Driven Frame - Level Completion
-
 <table>
     <thead>
         <tr>
