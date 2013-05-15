@@ -187,54 +187,19 @@ ApiResultEnum Playnomics.instance.userInfo(
 ```
 If any of the parameters are not available, you should pass `null`.
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>country</code></td>
-            <td>string</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><code>subdivision</code></td>
-            <td>string</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><code>birthyear</code></td>
-            <td>short?</td>
-            <td>4-digit year, such as 1980</td>
-        </tr>
-        <tr>
-            <td><code>source</code></td>
-            <td>string</td>
-            <td>source of the user, such as "FacebookAds", "UserReferral", "Playnomics", etc. These are only suggestions, any 16-character or shorter string is acceptable.</td>
-        </tr>
-        <tr>
-            <td><code>sourceCampaign</code></td>
-            <td>string</td>
-            <td>any 16-character or shorter string to help identify specific campaigns</td>
-        </tr>
-        <tr>
-            <td><code>sourceUser</code></td>
-            <td>strings</td>
-            <td>if the user was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this user into the game</td>
-        </tr>
-        <tr>
-            <td><code>installTime</code></td>
-            <td>long?</td>
-            <td>unix epoch time in seconds when the user originally installed the game</td>
-        </tr>
-    </tbody>
-</table>
 
-Since PlayRM uses the game client’s IP address to determine geographic location, country and subdivision are often set to null.
+| Name             | Type      | Description                        |
+| ---------------- | :-------: | ---------------------------------- |
+| `country`        | string    | Deprecated, should be left `null`. |
+| `subdivision`    | string    | Deprecated, should be left `null`. |
+| `birthyear`      | short?    | 4-digit year, such as 1980         |
+| `source`         | string    | Source of the user, such as "FacebookAds", "UserReferral", "Playnomics", etc. These are only suggestions, any 16-character or shorter string is acceptable. |
+| `sourceCampaign` | string    | If the user was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this user into the game |
+| `sourceUser`     | string    | If the user was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this user into the game |
+| `installTime`    | long?     | Unix epoch time in seconds when the user originally installed the game |
+
+
+Since PlayRM uses the game client’s IP address to determine geographic location, country and subdivision should be set to `null`.
 
 ```csharp
 void Start()
