@@ -354,7 +354,7 @@ TransactionCurrency TransactionCurrency.createReal(double currencyValue, Currenc
 ```csharp
 TransactionCurrency TransactionCurrency.createVirtual(double currencyValue, string type)
 ```
-`type` is a short name (up to 16 characters) for the currency, eg: "Gold Coins."
+`type` is a short name (up to 16 characters) for the currency, eg: "MonsterBucks."
 
 We hightlight three common use-cases below.
 * [Purchases of In-Game Currency with Real Currency](#purchases-of-in-game-currency-with-real-currency)
@@ -366,12 +366,12 @@ We hightlight three common use-cases below.
 A very common monetization strategy is to incentivize players to purchase premium, in-game currency with real currency. PlayRM treats this like a currency exchange. This is one of the few cases where multiple `TranactionCurrency` are used in a transaction. `itemId`, `quantity`, and `otherUserId` are left `null`.
 
 ```csharp
-//player purchases 500 Gold Coins for 10 USD
+//player purchases 500 MonsterBucks for 10 USD
 
 TransactionCurrency[] currencies = new TransactionCurrency[2]; 
 
 var quantityCoins = 500;
-var gameCurrency = "Gold Coins";
+var gameCurrency = "MonsterBucks";
 currencies[0] = TransactionCurrency.createVirtual(quantityCoins, gameCurrency);
 
 var priceInUSD = 10;
@@ -383,16 +383,16 @@ Playnomics.instance.transaction(transactionId, TransactionType.CurrencyConvert, 
 ### Purchases of Items with Real Currency
 
 ```csharp
-//player purchases a "Sword" for $.99 USD
+//player purchases a "Vaporizer" for $.99 USD
 
-var swordItemId = "Sword"
-var quantitySword = 1;
-var priceOfSword = .99;
+var vaporizerItemId = "Vaporizer"
+var quantityVaporizer = 1;
+var priceOfVaporizer = .99;
 
 TransactionCurrency[] currencies = new TransactionCurrency[1]; 
-currencies[0] = TransactionCurrency.createReal(priceOfSword, CurrencyType.USD);
+currencies[0] = TransactionCurrency.createReal(priceOfVaporizer, CurrencyType.USD);
 
-Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currencies, swordItemId, quantitySword, null);
+Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currencies, vaporizerItemId, quantityVaporizer, null);
 ```
 
 ### Purchases of Items with Premium Currency
@@ -406,17 +406,17 @@ This is a continuation on the first currency exchange example. It showcases how 
 ```csharp
 
 //In this hypothetical, Energy is an attention currency that is earned over the lifetime of the game. 
-//They can also be purchased with the premium Gold Coins that the player may have purchased earlier.
+//They can also be purchased with the premium MonsterBucks that the player may have purchased earlier.
 
-//player buys 100 Energy with 10 Gold Coins
+//player buys 100 Mana with 10 MonsterBucks
 //notice that both currencies are virtual
 TransactionCurrency[] currencies = new TransactionCurrency[2]; 
 
-var attentionCurrency = "Energy";
+var attentionCurrency = "Mana";
 var attentionAmount = 100;
 currencies[0] = TransactionCurrency.createVirtual(attentionAmount, attentionCurrency);
 
-var premimumCurrency = "Gold Coins";
+var premimumCurrency = "MonsterBucks";
 var premiumCost = -20;
 currencies[1] = TransactionCurrency.createVirtual(premiumCost, premimumCurrency);
 
@@ -427,12 +427,12 @@ Playnomics.instance.transaction(transactionId, TransactionType.CurrencyConvert, 
 This is a continuation on the first item purchase example, except with premium currency.
 
 ```javascript
-//player buys 20 light armor, for 5 Gold Coins
+//player buys 20 light armor, for 5 MonsterBucks
 
 var itemQuantity = 20;
 var item = "Light Armor";
 
-var premimumCurrency = "Gold Coins";
+var premimumCurrency = "MonsterBucks";
 var premiumCost = 5;
 
 TransactionCurrency[] currencies = new TransactionCurrency[1]; 
@@ -687,9 +687,12 @@ Here are three common use cases for frames and a messaging campaigns
 * [Event Driven Frame - Open the Store](#event-driven-frame-open-the-store) for instance, when the player is running low on premium currency
 * [Event Driven Frame - Level Completion](#event-driven-drame-level-completion)
 
+For each of the examples, we will create a script to handle the code callback, and attach it to the `GameObject` called **ClickHandler**.
+
+
 ### Game Start Frame
 
-In this use-case, you want to configure a frame that is always shown to players when they start playing a new game. In this example, the message shown to the player may change based on the configured segments:
+In this use-case, we want to configure a frame that is always shown to players when they start playing a new game. The message shown to the player may change based on the desired segments:
 
 <table>
     <thead>
@@ -717,7 +720,7 @@ In this use-case, you want to configure a frame that is always shown to players 
                 1st
             </td>
             <td>
-                In this case, we're be worried that one once-active players are now in danger of leaving the game. We might offer them <strong>50 Gold Coins</strong> to bring them back.
+                In this case, we're be worried that one once-active players are now in danger of leaving the game. We might offer them <strong>50 MonsterBucks</strong> to bring them back.
             </td>
             <td>
 
@@ -729,7 +732,7 @@ In this use-case, you want to configure a frame that is always shown to players 
                 </td>
             <td>2nd</td>
             <td>
-                In this case, we want to thank the player from coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 Gold Coins</strong> to increase their engagement and loyalty.
+                In this case, we want to thank the player from coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 MonsterBucks</strong> to increase their engagement and loyalty.
             </td>
             <td>
                 
@@ -741,7 +744,7 @@ In this use-case, you want to configure a frame that is always shown to players 
             </td>
             <td>3rd</td>
             <td>
-                In this case, we want to thank the player from coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 Gold Coins</strong> to increase their engagement and loyalty.
+                In this case, we can offer a special item to them for returning to the grame.
             </td>
             <td>
                 
@@ -750,7 +753,30 @@ In this use-case, you want to configure a frame that is always shown to players 
     </tbody>
 </table>
 
+```csharp
+using UnityEngine;
+
+public class MessageClickHandler : MonoBehavior {
+    
+    public void grant10Coins(){
+        //grant 50 coins
+    }
+
+    public void grant50Coins(){
+       //grant 10 coins
+    } 
+
+    public void grantSpecialItem(){
+        //grant a single special item to the player
+    }
+}
+```
+
 ### Event Driven Frame - Open the Store
+
+An advantage of a *dynamic* frame, is that it can be triggered based on an in-game event. Another use case,
+
+In this use-case, we want to configure a frame that is always shown to players when they start playing a new game. The message shown to the player may change based on the configured segments:
 
 <table>
     <thead>
@@ -776,7 +802,7 @@ In this use-case, you want to configure a frame that is always shown to players 
             </td>
             <td>1st</td>
             <td>
-                You notice that the player's in-game, premium currency drops below a certain threshold, now you can prompt them to reup with this message.
+                You notice that the player's in-game, premium currency drops below a certain threshold, now you can prompt them to re-up with this <strong>message</strong>.
             </td>
             <td>
                 
@@ -799,8 +825,8 @@ public class MessageClickHandler : MonoBehavior {
         store.open();
     } 
 }
-
 ```
+
 The related message would be configured in the Control Panel to use this callback by placing this in the **Target URL** : `pna://ClickHandler.onStoreFrameClicked`.
 
 ### Event Driven Frame - Level Completion
@@ -842,7 +868,7 @@ The related message would be configured in the Control Panel to use this callbac
             <td>2nd</td>
             <td>
                 You simply congratulate them on completing the level and grant them some attention currency, 
-                "Energy" for completeing the level.
+                "Mana" for completeing the level.
             </td>
             <td>
                 
