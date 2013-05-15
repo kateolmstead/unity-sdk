@@ -721,8 +721,8 @@ In this use-case, we want to configure a frame that is always shown to players w
             <td>
                 In this case, we're be worried that one once-active players are now in danger of leaving the game. We might offer them <strong>50 MonsterBucks</strong> to bring them back.
             </td>
-            <td>
-                <img style="width:500px;" src="http://playnomics.com/integration-dev/img/messaging/50-free-monster-bucks.png"/>
+            <td style="width:250px;">
+                <img src="http://playnomics.com/integration-dev/img/messaging/50-free-monster-bucks.png"/>
             </td>
         </tr>
         <tr>
@@ -733,8 +733,8 @@ In this use-case, we want to configure a frame that is always shown to players w
             <td>
                 In this case, we want to thank the player from coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 MonsterBucks</strong> to increase their engagement and loyalty.
             </td>
-            <td>
-                <img style="width:500px;" src="http://playnomics.com/integration-dev/img/messaging/10-free-monster-bucks.png"/>
+            <td style="width:250px;"> 
+                <img src="http://playnomics.com/integration-dev/img/messaging/10-free-monster-bucks.png"/>
             </td>
         </tr>
         <tr>
@@ -745,8 +745,8 @@ In this use-case, we want to configure a frame that is always shown to players w
             <td>
                 In this case, we can offer a special item to them for returning to the grame.
             </td>
-            <td>
-                <img style="width:500px;" src="http://playnomics.com/integration-dev/img/messaging/free-bfb.png"/>
+            <td style="width:250px;">
+                <img src="http://playnomics.com/integration-dev/img/messaging/free-bfb.png"/>
             </td>
         </tr>
     </tbody>
