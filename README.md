@@ -698,7 +698,7 @@ In this use-case, we want to configure a frame that is always shown to players w
 <table>
     <thead>
         <tr>
-            <th>
+            <th >
                 Segment
             </th>
             <th>
@@ -707,7 +707,7 @@ In this use-case, we want to configure a frame that is always shown to players w
             <th>
                 Code Callback
             </th>
-            <th>
+            <th style="width:250px;">
                 Creative
             </th>
         </tr>
