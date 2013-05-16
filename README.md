@@ -7,8 +7,6 @@ This guide showcases the features of the PlayRM Unity SDK and shows how to integ
 * Retain their current audience
 * Ultimately generate more revenue for their games
 
-<img src="http://www.playnomics.com/integration/img/60-Day-Plan.png"/>
-
 The Playnomics Unity SDK supports Unity games built for Web Browsers, iOS, Android, PCs and Macs. Integration of the PlayRM SDK into an existing or brand new Unity game involves registering your game with the PlayRM service and properly configuring the SDK. The SDK communicates with the PlayRM RESTful API, and the events are processed and aggregated for your PlayRM Dashboard in the control panel.
 
 The SDK includes several modules which track different player behaviors and actions. The first two modules are initialized at or near the beginning of the play session, and the other modules are event-driven.
@@ -21,8 +19,8 @@ The SDK includes several modules which track different player behaviors and acti
 
 The [engagement module](#installing-the-sdk) is available upon install and will automatically start running.
 
-Core Concepts
-=============
+Outline
+=======
 * [Prerequisites](#prerequisites)
     * [Signing Up for the PlayRM Service](#signing-up-for-the-playrm-service)
     * [Register Your Game](#register-your-game)
