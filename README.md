@@ -516,12 +516,12 @@ ApiResultEnum Playnomics.instance.invitationResponse(
     </thead>
     <tbody>
         <tr>
-            <td>invitationId</td>
+            <td><code>invitationId</code></td>
             <td>long</td>
             <td>The ID of the corresponding <code>invitationSent</code> event.</td>
         </tr>
         <tr>
-            <td>recipientUserId</td>
+            <td><code>recipientUserId</code></td>
             <td>string</td>
             <td>The <code>recipientUserID</code> used in the corresponding <code>invitationSent</code> event.</td>
         </tr>
@@ -562,12 +562,12 @@ ApiResultEnum Playnomics.instance.milestone(
     </thead>
     <tbody>
         <tr>
-            <td>milestoneId</td>
+            <td><code>milestoneId</code></td>
             <td>long</long>
             <td>a unique 64-bit numeric identifier for this milestone occurrence</td>
         </tr>
         <tr>
-            <td>milestoneName</td>
+            <td><code>milestoneName</code></td>
             <td>string</td>
             <td>the name of the milestone which should be one of "TUTORIAL" or "CUSTOMn", where n is 1 through 5</td>
         </tr>
