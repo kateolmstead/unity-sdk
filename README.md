@@ -740,7 +740,7 @@ In this use-case, we want to configure a frame that is always shown to players w
             </td>
             <td>3rd</td>
             <td>
-                In this case, we can offer a special item to them for returning to the grame.
+                In this case, we can offer a special item to them for returning to the game.
             </td>
             <td>
                 <img src="http://playnomics.com/integration-dev/img/messaging/free-bfb.png"/>
