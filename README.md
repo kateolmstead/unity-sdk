@@ -1,13 +1,13 @@
 Playnomics PlayRM Unity SDK Integration Guide
 =============================================
-This guide showcases the features of the PlayRM Unity SDK and shows how to integrate the SDK with your game. Our SDK provides game publishers with tools for tracking player behavior and engagement so that they can:
+This guide showcases the features of the PlayRM Unity SDK and shows how to integrate the SDK within your game. Our SDK provides game publishers with tools for tracking player behavior and engagement so they can:
 
 * Better understand and segment their audience
 * Reach out to new like-minded players
 * Retain their current audience
 * Ultimately generate more revenue for their games
 
-The Playnomics Unity SDK supports Unity games built for Web Browsers, iOS, Android, PCs and Macs. Integration of the PlayRM SDK into an existing or brand new Unity game involves registering your game with the PlayRM service and properly configuring the SDK. The SDK communicates with the PlayRM RESTful API, and the events are processed and aggregated for your PlayRM Dashboard in the control panel.
+The Playnomics Unity SDK supports Unity games built for Web Browsers, iOS, Android, PCs, and Macs. Integration of the PlayRM SDK into an existing or brand new Unity game involves registering your game with the PlayRM service and properly configuring the SDK. The SDK communicates with the PlayRM RESTful API, and the events are processed and aggregated for your PlayRM Dashboard in the control panel.
 
 The SDK includes several modules which track different player behaviors and actions. The first two modules are initialized at or near the beginning of the play session, and the other modules are event-driven.
 
@@ -48,7 +48,7 @@ Before you can integrate with the PlayRM SDK you'll need to sign up and register
 
 ## Signing Up for the PlayRM Service
 
-Visit <a href="https://controlpanel.playnomics.com/signup" target="_blank">https://controlpanel.playnomics.com/signup</a> to create an account. The control panel is the dashboard to manage all of the PlayRM features once the SDK integration has been completed.
+Visit <a href="https://controlpanel.playnomics.com/signup" target="_blank">https://controlpanel.playnomics.com/signup</a> to create an account. The control panel is the dashboard to manage all PlayRM features once the SDK integration is completed.
 
 ## Register Your Game
 After receiving a registration confirmation email, login to the <a href="https://controlpanel.playnomics.com" target="_blank">control panel</a>. Select the "Applications" tab and create a new application. Your application will be granted an Application ID (`<APPID>`) and an API KEY.
@@ -61,7 +61,7 @@ Basic Integration
 =================
 
 ## Installing the SDK
-You can download the SDK package from downloading the *PlaynomicsSDK.unitypackage* file included in the *build* folder of this repo, or you can also install the SDK files directly from the <a href="https://www.assetstore.unity3d.com/#/content/6179" target="_blank">Unity Asset Store</a>. If you download the package file from the repo, go to *Assets > Import New Asset ... > Custom Package * to import the package.
+You can install the SDK package by downloading the *PlaynomicsSDK.unitypackage* file included in the *build* folder of this GitHub repo, or you can install the SDK files directly from the <a href="https://www.assetstore.unity3d.com/#/content/6179" target="_blank">Unity Asset Store</a>. If you download the package file from the repo, go to *Assets > Import New Asset ... > Custom Package * to import the package.
 
 ![Importing the prefab](http://www.playnomics.com/integration/img/unity/prefab.png)
 
@@ -100,7 +100,7 @@ or have PlayRM, generate a *best-effort* unique-identifier for the player:
 Playnomics.instance.startPlaynomics(<APPID>);
 ```
 
-If possible, you should provide your own `<USER-ID>`, especially if your game is cross-platform, since *best-effort* unqiue identifiers are generated differently depending on the Platform. If you do choose to provide a `<USER-ID>`, this value should be a persistent, anonymized, and unique to each player. This is typically discerned dynamically when a player starts the game. Some potential implementations:
+If possible, you should provide your own `<USER-ID>`, especially if your game is cross-platform, since *best-effort* unique identifiers are generated differently depending on the Platform. If you do choose to provide a `<USER-ID>`, this value should be persistent, anonymized, and unique to each player. This is typically discerned dynamically when a player starts the game. Some potential implementations:
 
 * An internal ID (such as a database auto-generated number).
 * A hash of the user’s email address.
@@ -164,11 +164,11 @@ function Start(){
 
 ```
 
-Once started, the SDK will automatically start collecting basic user information (including geo-location) and engagement data.
+Once started, the SDK will automatically begin collecting basic user information (including geo-location) and engagement data.
 
 ## Demographics and Install Attribution
 
-After the SDK has been loaded, the user info module may be called to collect basic demographic and acquisition information. This data will be used to segment users based on how/where they were acquired and enables improved targeting with basic demographics in addition to the behavioral data collected using other events.
+After the SDK is loaded, the user info module may be called to collect basic demographic and acquisition information. This data is used to segment users based on how/where they were acquired and enables improved targeting with basic demographics, in addition to the behavioral data collected using other events.
 
 Provide each user's information using this call:
 
@@ -300,9 +300,9 @@ ApiResultEnum Playnomics.instance.transaction(
                     </li>
                     <li>BuyService: A purchase of a service, e.g., VIP membership </li>
                     <li>SellService: The sale of a service to another user</li>
-                    <li>ReturnService:  The return of a service</li>
+                    <li>ReturnService: The return of a service</li>
                     <li>
-                        CurrencyConvert: An conversion of currency from one form to another, usually in the form of real currency (e.g., US dollars) to virtual currency.  If the type of a transaction is CurrencyConvert, then there should be at least 2 elements in the <code>transactionCurrencies</code> array
+                        CurrencyConvert: A conversion of currency from one form to another, usually in the form of real currency (e.g., US dollars) to virtual currency.  If the type of a transaction is CurrencyConvert, then there should be at least 2 elements in the <code>transactionCurrencies</code> array
                     </li>
                     <li>Initial: An initial allocation of currency and/or virtual items to a new user</li>
                     <li>Free: Free currency or item given to a user by the application</li>
@@ -341,7 +341,7 @@ ApiResultEnum Playnomics.instance.transaction(
     </tbody>
 </table>
 
-The `TransactionCurrency` class encapsulates the type of currency that was used in the transaction. We provide static constructors for common types of currency.
+The `TransactionCurrency` class encapsulates the type of currency that was used in the transaction. We provide static constructors for common currency types.
 
 *Real* currency implementation:
 ```csharp
@@ -349,13 +349,13 @@ TransactionCurrency TransactionCurrency.createReal(double currencyValue, Currenc
 ```
 `CurrencyType` is an enumeration with either `USD` (US Dollars) or `FBC` (Facebook Credits).
 
-*Virutal* currency implementation:
+*Virtual* currency implementation:
 ```csharp
 TransactionCurrency TransactionCurrency.createVirtual(double currencyValue, string type)
 ```
-`type` is a short name (up to 16 characters) for the currency, eg: "MonsterBucks."
+`type` is a short name (up to 16 characters) for the currency, e.g.: "MonsterBucks."
 
-We hightlight three common use-cases below.
+We highlight three common use-cases below.
 * [Purchases of In-Game Currency with Real Currency](#purchases-of-in-game-currency-with-real-currency)
 * [Purchases of Items with Real Currency](#purchases-of-items-with-real-currency)
 * [Purchases of Items with In-Game Currency](#purchases-of-items-with-in-game-currency)
@@ -442,7 +442,7 @@ Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currenci
 
 ## Invitations and Virality
 
-The virality module allows you to track a singular invitation from one user to another (e.g., inviting friends to join a game).
+The virality module allows you to track a single invitation from one user to another (e.g., inviting friends to join a game).
 
 If multiple requests can be sent at the same time, a separate function call should be made for each recipient.
 
@@ -469,7 +469,7 @@ ApiResultEnum Playnomics.instance.invitationSent(
             <td>
                 A unique 64-bit integer identifier for this invitation. 
 
-                If no identifier is available this could be a hash/MD5/SHA1 of the sender's and neighbor's IDs concatenated. <strong>The resulting identifier can not be personally identifiable.</strong>
+                If no identifier is available, this could be a hash/MD5/SHA1 of the sender's and neighbor's concatenated IDs. <strong>The resulting identifier can not be personally identifiable.</strong>
             </td>
         </tr>
         <tr>
@@ -481,7 +481,7 @@ ApiResultEnum Playnomics.instance.invitationSent(
             <td><code>recipientAddress</code></td>
             <td>string</td>
             <td>
-                An optional way to identify the recipient, for example the <strong>hashed email address</strong>. When using <code>recipientUserId</code> this can be <code>null</code>.
+                An optional way to identify the recipient, for example the <strong>hashed e-mail address</strong>. When using <code>recipientUserId</code> this can be <code>null</code>.
             </td>
         </tr>
         <tr>
@@ -499,7 +499,7 @@ ApiResultEnum Playnomics.instance.invitationSent(
     </tbody>
 </table>
 
-You can then track each invitation acceptance. The important thing to note is that you will need to pass the invitationId through the invitation link.
+You can then track each invitation acceptance. IMPORTANT: you will need to pass the invitationId through the invitation link.
 
 ```javascript
 ApiResultEnum Playnomics.instance.invitationResponse(
@@ -569,7 +569,7 @@ ApiResultEnum Playnomics.instance.milestone(
         <tr>
             <td><code>milestoneName</code></td>
             <td>string</td>
-            <td>the name of the milestone which should be one of "TUTORIAL" or "CUSTOMn", where n is 1 through 5</td>
+            <td>the name of the milestone, which should be one of "TUTORIAL" or "CUSTOMn", where n is 1 through 5</td>
         </tr>
     </tbody>
 </table>
@@ -631,7 +631,7 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId);
 
 Frames are loaded asynchronously to keep your game responsive. The `initMessagingFrame` call begins the frame loading process. However, until you call `show` on the frame, the frame will not be drawn in the UI. This gives you control over when a frame will appear.
 
-If a frame or its image components cannot be loaded, the SDK will attempt to reloaded the frame.
+If a frame or its image components cannot be loaded, the SDK will attempt to reload the frame.
 
 Frames are destroyed on a scene transition or when closed.
 
@@ -676,11 +676,11 @@ Depending on your configuration, a variety of actions can take place when a fram
 
 All of this setup, takes place at the the time of the messaging campaign configuration. However, all code callbacks need to be configured before PlayRM can interact with it. The SDK uses Unity's messaging passing framework for callbacks, so a code callback must be:
 
-* In a script attached to a singular, uniquely-named `GameObject`
+* In a script attached to a single, uniquely-named `GameObject`
 * The script method should have no parameters
 * The method should return `void`
 
-Here are three common use cases for frames and a messaging campaigns
+Here are three common use cases for frames and a messaging campaigns:
 
 * [Game Start Frame](#game-start-frame)
 * [Event Driven Frame - Open the Store](#event-driven-frame-open-the-store) for instance, when the player is running low on premium currency
@@ -716,7 +716,7 @@ In this use-case, we want to configure a frame that is always shown to players w
             </td>
             <td>1st</td>
             <td>
-                In this case, we're be worried that one once-active players are now in danger of leaving the game. We might offer them <strong>50 MonsterBucks</strong> to bring them back.
+                In this case, we're worried that once-active players are now in danger of leaving the game. We might offer them <strong>50 MonsterBucks</strong> to bring them back.
             </td>
             <td>
                 <img src="http://playnomics.com/integration-dev/img/messaging/50-free-monster-bucks.png"/>
@@ -728,7 +728,7 @@ In this use-case, we want to configure a frame that is always shown to players w
             </td>
             <td>2nd</td>
             <td>
-                In this case, we want to thank the player from coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 MonsterBucks</strong> to increase their engagement and loyalty.
+                In this case, we want to thank the player for coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 MonsterBucks</strong> to increase their engagement and loyalty.
             </td>
             <td> 
                 <img src="http://playnomics.com/integration-dev/img/messaging/10-free-monster-bucks.png"/>
@@ -781,9 +781,9 @@ The related messages would be configured in the Control Panel to use this callba
 
 ### Event Driven Frame - Open the Store
 
-An advantage of a *dynamic* frame, is that it can be triggered based on an in-game event. For each in-game event you would configure a separate frame. While segmentation maybe helpful in deciding what message you show, it may be sufficient to show the same message to all players.
+An advantage of *dynamic* frames is that they can be triggered by in-game events. For each in-game event you would configure a separate frame. While segmentation may be helpful in deciding what message you show, it may be sufficient to show the same message to all players.
 
-In particular one event, a player may spend through their premium currency and you want to remind them that they can re-up through your store. In the context, we show the same message to all players.
+In particular one event, for examle, a player may deplete their premium currency and you want to remind them that they can re-up through your store. In this context, we display the same message to all players.
 
 <table>
     <thead>
@@ -840,7 +840,7 @@ The Default message would be configured in the Control Panel to use this callbac
 
 ### Event Driven Frame - Level Completion
 
-Another in-game event, we want to show a segmented message to players after they complete a level or challenge. In this case, we're trying to receive some revenue from players unlikely to monetized.
+In the following example, we wish to generate third-party revenue from players unlikely to monetize by showing them a segmented message after completing a level or challenge: 
 
 <table>
     <thead>
