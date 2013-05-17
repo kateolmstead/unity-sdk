@@ -14,7 +14,7 @@ The SDK includes several modules which track different player behaviors and acti
 * [Engagement Module](#installing-the-sdk) - collects geographic and engagement information
 * [User Info Module](#demographics-and-install-attribution) - provides basic user information
 * [Monetization Module](#monetization) - tracks various monetization events
-* [Viralility Module](#invitations-and-virality) - tracks the social activities of users
+* [Viralility Module](#invitations-and-virality) - tracks the social activities of player
 * [Milestone Module](#custom-event-tracking) - tracks pre-defined significant events in the game experience
 
 The [engagement module](#installing-the-sdk) is available upon install and will automatically start running.
@@ -84,7 +84,7 @@ import PlaynomicsPlugin;
 
 All public methods, except for messaging specific calls, return an enumeration `ApiResultEnum` with a value of `NotStarted` or `Success`. `NotStarted` indicates that the PlayRM session has not been started, covered in the next section. 
 
-**You always need to start a session before 
+**You always need to start a session before making any other SDK calls.**
 
 ### Starting a Player Session
 
@@ -103,9 +103,9 @@ Playnomics.instance.startPlaynomics(<APPID>);
 If possible, you should provide your own `<USER-ID>`, especially if your game is cross-platform, since *best-effort* unique identifiers are generated differently depending on the Platform. If you do choose to provide a `<USER-ID>`, this value should be persistent, anonymized, and unique to each player. This is typically discerned dynamically when a player starts the game. Some potential implementations:
 
 * An internal ID (such as a database auto-generated number).
-* A hash of the user’s email address.
+* A hash of the player’s email address.
 
-**You cannot use the user's Facebook ID or any personally identifiable information (plain-text email, name, etc) for the `<USER-ID>`.**
+**You cannot use the player's Facebook ID or any personally identifiable information (plain-text email, name, etc) for the `<USER-ID>`.**
 
 You **MUST** make the initialization call before working with any other PlayRM modules. You only need to call this method once.
 
@@ -132,7 +132,7 @@ public class PlaynomicsInit : MonoBehaviour
         
         string hashedUserId;
     
-        //set the hashedUserId from the authenticated user
+        //set the hashedUserId from the authenticated player
         //this value should not include personally identifiable information
     
         Playnomics.instance.start(applicationId, hashedUserId);
@@ -164,13 +164,13 @@ function Start(){
 
 ```
 
-Once started, the SDK will automatically begin collecting basic user information (including geo-location) and engagement data.
+Once started, the SDK will automatically begin collecting basic player information (including geo-location) and engagement data.
 
 ## Demographics and Install Attribution
 
 After the SDK is loaded, the user info module may be called to collect basic demographic and acquisition information. This data is used to segment users based on how/where they were acquired and enables improved targeting with basic demographics, in addition to the behavioral data collected using other events.
 
-Provide each user's information using this call:
+Provide each players's information using this call:
 
 ```javascript
 ApiResultEnum Playnomics.instance.userInfo(
@@ -197,12 +197,12 @@ If any of the parameters are not available, you should pass `null`.
         <tr>
             <td><code>country</code></td>
             <td>string</td>
-            <td></td>
+            <td>This has been deprecated. Just pass <code>null</code>.</td>
         </tr>
         <tr>
             <td><code>subdivision</code></td>
             <td>string</td>
-            <td></td>
+            <td>This has been deprecated. Just pass <code>null</code>.</td>
         </tr>
         <tr>
             <td><code>birthyear</code></td>
@@ -212,7 +212,9 @@ If any of the parameters are not available, you should pass `null`.
         <tr>
             <td><code>source</code></td>
             <td>string</td>
-            <td>source of the user, such as "FacebookAds", "UserReferral", "Playnomics", etc. These are only suggestions, any 16-character or shorter string is acceptable.</td>
+            <td>
+                Source of the player, such as "FacebookAds", "UserReferral", "Playnomics", etc. These are only suggestions, any 16-character or shorter string is acceptable.
+            </td>
         </tr>
         <tr>
             <td><code>sourceCampaign</code></td>
@@ -222,17 +224,19 @@ If any of the parameters are not available, you should pass `null`.
         <tr>
             <td><code>sourceUser</code></td>
             <td>strings</td>
-            <td>if the user was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this user into the game</td>
+            <td>
+                If the player was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this player into the game.
+            </td>
         </tr>
         <tr>
             <td><code>installTime</code></td>
             <td>long?</td>
-            <td>unix epoch time in seconds when the user originally installed the game</td>
+            <td>Unix epoch time in seconds when the player originally installed the game.</td>
         </tr>
     </tbody>
 </table>
 
-Since PlayRM uses the game client’s IP address to determine geographic location, country and subdivision are often set to null.
+Since PlayRM uses the game client’s IP address to determine geographic location, country and subdivision should be set to `null`.
 
 ```csharp
 void Start()
@@ -240,7 +244,6 @@ void Start()
     //after Playnomics.startPlaynomics has been called
     long? installTime = null;
     if(isNewUser){
-        //
         DateTime baseDate = new DateTime(1970, 1, 1);
         DateTime now = DateTime.UtcNow;
         installTime = (long)((date - baseDate).TotalSeconds;
@@ -256,11 +259,11 @@ void Start()
 
 PlayRM provides a flexible interface for tracking monetization events. This module should be called every time a player triggers a monetization event. 
 
-This event tracks users that have monetized and the amount they have spent in total, *real* currency:
+This event tracks players that have monetized and the amount they have spent in total, *real* currency:
 * FBC (Facebook Credits)
 * USD (US Dollars)
 
-or an in-game *virtual* currency.
+or an in-game, *virtual* currency.
 
 ```csharp
 ApiResultEnum Playnomics.instance.transaction(
@@ -283,7 +286,9 @@ ApiResultEnum Playnomics.instance.transaction(
         <tr>
             <td><code>transactionId</code></td>
             <td>long</td>
-            <td>A unique identifier for this transaction. If you don't have a transaction ID from payments system, you can genenate large random number.</td>
+            <td>
+                A unique identifier for this transaction. If you don't have a transaction ID from payments system, you can genenate large random number.
+            </td>
         </tr>
         <tr>
             <td><code>transactionType<code></td>
@@ -291,12 +296,12 @@ ApiResultEnum Playnomics.instance.transaction(
             <td>
                 The type of transaction occurring:
                 <ul>
-                    <li>BuyItem: A purchase of virtual item. The <code>quantity</code> is added to the user's inventory</li>
+                    <li>BuyItem: A purchase of virtual item. The <code>quantity</code> is added to the player's inventory</li>
                     <li>
-                        SellItem: A sale of a virtual item to another user. The item is removed from the user's inventory. Note: a sale of an item will result in two events with the same <code>transactionId</code>, one for the sale with type SellItem, and one for the receipt of that sale, with type BuyItem.
+                        SellItem: A sale of a virtual item to another player. The item is removed from the player's inventory. Note: a sale of an item will result in two events with the same <code>transactionId</code>, one for the sale with type SellItem, and one for the receipt of that sale, with type BuyItem.
                     </li>
                     <li>
-                        ReturnItem: A return of a virtual item to the store. The item is removed from the user's inventory
+                        ReturnItem: A return of a virtual item to the store. The item is removed from the player's inventory
                     </li>
                     <li>BuyService: A purchase of a service, e.g., VIP membership </li>
                     <li>SellService: The sale of a service to another user</li>
@@ -304,22 +309,24 @@ ApiResultEnum Playnomics.instance.transaction(
                     <li>
                         CurrencyConvert: A conversion of currency from one form to another, usually in the form of real currency (e.g., US dollars) to virtual currency.  If the type of a transaction is CurrencyConvert, then there should be at least 2 elements in the <code>transactionCurrencies</code> array
                     </li>
-                    <li>Initial: An initial allocation of currency and/or virtual items to a new user</li>
-                    <li>Free: Free currency or item given to a user by the application</li>
+                    <li>Initial: An initial allocation of currency and/or virtual items to a new player</li>
+                    <li>Free: Free currency or item given to a player by the application</li>
                     <li>
-                        Reward: Currency or virtual item given by the application as a reward for some action by the user
+                        Reward: Currency or virtual item given by the application as a reward for some action by the player
                     </li>
                     <li>
-                        GiftSend: A virtual item sent from one user to another. Note: a virtual gift should result in two transaction events with the same <code>transactionId</code>, one with the type GiftSend, and another with the type GiftReceive
+                        GiftSend: A virtual item sent from one player to another. Note: a virtual gift should result in two transaction events with the same <code>transactionId</code>, one with the type GiftSend, and another with the type GiftReceive
                     </li>
-                    <li>GiftReceive: A virtual good received by a user. See note for GiftSend type</li>
+                    <li>GiftReceive: A virtual good received by a player. See note for GiftSend type</li>
                 </ul>
             </td>
         </tr>
         <tr>
             <td><code>transactionCurrencies</code></td>
             <td>TransactionCurrency[]</td>
-            <td>An array of <code>TransactionCurrency</code>, describing the different types of currency used in this transaction.</td>
+            <td>
+                An array of <code>TransactionCurrency</code>, describing the different types of currency used in this transaction.
+            </td>
         </tr>
         <tr>
             <td><code>itemId</code></td>
@@ -335,7 +342,7 @@ ApiResultEnum Playnomics.instance.transaction(
             <td><code>otherUserId</code></td>
             <td>string</td>
             <td>
-               If applicable, the other user involved in the transaction. A contextual example is a user sending a gift to another user.
+               If applicable, the other player involved in the transaction. A contextual example is a player sending a gift to another player.
             </td>
         </tr>
     </tbody>
@@ -373,7 +380,7 @@ var quantityCoins = 500;
 var gameCurrency = "MonsterBucks";
 currencies[0] = TransactionCurrency.createVirtual(quantityCoins, gameCurrency);
 
-var priceInUSD = 10;
+var priceInUSD = -10;
 currencies[1] = TransactionCurrency.createReal(priceInUSD, CurrencyType.USD);
 
 Playnomics.instance.transaction(transactionId, TransactionType.CurrencyConvert, currencies, null, null, null);
@@ -396,7 +403,7 @@ Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currenci
 
 ### Purchases of Items with Premium Currency
 
-This event is used to segment monetized users (and potential future monetizers) by collecting information about how and when they spend their premium currency (an in-game currency that is primarily acquired using a *real* currency). This is one level of information deeper than the previous use-cases.
+This event is used to segment monetized players (and potential future monetizers) by collecting information about how and when they spend their premium currency (an in-game currency that is primarily acquired using a *real* currency). This is one level of information deeper than the previous use-cases.
 
 #### Currency Exchanges
 
@@ -442,7 +449,7 @@ Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currenci
 
 ## Invitations and Virality
 
-The virality module allows you to track a single invitation from one user to another (e.g., inviting friends to join a game).
+The virality module allows you to track a single invitation from one player to another (e.g., inviting friends to join a game).
 
 If multiple requests can be sent at the same time, a separate function call should be made for each recipient.
 
@@ -475,7 +482,9 @@ ApiResultEnum Playnomics.instance.invitationSent(
         <tr>
             <td><code>recipientUserId</code></td>
             <td>string</td>
-            <td>This can be a hash/MD5/SHA1 of the recipient's Facebook ID, their Facebook 3rd Party ID or an internal ID. It cannot be a personally identifiable ID.</td>
+            <td>
+                This can be a hash/MD5/SHA1 of the recipient's Facebook ID, their Facebook 3rd Party ID or an internal ID. It cannot be a personally identifiable ID.
+            </td>
         </tr>
         <tr>
             <td><code>recipientAddress</code></td>
@@ -528,11 +537,11 @@ ApiResultEnum Playnomics.instance.invitationResponse(
     </tbody>
 </table>
 
-Example calls for a user’s invitation and the recipient’s acceptance:
+Example calls for a player's invitation and the recipient’s acceptance:
 
 ```csharp
 var invitationId = 112345675;
-var recipientUserId = 10000013;
+var recipientUserId = "10000013";
 
 Playnomics.instance.invitationSent(invitationId, recipientUserId, null, null);
 
@@ -545,7 +554,7 @@ Playnomics.instance.invitationResponse(invitationId, recipientUserId, "accepted"
 
 Milestones may be defined in a number of ways.  They may be defined at certain key gameplay points like, finishing a tutorial, or may they refer to other important milestones in a player's lifecycle. PlayRM, by default, supports up to five custom milestones.  Players can be segmented based on when and how many times they have achieved a particular milestone.
 
-Each time a user reaches a milestone, track it with this call:
+Each time a player reaches a milestone, track it with this call:
 
 ```csharp
 ApiResultEnum Playnomics.instance.milestone(
@@ -564,12 +573,14 @@ ApiResultEnum Playnomics.instance.milestone(
         <tr>
             <td><code>milestoneId</code></td>
             <td>long</long>
-            <td>a unique 64-bit numeric identifier for this milestone occurrence</td>
+            <td>A unique 64-bit numeric identifier for this milestone occurrence</td>
         </tr>
         <tr>
             <td><code>milestoneName</code></td>
             <td>string</td>
-            <td>the name of the milestone, which should be one of "TUTORIAL" or "CUSTOMn", where n is 1 through 5</td>
+            <td>
+                The name of the milestone which should be one of "TUTORIAL" or "CUSTOMn", where n is 1 through 5.  The name is case-sensitive.
+            </td>
         </tr>
     </tbody>
 </table>
@@ -894,7 +905,7 @@ public class MessageClickHandler : MonoBehavior {
     //...
 
     public void grantMana(){
-        //grant mana to the user
+        //grant mana to the player
     }
 
     //...
