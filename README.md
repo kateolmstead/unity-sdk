@@ -1,30 +1,15 @@
 Playnomics PlayRM Unity SDK Integration Guide
 =============================================
-This guide showcases the features of the PlayRM Unity SDK and shows how to integrate the SDK within your game. Our SDK provides game publishers with tools for tracking player behavior and engagement so they can:
-
-* Better understand and segment their audience
-* Reach out to new like-minded players
-* Retain their current audience
-* Ultimately generate more revenue for their games
+If you're new to PlayRM or don't yet have an account with <a href="http://www.playnomics.com">Playnomics</a>, please take a moment to <a href="http://integration.playnomics.com/technical/#integration-getting-started">get acquainted with PlayRM</a>.
 
 The Playnomics Unity SDK supports Unity games built for Web Browsers, iOS, Android, PCs, and Macs. Integration of the PlayRM SDK into an existing or brand new Unity game involves registering your game with the PlayRM service and properly configuring the SDK. The SDK communicates with the PlayRM RESTful API, and the events are processed and aggregated for your PlayRM Dashboard in the control panel.
 
-The SDK includes several modules which track different player behaviors and actions. The first two modules are initialized at or near the beginning of the play session, and the other modules are event-driven.
+**Considerations for Cross-Platform Games**
 
-* [Engagement Module](#installing-the-sdk) - collects geographic and engagement information
-* [User Info Module](#demographics-and-install-attribution) - provides basic user information
-* [Monetization Module](#monetization) - tracks various monetization events
-* [Viralility Module](#invitations-and-virality) - tracks the social activities of player
-* [Milestone Module](#custom-event-tracking) - tracks pre-defined significant events in the game experience
-
-The [engagement module](#installing-the-sdk) is available upon install and will automatically start running.
+If you want to deploy your game to multiple platforms (eg: iOS and the Unity Web player), you'll need to create a separate Playnomics Applications in the control panel. Each application will have a separate `<APPID>` along with frames so that creatives are sized appropriately.
 
 Outline
 =======
-* [Prerequisites](#prerequisites)
-    * [Signing Up for the PlayRM Service](#signing-up-for-the-playrm-service)
-    * [Register Your Game](#register-your-game)
-    * [Considerations for Cross-Platform Games](#considerations-for-cross-platform-games)
 * [Basic Integration](#basic-integration)
     * [Installing the SDK](#installing-the-sdk)
         * [Interacting with PlayRM in Your Game](interacting-with-playrm-in-your-game)
@@ -41,21 +26,6 @@ Outline
     * [SDK Integration](#sdk-integration)
     * [Using Code Callbacks](#using-code-callbacks)
 * [Support Issues](#support-issues)
-
-Prerequisites
-=============
-Before you can integrate with the PlayRM SDK you'll need to sign up and register your game.
-
-## Signing Up for the PlayRM Service
-
-Visit <a href="https://controlpanel.playnomics.com/signup" target="_blank">https://controlpanel.playnomics.com/signup</a> to create an account. The control panel is the dashboard to manage all PlayRM features once the SDK integration is completed.
-
-## Register Your Game
-After receiving a registration confirmation email, login to the <a href="https://controlpanel.playnomics.com" target="_blank">control panel</a>. Select the "Applications" tab and create a new application. Your application will be granted an Application ID (`<APPID>`) and an API KEY.
-
-**Considerations for Cross-Platform Games**
-
-If you want to deploy your game to multiple platforms (eg: iOS and the Unity Web player), you'll need to create a separate Playnomics Applications in the control panel. Each application will have a separate `<APPID>` along with frames so that creatives are sized appropriately.
 
 Basic Integration
 =================
@@ -423,7 +393,7 @@ var attentionAmount = 100;
 currencies[0] = TransactionCurrency.createVirtual(attentionAmount, attentionCurrency);
 
 var premimumCurrency = "MonsterBucks";
-var premiumCost = -20;
+var premiumCost = -10;
 currencies[1] = TransactionCurrency.createVirtual(premiumCost, premimumCurrency);
 
 Playnomics.instance.transaction(transactionId, TransactionType.CurrencyConvert, currencies, null, null, null);
@@ -579,7 +549,7 @@ ApiResultEnum Playnomics.instance.milestone(
             <td><code>milestoneName</code></td>
             <td>string</td>
             <td>
-                The name of the milestone which should be one of "TUTORIAL" or "CUSTOMn", where n is 1 through 5.  The name is case-sensitive.
+                The name of the milestone which should be "TUTORIAL" or "CUSTOMn", where n is 1 through 5.  The name is case-sensitive.
             </td>
         </tr>
     </tbody>
@@ -601,11 +571,11 @@ long GetRandomLong(){
 
 //when the player completes the tutorial
 var milestoneTutorialId = GetRandomLong();
-pnMilestone(milestoneTutorialId, "TUTORIAL");
+Playnomics.instance.milestone(milestoneTutorialId, "TUTORIAL");
 
 //when milestone CUSTOM2 is reached
 var milestoneCustom2Id = GetRandomLong();
-pnMilestone(milestoneCustom2Id, "CUSTOM2");
+Playnomics.instance.milestone(milestoneCustom2Id, "CUSTOM2");
 ```
 
 Messaging Integration
@@ -633,9 +603,9 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId);
     </thead>
     <tbody>
         <tr>
-            <td>frameId</td>
+            <td><code>frameId<code></td>
             <td>string</td>
-            <td>Unique identifier for the frame.</td>
+            <td>Unique identifier for the frame, the <code><PLAYRM-FRAME-ID></code></td>
         </tr>
     </tbody>
 </table>
@@ -683,13 +653,15 @@ Depending on your configuration, a variety of actions can take place when a fram
 
 * Redirect the player to a web URL in the platform's browser application
 * Firing a code callback in your game
-* Or in the simplest case, just close the frame, provided that the Close Button has been configured correctly.
+* Or in the simplest case, just close the frame, provided that the **Close Button** has been configured correctly.
 
 All of this setup, takes place at the the time of the messaging campaign configuration. However, all code callbacks need to be configured before PlayRM can interact with it. The SDK uses Unity's messaging passing framework for callbacks, so a code callback must be:
 
 * In a script attached to a single, uniquely-named `GameObject`
 * The script method should have no parameters
 * The method should return `void`
+
+**The code callback will not fire if the Close button is pressed.**
 
 Here are three common use cases for frames and a messaging campaigns:
 
@@ -766,7 +738,6 @@ using UnityEngine;
 public class MessageClickHandler : MonoBehavior {
     
     //...
-    //...
 
     public void grant10MonsterBucks(){
         //grant 10 MonsterBucks
@@ -781,14 +752,13 @@ public class MessageClickHandler : MonoBehavior {
     }
 
     //...
-    //...
 }
 ```
 The related messages would be configured in the Control Panel to use this callback by placing this in the **Target URL** for each message :
 
-* **At-Risk Message** : `pna://ClickHandler.grant50MonsterBucks`
-* **Lapsed 7 or more days** : `pna://ClickHandler.grant10MonsterBucks`
-* **Default** : `pna://ClickHandler.grantBazooka`
+* **At-Risk Message** : `pnx://ClickHandler.grant50MonsterBucks`
+* **Lapsed 7 or more days** : `pnx://ClickHandler.grant10MonsterBucks`
+* **Default** : `pnx://ClickHandler.grantBazooka`
 
 ### Event Driven Frame - Open the Store
 
@@ -835,19 +805,17 @@ using UnityEngine;
 public class MessageClickHandler : MonoBehavior {
     
     //...
-    //...
 
     public void openStore(){
         //open the game store after the press or click has occurred
         store.open();
     }
 
-    //...
     //... 
 }
 ```
 
-The Default message would be configured in the Control Panel to use this callback by placing this in the **Target URL** for the message : `pna://ClickHandler.openStore`.
+The Default message would be configured in the Control Panel to use this callback by placing this in the **Target URL** for the message : `pnx://ClickHandler.openStore`.
 
 ### Event Driven Frame - Level Completion
 
@@ -902,20 +870,18 @@ using UnityEngine;
 public class MessageClickHandler : MonoBehavior {
     
     //...
-    //...
 
     public void grantMana(){
         //grant mana to the player
     }
-
-    //...
+    
     //... 
 }
 ```
 The related messages would be configured in the Control Panel to use this callback by placing this in the **Target URL** for each message :
 
 * **Non-monetizers, in their 5th day of game play** : `HTTP URL for Third Party Ad`
-* **Default** : `pna://ClickHandler.grantMana`
+* **Default** : `pnx://ClickHandler.grantMana`
 
 Support Issues
 ==============
