@@ -4,7 +4,7 @@ If you're new to PlayRM or don't yet have an account with <a href="http://www.pl
 
 The Playnomics Unity SDK supports Unity games built for Web Browsers, iOS, Android, PCs, and Macs. Integration of the PlayRM SDK into an existing or brand new Unity game involves registering your game with the PlayRM service and properly configuring the SDK. The SDK communicates with the PlayRM RESTful API, and the events are processed and aggregated for your PlayRM Dashboard in the control panel.
 
-**Considerations for Cross-Platform Games**
+## Considerations for Cross-Platform Games
 
 If you want to deploy your game to multiple platforms (eg: iOS and the Unity Web player), you'll need to create a separate Playnomics Applications in the control panel. Each application will have a separate `<APPID>` along with frames so that creatives are sized appropriately.
 
@@ -26,6 +26,7 @@ Outline
     * [SDK Integration](#sdk-integration)
     * [Using Code Callbacks](#using-code-callbacks)
 * [Support Issues](#support-issues)
+* [Change Log](#change-log)
 
 Basic Integration
 =================
@@ -886,3 +887,25 @@ The related messages would be configured in the Control Panel to use this callba
 Support Issues
 ==============
 If you have any questions or issues, please contact <a href="mailto:support@playnomics.com">support@playnomics.com</a>.
+
+Change Log
+==========
+## Version 3.03
+* Making the SDK compliant with iOS6 IDFA requirements.
+
+## Version 3.02
+* Messages can now support messages with no target URL.
+
+## Version 3.01
+* Fix related to Unity Player editor crashes.
+* Fix related to engagement module logging.
+
+## Version 3.00
+* Added support for messaging 
+* Added support for milestones.
+
+## Version 2
+* Updated Playnomics server URLs
+
+## Version 1
+* First release.
