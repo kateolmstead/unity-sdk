@@ -890,22 +890,22 @@ If you have any questions or issues, please contact <a href="mailto:support@play
 
 Change Log
 ==========
-## Version 3.03
+####  Version 3.03
 * Making the SDK compliant with iOS6 IDFA requirements.
 
-## Version 3.02
+#### Version 3.02
 * Messages can now support messages with no target URL.
 
-## Version 3.01
+#### Version 3.01
 * Fix related to Unity Player editor crashes.
 * Fix related to engagement module logging.
 
-## Version 3.00
+#### Version 3
 * Added support for messaging 
 * Added support for milestones.
 
-## Version 2
+#### Version 2
 * Updated Playnomics server URLs
 
-## Version 1
+#### Version 1
 * First release.
