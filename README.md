@@ -890,12 +890,7 @@ If you have any questions or issues, please contact <a href="mailto:support@play
 
 Change Log
 ==========
-<<<<<<< Updated upstream
-####  [Version 3.03](unity-sdk/tree/v3.0.3)
-=======
-
 ####  Version 3.03
->>>>>>> Stashed changes
 * Making the SDK compliant with iOS6 IDFA requirements.
 
 #### Version 3.02
@@ -914,3 +909,6 @@ Change Log
 
 #### Version 1
 * First release.
+
+View version tags <a href="https://github.com/playnomics/unity-sdk/tags">here</a>
+
