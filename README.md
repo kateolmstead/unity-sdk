@@ -34,7 +34,7 @@ Basic Integration
 ## Installing the SDK
 You can install the SDK package by downloading the *PlaynomicsSDK.unitypackage* file included in the *build* folder of this GitHub repo, or you can install the SDK files directly from the <a href="https://www.assetstore.unity3d.com/#/content/6179" target="_blank">Unity Asset Store</a>. If you download the package file from the repo, go to *Assets > Import New Asset ... > Custom Package * to import the package.
 
-![Importing the prefab](http://www.playnomics.com/integration/img/unity/prefab.png)
+![Importing the prefab](http://integration.playnomics.com/img/unity/prefab.png)
 
 The package has a prefab with everything you need to work with the SDK. Simply drag the prefab into your first game scene and this will make the SDK available to your game. The `GameObject` for this is called **Playnomics**. You only need to do this once.
 
