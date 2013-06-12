@@ -625,7 +625,7 @@ function Start(){
 
 ```
 
-If you ever wish to test or troubleshoot your integration later on, simply set `setTestMode` back to `true` and revisit the self-check validation tool for your application:
+If you ever wish to test or troubleshoot your integration later on, simply set `Playnomics.instance.TestMode` back to `true` and revisit the self-check validation tool for your application:
 
 **`https://controlpanel.playnomics.com/validation/<APPID>`**
 
