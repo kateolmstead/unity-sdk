@@ -555,7 +555,7 @@ ApiResultEnum Playnomics.instance.milestone(
             <td><code>milestoneName</code></td>
             <td>string</td>
             <td>
-                The name of the milestone which should be "TUTORIAL" or "CUSTOMn", where n is 1 through 5.  The name is case-sensitive.
+                The name of the milestone which should be "CUSTOMn", where n is 1 through 5.  The name is case-sensitive.
             </td>
         </tr>
     </tbody>
@@ -575,13 +575,9 @@ long GetRandomLong(){
 //...
 //...
 
-//when the player completes the tutorial
-var milestoneTutorialId = GetRandomLong();
-Playnomics.instance.milestone(milestoneTutorialId, "TUTORIAL");
-
-//when milestone CUSTOM2 is reached
-var milestoneCustom2Id = GetRandomLong();
-Playnomics.instance.milestone(milestoneCustom2Id, "CUSTOM2");
+//when milestone CUSTOM1 is reached
+var milestoneCustom1Id = GetRandomLong();
+Playnomics.instance.milestone(milestoneCustom1Id, "CUSTOM1");
 ```
 ## Validate Integration
 After configuring your selected PlayRM modules, you should verify your application's correct integration with the self-check validation service.
