@@ -21,6 +21,8 @@ Outline
         * [Purchases of Items with Premium Currency](#purchases-of-items-with-premium-currency)
     * [Invitations and Virality](#invitations-and-virality)
     * [Custom Event Tracking](#custom-event-tracking)
+    * [Validate Integration](#validate-integration)
+    * [Switch SDK to Production Mode](#switch-sdk-to-production-mode)
 * [Messaging Integration](#messaging-integration)
     * [Setting up a Frame](#setting-up-a-frame)
     * [SDK Integration](#sdk-integration)
@@ -74,7 +76,7 @@ Playnomics.instance.startPlaynomics(<APPID>);
 If possible, you should provide your own `<USER-ID>`, especially if your game is cross-platform, since *best-effort* unique identifiers are generated differently depending on the Platform. If you do choose to provide a `<USER-ID>`, this value should be persistent, anonymized, and unique to each player. This is typically discerned dynamically when a player starts the game. Some potential implementations:
 
 * An internal ID (such as a database auto-generated number).
-* A hash of the player’s email address.
+* A hash of the player's email address.
 
 **You cannot use the player's Facebook ID or any personally identifiable information (plain-text email, name, etc) for the `<USER-ID>`.**
 
@@ -103,6 +105,8 @@ public class PlaynomicsInit : MonoBehaviour
         
         string hashedUserId;
     
+        Playnomics.instance.TestMode = true;
+    
         //set the hashedUserId from the authenticated player
         //this value should not include personally identifiable information
     
@@ -130,12 +134,13 @@ function Start(){
 #elif UNITY_IOS
     applicationId = iOsApplicationId;
 #endif
+    Playnomics.instance.TestMode = true;
     Playnomics.instance.startPlaynomics(applicationId);
 }
 
 ```
 
-Once started, the SDK will automatically begin collecting basic player information (including geo-location) and engagement data.
+Once started, the SDK will automatically begin collecting basic player information (including geo-location) and engagement data in **test mode** (be sure to switch to [production mode](#switch-sdk-to-production-mode) before deploying your application).
 
 ## Demographics and Install Attribution
 
@@ -207,7 +212,7 @@ If any of the parameters are not available, you should pass `null`.
     </tbody>
 </table>
 
-Since PlayRM uses the game client’s IP address to determine geographic location, country and subdivision should be set to `null`.
+Since PlayRM uses the game client's IP address to determine geographic location, country and subdivision should be set to `null`.
 
 ```csharp
 void Start()
@@ -222,7 +227,7 @@ void Start()
 
     SexEnum playerSex = SexEnum.F;
     short birthYear = 1980;
-    ApiResultEnum result = Playnomics.instance.userInfo(null, null, playerSex, birthYear, “AppStore”, “Facebook Ad”, null, installTime);
+    ApiResultEnum result = Playnomics.instance.userInfo(null, null, playerSex, birthYear, "AppStore", "Facebook Ad", null, installTime);
 }
 ```
 
@@ -508,7 +513,7 @@ ApiResultEnum Playnomics.instance.invitationResponse(
     </tbody>
 </table>
 
-Example calls for a player's invitation and the recipient’s acceptance:
+Example calls for a player's invitation and the recipient's acceptance:
 
 ```csharp
 var invitationId = 112345675;
@@ -578,6 +583,51 @@ Playnomics.instance.milestone(milestoneTutorialId, "TUTORIAL");
 var milestoneCustom2Id = GetRandomLong();
 Playnomics.instance.milestone(milestoneCustom2Id, "CUSTOM2");
 ```
+## Validate Integration
+After configuring your selected PlayRM modules, you should verify your application's correct integration with the self-check validation service.
+
+Simply visit the self-check page for your application: **`https://controlpanel.playnomics.com/validation/<APPID>`**
+
+You can now see the most recent event data sent by the SDK, with any errors flagged. Visit the <a href="http://integration.playnomics.com/technical/#self-check">self-check validation guide</a> for more information.
+
+We strongly recommend running the self-check validator before deploying your newly integrated application to production.
+
+## Switch SDK to Production Mode
+Once you have [validated](#validate-integration) your integration, switch the SDK from **test** to **production** mode by simply 
+setting the `Playnomics.instance.TestMode` field to `false` (or by removing/commenting out the call entirely) in the initialization block:
+
+```csharp
+//...
+public class PlaynomicsInit : MonoBehaviour
+{
+    void Start() {
+        
+        //...
+    
+        Playnomics.instance.TestMode = false;
+    
+        //set the hashedUserId from the authenticated player
+        //this value should not include personally identifiable information
+    
+        Playnomics.instance.start(applicationId, hashedUserId);
+    }
+}
+
+```
+```javascript
+//JavaScript
+//...
+function Start(){
+    //...
+    Playnomics.instance.TestMode = true;
+    Playnomics.instance.startPlaynomics(applicationId);
+}
+
+```
+
+If you ever wish to test or troubleshoot your integration later on, simply set `setTestMode` back to `true` and revisit the self-check validation tool for your application:
+
+**`https://controlpanel.playnomics.com/validation/<APPID>`**
 
 Messaging Integration
 =====================
