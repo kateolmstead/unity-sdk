@@ -26,6 +26,7 @@ Outline
 * [Messaging Integration](#messaging-integration)
     * [SDK Integration](#sdk-integration)
     * [Using Code Callbacks](#using-code-callbacks)
+* [Push Notifications](#push-notifications)
 * [Support Issues](#support-issues)
 * [Change Log](#change-log)
 
@@ -929,13 +930,63 @@ The related messages would be configured in the Control Panel to use this callba
 * **Non-monetizers, in their 5th day of game play** : `HTTP URL for Third Party Ad`
 * **Default** : `pnx://ClickHandler.grantMana`
 
+Push Notifications
+==================
+
+## Registering for PlayRM Push Messaging
+
+Push Notifications are currently only supported for iOS devices. Toggle the iOS Push Notifications on the Playnomics prefab.
+
+## Push Messaging Impression and Click Tracking
+
+There are 3 situations in which an iOS device can receive a Push Notification
+
+<table>
+    <thead>
+        <tr>
+            <th>Sitatuation</th>
+            <th>Push Message Shown?</th>
+            <th>Delegate Handler</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>App is not running</td>
+            <td rowspan="2">Yes</td>
+            <td>didFinishLaunchingWithOptions:(NSDictionary*)launchOptions</td>
+        </tr>
+        <tr>
+            <td>App is running in the background</td>
+            <td rowspan="2">
+                didReceiveRemoteNotification:(NSDictionary*)userInfo
+            </td>
+        </tr>
+        <tr>
+            <td>App is running in the foreground</td>
+            <td>No</td>
+        </tr>
+    </tbody>
+</table>
+
+By default, iOS does not show push notifications when your app is already in the foreground. Consequently, PlayRM does NOT track these push notifications as impressions nor clicks.
+
+## Clearing Push Badge Numbers
+
+When you send push notifications, you can configure a badge number that will be set on your application. iOS defers the responsibility of resetting the badge number to the developer. 
+
+We have taken care of the step for you, so that the badge number is reset when your games goes into the background.
+
 Support Issues
 ==============
 If you have any questions or issues, please contact <a href="mailto:support@playnomics.com">support@playnomics.com</a>.
 
 Change Log
 ==========
-####  Version 3.03
+#### Version 3.1
+* Adding Push Notifications support for iOS devices.
+* Improve performance and exception handling for messaging frames.
+
+#### Version 3.03
 * Making the SDK compliant with iOS6 IDFA requirements.
 
 #### Version 3.02
