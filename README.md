@@ -974,7 +974,7 @@ By default, iOS does not show push notifications when your app is already in the
 
 When you send push notifications, you can configure a badge number that will be set on your application. iOS defers the responsibility of resetting the badge number to the developer. 
 
-We have taken care of the step for you, so that the badge number is reset when your games goes into the background.
+We have taken care of the step for you, so that the badge number is cleared when your games goes into the background.
 
 Support Issues
 ==============
