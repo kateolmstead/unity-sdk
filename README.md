@@ -1,40 +1,21 @@
 Playnomics PlayRM Unity SDK Integration Guide
 =============================================
-If you're new to PlayRM or don't yet have an account with <a href="http://www.playnomics.com">Playnomics</a>, please take a moment to <a href="http://integration.playnomics.com/technical/#integration-getting-started">get acquainted with PlayRM</a>.
+If you're new to PlayRM and/or don't have a PlayRM account and would like to get started using PlayRM please visit   <a href="https://controlpanel.playnomics.com/signup">https://controlpanel.playnomics.com/signup</a>   to sign up. Soon after creating an account you will receive a registration confirmation email permitting you access to your PlayRM control panel.
 
-The Playnomics Unity SDK supports Unity games built for Web Browsers, iOS, Android, PCs, and Macs. Integration of the PlayRM SDK into an existing or brand new Unity game involves registering your game with the PlayRM service and properly configuring the SDK. The SDK communicates with the PlayRM RESTful API, and the events are processed and aggregated for your PlayRM Dashboard in the control panel.
+Within the control panel, click the <strong>applications</strong> tab and add your game. Upon doing so, you will recieve an <strong>Application ID</strong> and an <strong>API KEY</strong>. These two components will enable you to begin the integration process.
+
+Our integration has been optimized to be as straight forward and user friendly as possible. If you're feeling unsure or would like better understand the order the process before beginning integration, please take a moment to check out the <a href="http://integration.playnomics.com/technical/#integration-getting-started">getting started</a> page. Here you can find an overview of our integration process, and platform specific features, to help you better understand the PlayRM integration process.
 
 ## Considerations for Cross-Platform Games
 
-If you want to deploy your game to multiple platforms (eg: iOS and the Unity Web player), you'll need to create a separate Playnomics Applications in the control panel. Each application will have a separate `<APPID>` along with frames so that creatives are sized appropriately.
+If you want to deploy your game to multiple platforms (eg: Android and the Unity Web player), you'll need to create a separate Playnomics Applications in the control panel. Each application must incorporate a separate `<APPID>` particular to that application. In addition, message frames and their respective creative uploads will be particular to that app in order to ensure that they are sized appropriately - proportionate to your game screen size.
 
-Outline
-=======
-* [Basic Integration](#basic-integration)
-    * [Installing the SDK](#installing-the-sdk)
-        * [Interacting with PlayRM in Your Game](interacting-with-playrm-in-your-game)
-        * [Starting a Player Session](#starting-a-player-session)
-    * [Demographics and Install Attribution](#demographics-and-install-attribution)
-    * [Monetization](#monetization)
-        * [Purchases of In-Game Currency with Real Currency](#purchases-of-in-game-currency-with-real-currency)
-        * [Purchases of Items with Real Currency](#purchases-of-items-with-real-currency)
-        * [Purchases of Items with Premium Currency](#purchases-of-items-with-premium-currency)
-    * [Invitations and Virality](#invitations-and-virality)
-    * [Custom Event Tracking](#custom-event-tracking)
-    * [Validate Integration](#validate-integration)
-    * [Switch SDK to Production Mode](#switch-sdk-to-production-mode)
-* [Messaging Integration](#messaging-integration)
-    * [SDK Integration](#sdk-integration)
-    * [Using Code Callbacks](#using-code-callbacks)
-* [Push Notifications](#push-notifications)
-* [Support Issues](#support-issues)
-* [Change Log](#change-log)
+
 
 Basic Integration
 =================
 
-## Installing the SDK
-You can install the SDK package by downloading the *PlaynomicsSDK.unitypackage* file included in the *build* folder of this GitHub repo, or you can install the SDK files directly from the <a href="https://www.assetstore.unity3d.com/#/content/6179" target="_blank">Unity Asset Store</a>. If you download the package file from the repo, go to *Assets > Import New Asset ... > Custom Package * to import the package.
+You can install the SDK package by downloading the *PlaynomicsSDK.unitypackage* file directly from <a href="https://github.com/playnomics/unity-sdk/raw/master/build/PlaynomicsSDK.unitypackage"><strong>this ling</strong></a>, or you can install the SDK files directly from the <a href="https://www.assetstore.unity3d.com/#/content/6179" target="_blank">Unity Asset Store</a>. If you download the package file from the repo, go to *Assets > Import New Asset ... > Custom Package * to import the package.
 
 ![Importing the prefab](http://integration.playnomics.com/img/unity/prefab.png)
 
@@ -141,6 +122,71 @@ function Start(){
 ```
 
 Once started, the SDK will automatically begin collecting basic player information (including geo-location) and engagement data in **test mode** (be sure to switch to [production mode](#switch-sdk-to-production-mode) before deploying your application).
+
+
+Congratulations! You've completed our basic integration. You will now be able to track engagement behaviors (having incorporated the Engagement Module) from the PlayRM dashboard. At this point we recomend that you use our integration validation tool to test your integration of our SDK in order insure that it has been properly incorporated in your game. 
+
+
+PlayRM is currently operating in test mode. Be sure you switch to [production mode](#switch-sdk-to-production-mode), by implementing the code call outlined in our Basic Integration before deploying your game on the web or in an app store.
+
+
+# Full Integration
+
+
+
+<div class="outline">
+<li>
+<a href="#full-integration">Full Integration</a>
+<ul>
+<li><a href="#demographics-and-install-attribution">Demographics and Install Attribution</a></li>
+<li>
+<a href="#monetization">Monetization</a>
+<ul>
+<li><a href="#purchases-of-in-game-currency-with-real-currency">Purchases of In-Game Currency with Real Currency</a></li>
+<li><a href="#purchases-of-items-with-real-currency">Purchases of Items with Real Currency</a></li>
+<li><a href="#purchases-of-items-with-premium-currency">Purchases of Items with Premium Currency</a></li>
+</ul>
+</li>
+<li><a href="#invitations-and-virality">Invitations and Virality</a></li>
+<li><a href="#custom-event-tracking">Custom Event Tracking</a></li>
+<li><a href="#validate-integration">Validate Integration</a></li>
+<li><a href="#switch-sdk-to-production-mode">Switch SDK to Production Mode</a></li>
+</ul>
+</li>
+<li>
+<a href="#messaging-integration">Messaging Integration</a>
+<ul>
+<li><a href="#sdk-integration">SDK Integration</a></li>
+<li><a href="#enabling-code-callbacks">Enabling Code Callbacks</a></li>
+</ul>
+</li>
+<ul>
+<li><a href="#push-notfications">Push Notifications</a></li>
+</ul>
+<ul>
+<li><a href="#support-issues">Support Issues</a></li>
+<li><a href="#change-log>"> Change Log</a></li>
+</ul>
+</div>
+
+
+If you're reading this it's likely that you've integrated our SDK and are interested in tailoring PlayRM to suit your particular segmentation needs.
+
+The index on the right provides a holistic overview of the <strong>full integration</strong> process. From it, you can jump to specific points in this document depending on what you're looking to learn and do.
+
+To clarify where you are in the timeline of our integration process, you've completed our basic integration. Doing so will enable you to track engagement behaviors from the PlayRM dashboard (having incorporated the Engagement Module). The following documentation will provides succint information on how to incorporate additional and more in-depth segmentation functionality by integrating any, or all of the following into your game:
+
+
+<ul>
+<li><strong>User Info Module:</strong> - provides basic user information</li>
+<li><strong>Monetization Module:</strong> - tracks various monetization events and transactions</li>
+<li><strong>Virality Module:</strong> - tracks the social activities of users</li>
+<li><strong>Milestone Module:</strong> - tracks significant player events customized to your game</li>
+</ul>
+
+
+Along with integration instructions for our various modules, you will also find integration information pertaining to messaging frame setup, and push setup within this documentation.
+
 
 ## Demographics and Install Attribution
 
