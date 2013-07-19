@@ -1028,6 +1028,9 @@ If you have any questions or issues, please contact <a href="mailto:support@play
 
 Change Log
 ==========
+#### Version 3.1.1
+* Caching performance improvements
+
 #### Version 3.1
 * Adding Push Notifications support for iOS devices.
 * Improve performance and exception handling for messaging frames.
