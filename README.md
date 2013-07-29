@@ -15,7 +15,7 @@ If you want to deploy your game to multiple platforms (eg: Android and the Unity
 Basic Integration
 =================
 
-You can install the SDK package by downloading the *PlaynomicsSDK.unitypackage* file directly from <a href="https://github.com/playnomics/unity-sdk/raw/master/build/PlaynomicsSDK.unitypackage"><strong>this ling</strong></a>, or you can install the SDK files directly from the <a href="https://www.assetstore.unity3d.com/#/content/6179" target="_blank">Unity Asset Store</a>. If you download the package file from the repo, go to *Assets > Import New Asset ... > Custom Package * to import the package.
+You can install the SDK package by downloading the *PlaynomicsSDK.unitypackage* file directly from <a href="https://github.com/playnomics/unity-sdk/raw/master/build/PlaynomicsSDK.unitypackage"><strong>this link</strong></a>, or you can install the SDK files directly from the <a href="https://www.assetstore.unity3d.com/#/content/6179" target="_blank">Unity Asset Store</a>. If you download the package file from the repo, go to *Assets > Import New Asset ... > Custom Package * to import the package.
 
 ![Importing the prefab](http://integration.playnomics.com/img/unity/prefab.png)
 
