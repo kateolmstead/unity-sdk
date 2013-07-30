@@ -135,37 +135,45 @@ PlayRM is currently operating in test mode. Be sure you switch to [production mo
 
 
 <div class="outline">
-<li>
-<a href="#full-integration">Full Integration</a>
 <ul>
-<li><a href="#demographics-and-install-attribution">Demographics and Install Attribution</a></li>
-<li>
-<a href="#monetization">Monetization</a>
-<ul>
-<li><a href="#purchases-of-in-game-currency-with-real-currency">Purchases of In-Game Currency with Real Currency</a></li>
-<li><a href="#purchases-of-items-with-real-currency">Purchases of Items with Real Currency</a></li>
-<li><a href="#purchases-of-items-with-premium-currency">Purchases of Items with Premium Currency</a></li>
-</ul>
-</li>
-<li><a href="#invitations-and-virality">Invitations and Virality</a></li>
-<li><a href="#custom-event-tracking">Custom Event Tracking</a></li>
-<li><a href="#validate-integration">Validate Integration</a></li>
-<li><a href="#switch-sdk-to-production-mode">Switch SDK to Production Mode</a></li>
-</ul>
-</li>
-<li>
-<a href="#messaging-integration">Messaging Integration</a>
-<ul>
-<li><a href="#sdk-integration">SDK Integration</a></li>
-<li><a href="#enabling-code-callbacks">Enabling Code Callbacks</a></li>
-</ul>
-</li>
-<ul>
-<li><a href="#push-notfications">Push Notifications</a></li>
-</ul>
-<ul>
-<li><a href="#support-issues">Support Issues</a></li>
-<li><a href="#change-log>"> Change Log</a></li>
+    <li>
+        <a href="#full-integration">Full Integration</a>
+        <ul>
+            <li><a href="#demographics-and-install-attribution">Demographics and Install Attribution</a></li>
+            <li>
+                <a href="#monetization">Monetization</a>
+                <ul>
+                    <li>
+                        <a href="#purchases-of-in-game-currency-with-real-currency">Purchases of In-Game Currency with Real Currency</a>
+                    </li>
+                    <li>
+                        <a href="#purchases-of-items-with-real-currency">Purchases of Items with Real Currency</a>
+                    </li>
+                    <li>
+                        <a href="#purchases-of-items-with-premium-currency">Purchases of Items with Premium Currency</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#invitations-and-virality">Invitations and Virality</a></li>
+            <li><a href="#custom-event-tracking">Custom Event Tracking</a></li>
+            <li><a href="#validate-integration">Validate Integration</a></li>
+            <li><a href="#switch-sdk-to-production-mode">Switch SDK to Production Mode</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="#messaging-integration">Messaging Integration</a>
+        <ul>
+            <li><a href="#sdk-integration">SDK Integration</a></li>
+            <li><a href="#enabling-code-callbacks">Enabling Code Callbacks</a></li>
+        </ul>
+    </li>
+    <ul>
+        <li><a href="#push-notfications">Push Notifications</a></li>
+    </ul>
+    <ul>
+        <li><a href="#support-issues">Support Issues</a></li>
+        <li><a href="#change-log"> Change Log</a></li>
+    </ul>
 </ul>
 </div>
 
@@ -178,10 +186,10 @@ To clarify where you are in the timeline of our integration process, you've comp
 
 
 <ul>
-<li><strong>User Info Module:</strong> - provides basic user information</li>
-<li><strong>Monetization Module:</strong> - tracks various monetization events and transactions</li>
-<li><strong>Virality Module:</strong> - tracks the social activities of users</li>
-<li><strong>Milestone Module:</strong> - tracks significant player events customized to your game</li>
+    <li><strong>User Info Module:</strong> - provides basic user information</li>
+    <li><strong>Monetization Module:</strong> - tracks various monetization events and transactions</li>
+    <li><strong>Virality Module:</strong> - tracks the social activities of users</li>
+    <li><strong>Milestone Module:</strong> - tracks significant player events customized to your game</li>
 </ul>
 
 
@@ -1028,6 +1036,9 @@ If you have any questions or issues, please contact <a href="mailto:support@play
 
 Change Log
 ==========
+#### Version 3.1.2
+Simplified the package file structure.
+
 #### Version 3.1.1
 * Caching performance improvements
 
