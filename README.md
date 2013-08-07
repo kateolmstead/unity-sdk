@@ -10,8 +10,6 @@ Our integration has been optimized to be as straight forward and user friendly a
 
 If you want to deploy your game to multiple platforms (eg: Android and the Unity Web player), you'll need to create a separate Playnomics Applications in the control panel. Each application must incorporate a separate `<APPID>` particular to that application. In addition, message frames and their respective creative uploads will be particular to that app in order to ensure that they are sized appropriately - proportionate to your game screen size.
 
-
-
 Basic Integration
 =================
 
@@ -1036,6 +1034,9 @@ If you have any questions or issues, please contact <a href="mailto:support@play
 
 Change Log
 ==========
+#### Version 3.1.3
+Bug fixes related to rendering messaging frames in multiple orientations on mobile platforms.
+
 #### Version 3.1.2
 Simplified the package file structure.
 
