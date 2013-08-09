@@ -1034,6 +1034,9 @@ If you have any questions or issues, please contact <a href="mailto:support@play
 
 Change Log
 ==========
+#### Version 3.2
+Added support for Messaging with Rich-Data Callbacks.
+
 #### Version 3.1.3
 Bug fixes related to rendering messaging frames in multiple orientations on mobile platforms.
 
