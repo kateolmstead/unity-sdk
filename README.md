@@ -162,7 +162,7 @@ PlayRM is currently operating in test mode. Be sure you switch to [production mo
         <a href="#messaging-integration">Messaging Integration</a>
         <ul>
             <li><a href="#sdk-integration">SDK Integration</a></li>
-            <li><a href="#enabling-code-callbacks">Enabling Code Callbacks</a></li>
+            <li><a href="#using-rich-data-callbacks">Using Rich Data Callbacks</a></li>
         </ul>
     </li>
     <ul>
@@ -170,7 +170,7 @@ PlayRM is currently operating in test mode. Be sure you switch to [production mo
     </ul>
     <ul>
         <li><a href="#support-issues">Support Issues</a></li>
-        <li><a href="#change-log"> Change Log</a></li>
+        <li><a href="#change-log">Change Log</a></li>
     </ul>
 </ul>
 </div>
@@ -181,7 +181,6 @@ If you're reading this it's likely that you've integrated our SDK and are intere
 The index on the right provides a holistic overview of the <strong>full integration</strong> process. From it, you can jump to specific points in this document depending on what you're looking to learn and do.
 
 To clarify where you are in the timeline of our integration process, you've completed our basic integration. Doing so will enable you to track engagement behaviors from the PlayRM dashboard (having incorporated the Engagement Module). The following documentation will provides succint information on how to incorporate additional and more in-depth segmentation functionality by integrating any, or all of the following into your game:
-
 
 <ul>
     <li><strong>User Info Module:</strong> - provides basic user information</li>
@@ -709,6 +708,33 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId);
     </tbody>
 </table>
 
+```csharp
+MessagingFrame Playnomics.instance.initMessagingFrame(string frameId, IFrameDelegate frameDelegate);
+```
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>frameId<code></td>
+            <td>string</td>
+            <td>Unique identifier for the frame, the <code><PLAYRM-FRAME-ID></code></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td><code>frameDelegate<code></td>
+            <td>IFrameDelegate</td>
+            <td>An implementation of IFrameDelegate to process rich data callbacks (see below)</td>
+        </tr>
+    </tbody>
+</table>
+
 Frames are loaded asynchronously to keep your game responsive. The `initMessagingFrame` call begins the frame loading process. However, until you call `show` on the frame, the frame will not be drawn in the UI. This gives you control over when a frame will appear.
 
 If a frame or its image components cannot be loaded, the SDK will attempt to reload the frame.
@@ -746,21 +772,26 @@ public class Scene : MonoBehavior {
 }
 ```
 
-## Using Code Callbacks
+## Using Rich Data Callbacks
 
 Depending on your configuration, a variety of actions can take place when a frame's message is pressed or clicked:
 
 * Redirect the player to a web URL in the platform's browser application
-* Firing a code callback in your game
+* Firing a Rich Data callback in your game
 * Or in the simplest case, just close the frame, provided that the **Close Button** has been configured correctly.
 
-All of this setup, takes place at the the time of the messaging campaign configuration. However, all code callbacks need to be configured before PlayRM can interact with it. The SDK uses Unity's messaging passing framework for callbacks, so a code callback must be:
+Rich Data is a JSON message that you associate with your message creative. When the player presses the message, the PlayRM SDK bubbles-up the associated JSON object to an implementation of the interface, `IFrameDelegate` associated with the frame.
 
-* In a script attached to a single, uniquely-named `GameObject`
-* The script method should have no parameters
-* The method should return `void`
+```csharp
+public interface IFrameDelegate
+{
+    void onClick(LitJson.JsonObject data);
+}
+```
 
-**The code callback will not fire if the Close button is pressed.**
+The actual contents of your message can be delayed until the time of the messaging campaign configuration. However, the structure of your message needs to be decided before you can process it in your game. 
+
+**The Rich Data callback will not fire if the Close button is pressed.**
 
 Here are three common use cases for frames and a messaging campaigns:
 
@@ -768,11 +799,11 @@ Here are three common use cases for frames and a messaging campaigns:
 * [Event Driven Frame - Open the Store](#event-driven-frame-open-the-store) for instance, when the player is running low on premium currency
 * [Event Driven Frame - Level Completion](#event-driven-drame-level-completion)
 
-For each of the examples, we will create a script to handle the code callback, and attach it to the `GameObject` called **ClickHandler**.
+For each of the examples, we will create a script that implements this interface and attach it to the appropriate frame(s).
 
 ### Game Start Frame
 
-In this use-case, we want to configure a frame that is always shown to players when they start playing a new game. The message shown to the player may change based on the desired segments:
+In this use-case, we want to configure a frame that is always shown to players when they start a new session. The message shown to the player may change based on the desired segments:
 
 <table>
     <thead>
@@ -784,7 +815,7 @@ In this use-case, we want to configure a frame that is always shown to players w
                 Priority
             </th>
             <th>
-                Code Callback
+                Callback Action
             </th>
             <th style="width:250px;">
                 Creative
@@ -831,33 +862,81 @@ In this use-case, we want to configure a frame that is always shown to players w
     </tbody>
 </table>
 
+We want our game to process messages for awarding items to players. We process this data with an implementation of the `IFrameDelegate` interface.
+
 ```csharp
-using UnityEngine;
+public AwardFrameDelegate : IFrameDelegate
+{
+    public void onClick(LitJson.JsonObject data)
+    {
+        if(data["type"] != null && data["type"] == "award")
+        {
+            string item = data["award"]["item"];
+            int quantity = data["award"]["quantity"];
 
-public class MessageClickHandler : MonoBehavior {
-    
-    //...
-
-    public void grant10MonsterBucks(){
-        //grant 10 MonsterBucks
+            //call your own inventory object
+            Inventory.addItem(item, quanity);
+        }
     }
-
-    public void grant50MonsterBucks(){
-        //grant 50 MonsterBucks
-    } 
-
-    public void grantBazooka(){
-        //grant a bazooka
-    }
-
-    //...
 }
 ```
-The related messages would be configured in the Control Panel to use this callback by placing this in the **Target URL** for each message :
+And then attaching this AwardFrameDelegate class to the frame shown in the first game scene
 
-* **At-Risk Message** : `pnx://ClickHandler.grant50MonsterBucks`
-* **Lapsed 7 or more days** : `pnx://ClickHandler.grant10MonsterBucks`
-* **Default** : `pnx://ClickHandler.grantBazooka`
+```csharp
+public class FirstGameScene : MonBehavior
+{
+    //...
+    //...
+    void Start()
+    {
+        const string frameId = "<PLAYRM-FRAME-ID>";
+        IFrameDelegate awardDelegate = new AwardFrameDelegate();
+        MessagingFrame frame = Playnomics.instance.initMessageFrame(frameId, awardDelegate);
+        frame.start();
+    }
+    //...
+    //...
+}
+
+```
+
+The related messages would be configured in the Control Panel to use this callback by placing this in the **Target Data** for each message :
+
+Grant 10 Monster Bucks
+```json
+{
+    "type" : "award",
+    "award" : 
+    {
+        "item" : "MonsterBucks",
+        "quantity" : 10
+    }
+}
+```
+
+Grant 50 Monster Bucks
+```json
+{
+    "type" : "award",
+    "award" : 
+    {
+        "item" : "MonsterBucks",
+        "quantity" : 50
+    }
+}
+```
+
+Grant Bazooka
+```json
+{
+    "type" : "award",
+    "award" :
+    {
+        "item" : "Bazooka",
+        "quantity" : 1
+    }
+}
+```
 
 ### Event Driven Frame - Open the Store
 
@@ -898,23 +977,35 @@ In particular one event, for examle, a player may deplete their premium currency
     </tbody>
 </table>
 
+We want our game to 
+
 ```csharp
 using UnityEngine;
 
-public class MessageClickHandler : MonoBehavior {
-    
-    //...
-
-    public void openStore(){
-        //open the game store after the press or click has occurred
-        store.open();
+public class StoreFrameHandler : IFrameDelegate 
+{
+    public void onClick(LitJson.JsonObject data)
+    {
+        if(data["type"] == "action")
+        {
+            if(data["actionType"] == "openStore")
+            {
+                //opens the store in our game
+                store.open();
+            }
+        }
     }
-
-    //... 
 }
 ```
 
-The Default message would be configured in the Control Panel to use this callback by placing this in the **Target URL** for the message : `pnx://ClickHandler.openStore`.
+The Default message would be configured in the Control Panel to use this callback by placing this in the **Target Data** for the message : 
+
+```json
+{
+    "type" : "action",
+    "action" : "openStore"
+}
+```
 
 ### Event Driven Frame - Level Completion
 
@@ -963,24 +1054,21 @@ In the following example, we wish to generate third-party revenue from players u
     </tbody>
 </table>
 
-```csharp
-using UnityEngine;
-
-public class MessageClickHandler : MonoBehavior {
-    
-    //...
-
-    public void grantMana(){
-        //grant mana to the player
-    }
-    
-    //... 
-}
-```
-The related messages would be configured in the Control Panel to use this callback by placing this in the **Target URL** for each message :
+This another continuation on the AwardFrameDelegate, with some different data. The related messages would be configured in the Control Panel to use this callback by placing this in the **Target URL** for each message :
 
 * **Non-monetizers, in their 5th day of game play** : `HTTP URL for Third Party Ad`
-* **Default** : `pnx://ClickHandler.grantMana`
+* **Default** :
+
+```json
+{
+    "type" : "award",
+    "award" :
+    {
+        "item" : "Mana",
+        "quantity" : 20
+    }
+}
+```
 
 Push Notifications
 ==================
@@ -1024,7 +1112,7 @@ By default, iOS does not show push notifications when your app is already in the
 
 ## Clearing Push Badge Numbers
 
-When you send push notifications, you can configure a badge number that will be set on your application. iOS defers the responsibility of resetting the badge number to the developer. 
+When you send push notifications, you can configure a badge number that will be set on your application. iOS defers the responsibility of resetting the badge number to the developer.
 
 We have taken care of the step for you, so that the badge number is cleared when your games goes into the background.
 
