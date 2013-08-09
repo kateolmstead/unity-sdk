@@ -708,6 +708,8 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId);
     </tbody>
 </table>
 
+Optionally, associate an implementation of IFrameDelegate to process rich data callbacks. See [Using Rich Data Callbacks](#using-rich-data-callbacks) for more information.
+
 ```csharp
 MessagingFrame Playnomics.instance.initMessagingFrame(string frameId, IFrameDelegate frameDelegate);
 ```
@@ -730,7 +732,7 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId, IFrameDele
         <tr>
             <td><code>frameDelegate<code></td>
             <td>IFrameDelegate</td>
-            <td>An implementation of IFrameDelegate to process rich data callbacks (see below)</td>
+            <td></td>
         </tr>
     </tbody>
 </table>
@@ -880,7 +882,7 @@ public AwardFrameDelegate : IFrameDelegate
     }
 }
 ```
-And then attaching this AwardFrameDelegate class to the frame shown in the first game scene
+And then attaching this AwardFrameDelegate class to the frame shown in the first game scene:
 
 ```csharp
 public class FirstGameScene : MonBehavior
@@ -1123,7 +1125,7 @@ If you have any questions or issues, please contact <a href="mailto:support@play
 Change Log
 ==========
 #### Version 3.2
-Added support for Messaging with Rich-Data Callbacks.
+Added support for Messaging with Rich Data Callbacks.
 
 #### Version 3.1.3
 Bug fixes related to rendering messaging frames in multiple orientations on mobile platforms.
