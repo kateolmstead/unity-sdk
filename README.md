@@ -701,7 +701,7 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId);
     </thead>
     <tbody>
         <tr>
-            <td><code>frameId<code></td>
+            <td><code>frameId</code></td>
             <td>string</td>
             <td>Unique identifier for the frame, the <code><PLAYRM-FRAME-ID></code></td>
         </tr>
@@ -723,14 +723,14 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId, IFrameDele
     </thead>
     <tbody>
         <tr>
-            <td><code>frameId<code></td>
+            <td><code>frameId</code></td>
             <td>string</td>
             <td>Unique identifier for the frame, the <code><PLAYRM-FRAME-ID></code></td>
         </tr>
     </tbody>
     <tbody>
         <tr>
-            <td><code>frameDelegate<code></td>
+            <td><code>frameDelegate</code></td>
             <td>IFrameDelegate</td>
             <td></td>
         </tr>
