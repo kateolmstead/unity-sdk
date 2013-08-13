@@ -739,8 +739,6 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId, IFrameDele
 
 Frames are loaded asynchronously to keep your game responsive. The `initMessagingFrame` call begins the frame loading process. However, until you call `show` on the frame, the frame will not be drawn in the UI. This gives you control over when a frame will appear.
 
-If a frame or its image components cannot be loaded, the SDK will attempt to reload the frame.
-
 Frames are destroyed on a scene transition or when closed.
 
 In the example below, we initialize the frame when a behavior script is loaded for the first time. In the update loop, we poll for the frame asking if it can be shown loading and then show it. In practice, a frame can be loaded in a variety of ways.
@@ -795,7 +793,7 @@ The actual contents of your message can be delayed until the time of the messagi
 
 **The Rich Data callback will not fire if the Close button is pressed.**
 
-Here are three common use cases for frames and a messaging campaigns:
+Here are three common use cases for frames and messaging campaigns:
 
 * [Game Start Frame](#game-start-frame)
 * [Event Driven Frame - Open the Store](#event-driven-frame-open-the-store) for instance, when the player is running low on premium currency
@@ -815,7 +813,7 @@ In this use-case, we want to configure a frame that is always shown to players w
                 Priority
             </th>
             <th>
-                Callback Action
+                Callback Behavior
             </th>
             <th style="width:250px;">
                 Creative
@@ -865,7 +863,7 @@ In this use-case, we want to configure a frame that is always shown to players w
 We want our game to process messages for awarding items to players. We process this data with an implementation of the `IFrameDelegate` interface.
 
 ```csharp
-public AwardFrameDelegate : IFrameDelegate
+public class AwardFrameDelegate : IFrameDelegate
 {
     public void onClick(LitJson.JsonData data)
     {
@@ -875,15 +873,15 @@ public AwardFrameDelegate : IFrameDelegate
             return;
         }
 
-        if(dataDict.ContainsKey("type") && data["type"] == "award")
+        if(dataDict.ContainsKey("type") && dataDict["type"].Equals("award"))
         {
             if(dataDict.ContainsKey("award"))
             {
-                string item = data["award"]["item"];
-                int quantity = data["award"]["quantity"];
+                string item = dataDict["award"]["item"];
+                int quantity = dataDict["award"]["quantity"];
 
                 //call your own inventory object
-                Inventory.addItem(item, quanity);
+                Inventory.addItem(item, quantity);
             }
         }
     }
@@ -892,7 +890,7 @@ public AwardFrameDelegate : IFrameDelegate
 And then attaching this AwardFrameDelegate class to the frame shown in the first game scene:
 
 ```csharp
-public class FirstGameScene : MonBehavior
+public class FirstGameScene : MonoBehavior
 {
     //...
     //...
@@ -963,7 +961,7 @@ In particular one event, for examle, a player may deplete their premium currency
                 Priority
             </th>
             <th>
-                Code Callback
+                Callback Behavior
             </th>
             <th>
                 Creative
@@ -986,12 +984,12 @@ In particular one event, for examle, a player may deplete their premium currency
     </tbody>
 </table>
 
-We want our game to 
+Related delegate callback code:
 
 ```csharp
 using UnityEngine;
 
-public class StoreFrameHandler : IFrameDelegate 
+public class StoreFrameDelegate : IFrameDelegate 
 {
     public void onClick(LitJson.JsonData data)
     {
@@ -1005,7 +1003,7 @@ public class StoreFrameHandler : IFrameDelegate
             if(dataDict.ContainsKey("actionType") && data["actionType"] == "openStore")
             {
                 //opens the store in our game
-                store.open();
+                Store.open();
             }
         }
     }
