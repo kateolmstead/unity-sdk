@@ -787,7 +787,7 @@ Rich Data is a JSON message that you associate with your message creative. When 
 ```csharp
 public interface IFrameDelegate
 {
-    void onClick(LitJson.JsonObject data);
+    void onClick(LitJson.JsonData data);
 }
 ```
 
@@ -800,8 +800,6 @@ Here are three common use cases for frames and a messaging campaigns:
 * [Game Start Frame](#game-start-frame)
 * [Event Driven Frame - Open the Store](#event-driven-frame-open-the-store) for instance, when the player is running low on premium currency
 * [Event Driven Frame - Level Completion](#event-driven-drame-level-completion)
-
-For each of the examples, we will create a script that implements this interface and attach it to the appropriate frame(s).
 
 ### Game Start Frame
 
@@ -869,15 +867,24 @@ We want our game to process messages for awarding items to players. We process t
 ```csharp
 public AwardFrameDelegate : IFrameDelegate
 {
-    public void onClick(LitJson.JsonObject data)
+    public void onClick(LitJson.JsonData data)
     {
-        if(data["type"] != null && data["type"] == "award")
+        IDictionary dataDict = data as IDictionary;
+        if(dataDict == null)
         {
-            string item = data["award"]["item"];
-            int quantity = data["award"]["quantity"];
+            return;
+        }
 
-            //call your own inventory object
-            Inventory.addItem(item, quanity);
+        if(dataDict.ContainsKey("type") && data["type"] == "award")
+        {
+            if(dataDict.ContainsKey("award"))
+            {
+                string item = data["award"]["item"];
+                int quantity = data["award"]["quantity"];
+
+                //call your own inventory object
+                Inventory.addItem(item, quanity);
+            }
         }
     }
 }
@@ -902,7 +909,7 @@ public class FirstGameScene : MonBehavior
 
 ```
 
-The related messages would be configured in the Control Panel to use this callback by placing this in the **Target Data** for each message :
+The related messages would be configured in the Control Panel to use this callback by placing this in the **Target Data** for each message:
 
 Grant 10 Monster Bucks
 ```json
@@ -986,11 +993,16 @@ using UnityEngine;
 
 public class StoreFrameHandler : IFrameDelegate 
 {
-    public void onClick(LitJson.JsonObject data)
+    public void onClick(LitJson.JsonData data)
     {
-        if(data["type"] == "action")
+        IDictionary dataDict = data as IDictionary;
+        if(dataDict == null){
+            return;
+        }   
+
+        if(dataDict.ContainsKey("type") && data["type"] == "action")
         {
-            if(data["actionType"] == "openStore")
+            if(dataDict.ContainsKey("actionType") && data["actionType"] == "openStore")
             {
                 //opens the store in our game
                 store.open();
@@ -1000,7 +1012,7 @@ public class StoreFrameHandler : IFrameDelegate
 }
 ```
 
-The Default message would be configured in the Control Panel to use this callback by placing this in the **Target Data** for the message : 
+The Default message would be configured in the Control Panel to use this callback by placing this in the **Target Data** for the message :
 
 ```json
 {
@@ -1056,10 +1068,10 @@ In the following example, we wish to generate third-party revenue from players u
     </tbody>
 </table>
 
-This another continuation on the AwardFrameDelegate, with some different data. The related messages would be configured in the Control Panel to use this callback by placing this in the **Target URL** for each message :
+This another continuation on the `AwardFrameDelegate`, with some different data. The related messages would be configured in the Control Panel:
 
-* **Non-monetizers, in their 5th day of game play** : `HTTP URL for Third Party Ad`
-* **Default** :
+* **Non-monetizers, in their 5th day of game play**, a Target URL: `HTTP URL for Third Party Ad`
+* **Default**, Target Data:
 
 ```json
 {
