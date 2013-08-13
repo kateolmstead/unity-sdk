@@ -732,7 +732,7 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId, IFrameDele
         <tr>
             <td><code>frameDelegate</code></td>
             <td>IFrameDelegate</td>
-            <td></td>
+            <td> Processes rich data callbacks, see <a href="#using-rich-data-callbacks">Using Rich Data Callbacks</a></td>
         </tr>
     </tbody>
 </table>
