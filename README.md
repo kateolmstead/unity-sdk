@@ -873,7 +873,8 @@ public class AwardFrameDelegate : IFrameDelegate
             return;
         }
 
-        if(dataDict.ContainsKey("type") && dataDict["type"].Equals("award"))
+        if(dataDict.ContainsKey("type") &&
+            dataDict["type"].Equals("award"))
         {
             if(dataDict.ContainsKey("award"))
             {
@@ -989,18 +990,20 @@ Related delegate callback code:
 ```csharp
 using UnityEngine;
 
-public class StoreFrameDelegate : IFrameDelegate 
+public class StoreFrameDelegate : IFrameDelegate
 {
     public void onClick(LitJson.JsonData data)
     {
         IDictionary dataDict = data as IDictionary;
         if(dataDict == null){
             return;
-        }   
+        }
 
-        if(dataDict.ContainsKey("type") && data["type"] == "action")
+        if(dataDict.ContainsKey("type") &&
+            data["type"] == "action")
         {
-            if(dataDict.ContainsKey("actionType") && data["actionType"] == "openStore")
+            if(dataDict.ContainsKey("actionType") &&
+                data["actionType"] == "openStore")
             {
                 //opens the store in our game
                 Store.open();
@@ -1021,7 +1024,7 @@ The Default message would be configured in the Control Panel to use this callbac
 
 ### Event Driven Frame - Level Completion
 
-In the following example, we wish to generate third-party revenue from players unlikely to monetize by showing them a segmented message after completing a level or challenge: 
+In the following example, we wish to generate third-party revenue from players unlikely to monetize by showing them a segmented message after completing a level or challenge:
 
 <table>
     <thead>
@@ -1161,7 +1164,7 @@ Simplified the package file structure.
 * Fix related to engagement module logging.
 
 #### Version 3
-* Added support for messaging 
+* Added support for messaging.
 * Added support for milestones.
 
 #### Version 2
