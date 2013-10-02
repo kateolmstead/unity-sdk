@@ -273,7 +273,7 @@ void Start()
     if(isNewUser){
         DateTime baseDate = new DateTime(1970, 1, 1);
         DateTime now = DateTime.UtcNow;
-        installTime = (long)((date - baseDate).TotalSeconds;
+        installTime = (long)((now - baseDate).TotalSeconds;
     }
 
     SexEnum playerSex = SexEnum.F;
