@@ -761,7 +761,7 @@ public class Scene : MonoBehavior {
 
     private void Update(){
 
-        if(frame.FrameState == FrameStateEnum.Loaded && !shown){
+        if(frame.FrameState == MessagingFrame.FrameStateEnum.Loaded && !shown){
             //the frame is ready and has never been shown
 
             shown = true;
