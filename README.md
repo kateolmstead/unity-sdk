@@ -666,7 +666,7 @@ public class PlaynomicsInit : MonoBehaviour
 //...
 function Start(){
     //...
-    Playnomics.instance.TestMode = true;
+    Playnomics.instance.TestMode = false;
     Playnomics.instance.startPlaynomics(applicationId);
 }
 
@@ -674,7 +674,7 @@ function Start(){
 
 If you ever wish to test or troubleshoot your integration later on, simply set `Playnomics.instance.TestMode` back to `true` and revisit the self-check validation tool for your application:
 
-**`https://controlpanel.playnomics.com/validation/<APPID>`**
+**`https://controlpanel.playnomics.com/applications/<APPID>`**
 
 Messaging Integration
 =====================
