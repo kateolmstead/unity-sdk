@@ -1033,13 +1033,13 @@ If you have any questions or issues, please contact <a href="mailto:support@play
 Change Log
 ==========
 #### Version 3.2
-Added support for Messaging with Rich Data Callbacks.
+* Added support for Messaging with Rich Data Callbacks.
 
 #### Version 3.1.3
-Bug fixes related to rendering messaging placements in multiple orientations on mobile platforms.
+* Bug fixes related to rendering messaging placements in multiple orientations on mobile platforms.
 
 #### Version 3.1.2
-Simplified the package file structure.
+* Simplified the package file structure.
 
 #### Version 3.1.1
 * Caching performance improvements
