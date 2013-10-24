@@ -675,7 +675,7 @@ Depending on your configuration, a variety of actions can take place when a plac
 * Firing a Rich Data callback in your game
 * Or in the simplest case, just close the placement, provided that the **Close Button** has been configured correctly.
 
-Rich Data is a JSON message that you associate with your message creative. When the player presses the message, the PlayRM SDK bubbles-up the associated JSON object to an implementation of the interface, `IFrameDelegate` associated with the frame.
+Rich Data is a JSON message that you associate with your message creative. When the player presses the message, the PlayRM SDK bubbles-up the associated JSON object to an implementation of the interface, `IFrameDelegate` associated with the placement.
 
 ```csharp
 public interface IFrameDelegate
