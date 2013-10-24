@@ -2,13 +2,13 @@ Playnomics PlayRM Unity SDK Integration Guide
 =============================================
 If you're new to PlayRM and/or don't have a PlayRM account and would like to get started using PlayRM please visit   <a href="https://controlpanel.playnomics.com/signup">https://controlpanel.playnomics.com/signup</a>   to sign up. Soon after creating an account you will receive a registration confirmation email permitting you access to your PlayRM control panel.
 
-Within the control panel, click the <strong>applications</strong> tab and add your game. Upon doing so, you will recieve an <strong>Application ID</strong> and an <strong>API KEY</strong>. These two components will enable you to begin the integration process.
+Within the control panel, click the <strong>applications</strong> tab and add your game. Upon doing so, you will receive an <strong>Application ID</strong> and an <strong>API KEY</strong>. These two components will enable you to begin the integration process.
 
-Our integration has been optimized to be as straight forward and user friendly as possible. If you're feeling unsure or would like better understand the order the process before beginning integration, please take a moment to check out the <a href="http://integration.playnomics.com/technical/#integration-getting-started">getting started</a> page. Here you can find an overview of our integration process, and platform specific features, to help you better understand the PlayRM integration process.
+Our integration has been optimized to be as straight forward and user friendly as possible. If you're feeling unsure or would like to better understand the process before beginning integration, please take a moment to check out the <a href="http://integration.playnomics.com/technical/#integration-getting-started">getting started</a> page. Here you can find an overview of our integration process, and platform specific features, to help you better understand the PlayRM integration process.
 
 ## Considerations for Cross-Platform Games
 
-If you want to deploy your game to multiple platforms (eg: Android and the Unity Web player), you'll need to create a separate Playnomics Applications in the control panel. Each application must incorporate a separate `<APPID>` particular to that application. In addition, message frames and their respective creative uploads will be particular to that app in order to ensure that they are sized appropriately - proportionate to your game screen size.
+If you want to deploy your game to multiple platforms (eg: Android and the Unity Web player), you'll need to create separate applications in the control panel. Each application must incorporate a separate `<APPID>` particular to that application. In addition, placementsand their respective creative uploads will be particular to that app in order to ensure that they are sized appropriately - proportionate to your game screen size.
 
 Basic Integration
 =================
@@ -122,7 +122,7 @@ function Start(){
 Once started, the SDK will automatically begin collecting basic player information (including geo-location) and engagement data in **test mode** (be sure to switch to [production mode](#switch-sdk-to-production-mode) before deploying your application).
 
 
-Congratulations! You've completed our basic integration. You will now be able to track engagement behaviors (having incorporated the Engagement Module) from the PlayRM dashboard. At this point we recomend that you use our integration validation tool to test your integration of our SDK in order insure that it has been properly incorporated in your game. 
+Congratulations! You've completed our basic integration. You will now be able to track engagement behaviors (having incorporated the Engagement Module) from the PlayRM dashboard. At this point we recommend that you use our integration validation tool to test your integration of our SDK in order insure that it has been properly incorporated in your game. 
 
 
 PlayRM is currently operating in test mode. Be sure you switch to [production mode](#switch-sdk-to-production-mode), by implementing the code call outlined in our Basic Integration before deploying your game on the web or in an app store.
@@ -152,8 +152,7 @@ PlayRM is currently operating in test mode. Be sure you switch to [production mo
                     </li>
                 </ul>
             </li>
-            <li><a href="#invitations-and-virality">Invitations and Virality</a></li>
-            <li><a href="#custom-event-tracking">Custom Event Tracking</a></li>
+<li><a href="#custom-event-tracking">Custom Event Tracking</a></li>
             <li><a href="#validate-integration">Validate Integration</a></li>
             <li><a href="#switch-sdk-to-production-mode">Switch SDK to Production Mode</a></li>
         </ul>
@@ -166,7 +165,7 @@ PlayRM is currently operating in test mode. Be sure you switch to [production mo
         </ul>
     </li>
     <ul>
-        <li><a href="#push-notfications">Push Notifications</a></li>
+        <li><a href="#push-notifications">Push Notifications</a></li>
     </ul>
     <ul>
         <li><a href="#support-issues">Support Issues</a></li>
@@ -180,24 +179,23 @@ If you're reading this it's likely that you've integrated our SDK and are intere
 
 The index on the right provides a holistic overview of the <strong>full integration</strong> process. From it, you can jump to specific points in this document depending on what you're looking to learn and do.
 
-To clarify where you are in the timeline of our integration process, you've completed our basic integration. Doing so will enable you to track engagement behaviors from the PlayRM dashboard (having incorporated the Engagement Module). The following documentation will provides succint information on how to incorporate additional and more in-depth segmentation functionality by integrating any, or all of the following into your game:
+To clarify where you are in the timeline of our integration process, you've completed our basic integration. Doing so will enable you to track engagement behaviors from the PlayRM dashboard (having incorporated the Engagement Module). The following documentation will provide succinct information on how to incorporate additional and more in-depth segmentation functionality by integrating any, or all of the following into your game:
 
 <ul>
     <li><strong>User Info Module:</strong> - provides basic user information</li>
     <li><strong>Monetization Module:</strong> - tracks various monetization events and transactions</li>
-    <li><strong>Virality Module:</strong> - tracks the social activities of users</li>
-    <li><strong>Milestone Module:</strong> - tracks significant player events customized to your game</li>
+    <li><strong>Custom Event Module:</strong> - tracks significant player events customized to your game</li>
 </ul>
 
 
-Along with integration instructions for our various modules, you will also find integration information pertaining to messaging frame setup, and push setup within this documentation.
+Along with integration instructions for our various modules, you will also find integration information pertaining to messaging setup, and push setup within this documentation.
 
 
 ## Demographics and Install Attribution
 
 After the SDK is loaded, the user info module may be called to collect basic demographic and acquisition information. This data is used to segment users based on how/where they were acquired and enables improved targeting with basic demographics, in addition to the behavioral data collected using other events.
 
-Provide each players's information using this call:
+Provide each player's information using this call:
 
 ```javascript
 ApiResultEnum Playnomics.instance.userInfo(
@@ -240,7 +238,7 @@ If any of the parameters are not available, you should pass `null`.
             <td><code>source</code></td>
             <td>string</td>
             <td>
-                Source of the player, such as "FacebookAds", "UserReferral", "Playnomics", etc. These are only suggestions, any 16-character or shorter string is acceptable.
+                Source of the player, such as "FacebookAds", "UserReferral", "Playnomics", etc. These are only suggestions; any 16-character or shorter string is acceptable.
             </td>
         </tr>
         <tr>
@@ -314,7 +312,7 @@ ApiResultEnum Playnomics.instance.transaction(
             <td><code>transactionId</code></td>
             <td>long</td>
             <td>
-                A unique identifier for this transaction. If you don't have a transaction ID from payments system, you can genenate large random number.
+                A unique identifier for this transaction. If you don't have a transaction ID from payments system, you can generate a large random number.
             </td>
         </tr>
         <tr>
@@ -474,114 +472,11 @@ currencies[0] = TransactionCurrency.createVirtual(premiumCost, premimumCurrency)
 Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currencies, item, itemQuantity, null);
 ```
 
-## Invitations and Virality
-
-The virality module allows you to track a single invitation from one player to another (e.g., inviting friends to join a game).
-
-If multiple requests can be sent at the same time, a separate function call should be made for each recipient.
-
-```csharp
-ApiResultEnum Playnomics.instance.invitationSent(
-  long invitationId,
-  string recipientUserId,
-  string recipientAddress,
-  string method)
-
-```
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>invitationId</code></td>
-            <td>long</td>
-            <td>
-                A unique 64-bit integer identifier for this invitation. 
-
-                If no identifier is available, this could be a hash/MD5/SHA1 of the sender's and neighbor's concatenated IDs. <strong>The resulting identifier can not be personally identifiable.</strong>
-            </td>
-        </tr>
-        <tr>
-            <td><code>recipientUserId</code></td>
-            <td>string</td>
-            <td>
-                This can be a hash/MD5/SHA1 of the recipient's Facebook ID, their Facebook 3rd Party ID or an internal ID. It cannot be a personally identifiable ID.
-            </td>
-        </tr>
-        <tr>
-            <td><code>recipientAddress</code></td>
-            <td>string</td>
-            <td>
-                An optional way to identify the recipient, for example the <strong>hashed e-mail address</strong>. When using <code>recipientUserId</code> this can be <code>null</code>.
-            </td>
-        </tr>
-        <tr>
-            <td><code>method</code></td>
-            <td>string</td>
-            <td>
-                The method of the invitation request will include one of the following:
-                <ul>
-                    <li>facebookRequest</li>
-                    <li>email</li>
-                    <li>twitter</li>
-                </ul>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-You can then track each invitation acceptance. IMPORTANT: you will need to pass the invitationId through the invitation link.
-
-```javascript
-ApiResultEnum Playnomics.instance.invitationResponse(
-    long invitationId,
-    string recipientUserId)
-```
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>invitationId</code></td>
-            <td>long</td>
-            <td>The ID of the corresponding <code>invitationSent</code> event.</td>
-        </tr>
-        <tr>
-            <td><code>recipientUserId</code></td>
-            <td>string</td>
-            <td>The <code>recipientUserID</code> used in the corresponding <code>invitationSent</code> event.</td>
-        </tr>
-    </tbody>
-</table>
-
-Example calls for a player's invitation and the recipient's acceptance:
-
-```csharp
-var invitationId = 112345675;
-var recipientUserId = "10000013";
-
-Playnomics.instance.invitationSent(invitationId, recipientUserId, null, null);
-
-//later on the recipient accepts the invitation
-
-Playnomics.instance.invitationResponse(invitationId, recipientUserId, "accepted");
-```
-
 ## Custom Event Tracking
 
-Milestones may be defined in a number of ways.  They may be defined at certain key gameplay points like, finishing a tutorial, or may they refer to other important milestones in a player's lifecycle. PlayRM, by default, supports up to five custom milestones.  Players can be segmented based on when and how many times they have achieved a particular milestone.
+Custom Events may be used in a number of ways.  They can be used to track certain key gameplay events such as finishing a tutorial or receiving a high score. They may also be used to track other important lifecycle events such as level up, zone unlocked, etc.  PlayRM, by default, supports up to five custom events.  You can then use these custom events to create more targeted custom segments.
 
-Each time a player reaches a milestone, track it with this call:
+Each time a player completes a certain event, track it with this call:
 
 ```csharp
 ApiResultEnum Playnomics.instance.milestone(
@@ -600,19 +495,19 @@ ApiResultEnum Playnomics.instance.milestone(
         <tr>
             <td><code>milestoneId</code></td>
             <td>long</long>
-            <td>A unique 64-bit numeric identifier for this milestone occurrence</td>
+            <td>A unique 64-bit numeric identifier for this custom event occurrence</td>
         </tr>
         <tr>
             <td><code>milestoneName</code></td>
             <td>string</td>
             <td>
-                The name of the milestone which should be "CUSTOMn", where n is 1 through 5.  The name is case-sensitive.
+                The name of the custom event which should be "CUSTOMn", where n is 1 through 5.  The name is case-sensitive.
             </td>
         </tr>
     </tbody>
 </table>
 
-Example client-side calls for a player reaching a milestone, with generated IDs:
+Example client-side calls for players completing events, with generated IDs:
 
 ```csharp
 long GetRandomLong(){
@@ -678,15 +573,15 @@ If you ever wish to test or troubleshoot your integration later on, simply set `
 
 Messaging Integration
 =====================
-This guide assumes you're already familiar with the concept of frames and messaging, and that you have all of the relevant `frames` setup for your application.
+This guide assumes you're already familiar with the concept of placements and messaging, and that you have all of the relevant `placements` setup for your application.
 
 If you are new to PlayRM's messaging feature, please refer to <a href="http://integration.playnomics.com" target="_blank">integration documentation</a>.
 
-Once you have all of your frames created with their associated `<PLAYRM-FRAME-ID>`s, you can start the integration process.
+Once you have all of your placements created with their associated `<PLAYRM-FRAME-ID>`s, you can start the integration process.
 
 ## SDK Integration
 
-Loading frames through the SDK:
+Loading placements through the SDK:
 
 ```csharp
 MessagingFrame Playnomics.instance.initMessagingFrame(string frameId);
@@ -703,7 +598,7 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId);
         <tr>
             <td><code>frameId</code></td>
             <td>string</td>
-            <td>Unique identifier for the frame, the <code>&lt;PLAYRM-FRAME-ID&gt;</code></td>
+            <td>Unique identifier for the placement, the <code>&lt;PLAYRM-FRAME-ID&gt;</code></td>
         </tr>
     </tbody>
 </table>
@@ -725,7 +620,7 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId, IFrameDele
         <tr>
             <td><code>frameId</code></td>
             <td>string</td>
-            <td>Unique identifier for the frame, the <code>&lt;PLAYRM-FRAME-ID&gt;</code></td>
+            <td>Unique identifier for the placement, the <code>&lt;PLAYRM-FRAME-ID&gt;</code></td>
         </tr>
     </tbody>
     <tbody>
@@ -737,11 +632,11 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId, IFrameDele
     </tbody>
 </table>
 
-Frames are loaded asynchronously to keep your game responsive. The `initMessagingFrame` call begins the frame loading process. However, until you call `show` on the frame, the frame will not be drawn in the UI. This gives you control over when a frame will appear.
+Placements are loaded asynchronously to keep your game responsive. The `initMessagingFrame` call begins the loading process. However, until you call `show` on the placement, the placement will not be drawn in the UI. This gives you control over when a placement will appear.
 
-Frames are destroyed on a scene transition or when closed.
+Placements are destroyed on a scene transition or when closed.
 
-In the example below, we initialize the frame when a behavior script is loaded for the first time. In the update loop, we poll for the frame asking if it can be shown loading and then show it. In practice, a frame can be loaded in a variety of ways.
+In the example below, we initialize the placement when a behavior script is loaded for the first time. In the update loop, we poll for the placement asking if it can be shown loading and then show it. In practice, a placement can be loaded in a variety of ways.
 
 ```csharp
 using PlaynomicsPlugin;
@@ -762,7 +657,7 @@ public class Scene : MonoBehavior {
     private void Update(){
 
         if(frame.FrameState == MessagingFrame.FrameStateEnum.Loaded && !shown){
-            //the frame is ready and has never been shown
+            //the placement is ready and has never been shown
 
             shown = true;
             //render the frame
@@ -774,11 +669,11 @@ public class Scene : MonoBehavior {
 
 ## Using Rich Data Callbacks
 
-Depending on your configuration, a variety of actions can take place when a frame's message is pressed or clicked:
+Depending on your configuration, a variety of actions can take place when a placement’s message is pressed or clicked:
 
 * Redirect the player to a web URL in the platform's browser application
 * Firing a Rich Data callback in your game
-* Or in the simplest case, just close the frame, provided that the **Close Button** has been configured correctly.
+* Or in the simplest case, just close the placement, provided that the **Close Button** has been configured correctly.
 
 Rich Data is a JSON message that you associate with your message creative. When the player presses the message, the PlayRM SDK bubbles-up the associated JSON object to an implementation of the interface, `IFrameDelegate` associated with the frame.
 
@@ -793,15 +688,15 @@ The actual contents of your message can be delayed until the time of the messagi
 
 **The Rich Data callback will not fire if the Close button is pressed.**
 
-Here are three common use cases for frames and messaging campaigns:
+Here are three common use cases for placements and messaging campaigns:
 
-* [Game Start Frame](#game-start-frame)
-* [Event Driven Frame - Open the Store](#event-driven-frame-open-the-store) for instance, when the player is running low on premium currency
-* [Event Driven Frame - Level Completion](#event-driven-drame-level-completion)
+* [Game Start Placement](#game-start-placement)
+* [Currency Balance Low Placement](#currency-balance-low-placement) for instance, when the player is running low on premium currency
+* [Level Complete Placement](#level-complete-placement)
 
-### Game Start Frame
+### Game Start Placement
 
-In this use-case, we want to configure a frame that is always shown to players when they start a new session. The message shown to the player may change based on the desired segments:
+In this use-case, we want to configure a placement that is always shown to players when they start a new session. The message shown to the player may change based on the desired segments:
 
 <table>
     <thead>
@@ -946,11 +841,11 @@ Grant Bazooka
 }
 ```
 
-### Event Driven Frame - Open the Store
+### Currency Balance Low Placement
 
-An advantage of *dynamic* frames is that they can be triggered by in-game events. For each in-game event you would configure a separate frame. While segmentation may be helpful in deciding what message you show, it may be sufficient to show the same message to all players.
+An advantage of a *dynamic* placement is that it can be triggered by in-game events. For each in-game event you would configure a separate placement. While segmentation may be helpful in deciding what message you show, it may be sufficient to show the same message to all players.
 
-In particular one event, for examle, a player may deplete their premium currency and you want to remind them that they can re-up through your store. In this context, we display the same message to all players.
+For example, a player may deplete their premium currency and you want to remind them that they can re-up through your store. In this context, we display the same message to all players.
 
 <table>
     <thead>
@@ -1022,7 +917,7 @@ The Default message would be configured in the Control Panel to use this callbac
 }
 ```
 
-### Event Driven Frame - Level Completion
+### Level Complete Placement
 
 In the following example, we wish to generate third-party revenue from players unlikely to monetize by showing them a segmented message after completing a level or challenge:
 
@@ -1046,7 +941,7 @@ In the following example, we wish to generate third-party revenue from players u
     <tbody>
         <tr>
             <td>
-                Non-monetizers, in their 5th day of game play
+                Non-Monetizers, in their 5th day of game play
             </td>
             <td>1st</td>
             <td>Show them a 3rd party ad, because they are unlikely to monetize.</td>
@@ -1069,7 +964,7 @@ In the following example, we wish to generate third-party revenue from players u
     </tbody>
 </table>
 
-This another continuation on the `AwardFrameDelegate`, with some different data. The related messages would be configured in the Control Panel:
+This is another continuation on the `AwardFrameDelegate`, with some different data. The related messages would be configured in the Control Panel:
 
 * **Non-monetizers, in their 5th day of game play**, a Target URL: `HTTP URL for Third Party Ad`
 * **Default**, Target Data:
@@ -1141,7 +1036,7 @@ Change Log
 Added support for Messaging with Rich Data Callbacks.
 
 #### Version 3.1.3
-Bug fixes related to rendering messaging frames in multiple orientations on mobile platforms.
+Bug fixes related to rendering messaging placements in multiple orientations on mobile platforms.
 
 #### Version 3.1.2
 Simplified the package file structure.
@@ -1151,7 +1046,7 @@ Simplified the package file structure.
 
 #### Version 3.1
 * Adding Push Notifications support for iOS devices.
-* Improve performance and exception handling for messaging frames.
+* Improve performance and exception handling for messaging placements.
 
 #### Version 3.03
 * Making the SDK compliant with iOS6 IDFA requirements.
@@ -1165,7 +1060,7 @@ Simplified the package file structure.
 
 #### Version 3
 * Added support for messaging.
-* Added support for milestones.
+* Added support for custom events.
 
 #### Version 2
 * Updated Playnomics server URLs
@@ -1174,4 +1069,5 @@ Simplified the package file structure.
 * First release.
 
 View version tags <a href="https://github.com/playnomics/unity-sdk/tags">here</a>
+
 
