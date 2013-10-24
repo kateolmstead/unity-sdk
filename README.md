@@ -8,7 +8,7 @@ Our integration has been optimized to be as straight forward and user friendly a
 
 ## Considerations for Cross-Platform Games
 
-If you want to deploy your game to multiple platforms (eg: Android and the Unity Web player), you'll need to create separate applications in the control panel. Each application must incorporate a separate `<APPID>` particular to that application. In addition, placementsand their respective creative uploads will be particular to that app in order to ensure that they are sized appropriately - proportionate to your game screen size.
+If you want to deploy your game to multiple platforms (eg: Android and the Unity Web player), you'll need to create separate applications in the control panel. Each application must incorporate a separate `<APPID>` particular to that application. In addition, placements and their respective creative uploads will be particular to that app in order to ensure that they are sized appropriately - proportionate to your game screen size.
 
 Basic Integration
 =================
@@ -1060,7 +1060,7 @@ Simplified the package file structure.
 
 #### Version 3
 * Added support for messaging.
-* Added support for custom events.
+* Added support for milestones.
 
 #### Version 2
 * Updated Playnomics server URLs
