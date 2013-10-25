@@ -501,7 +501,7 @@ ApiResultEnum Playnomics.instance.milestone(
             <td><code>milestoneName</code></td>
             <td>string</td>
             <td>
-                The name of the custom event which should be "CUSTOMn", where n is 1 through 5.  The name is case-sensitive.
+                The name of the custom event should be "CUSTOMn", where n is 1 through 5.  The name is case-sensitive.
             </td>
         </tr>
     </tbody>
