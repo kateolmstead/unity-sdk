@@ -966,7 +966,7 @@ In the following example, we wish to generate third-party revenue from users unl
 
 This is another continuation on the `AwardFrameDelegate`, with some different data. The related messages would be configured in the Control Panel:
 
-* **Non-monetizers, in their 5th day of app usage**, a Target URL: `HTTP URL for Third Party Ad`
+* **Non-Monetizers, in their 5th day of app usage**, a Target URL: `HTTP URL for Third Party Ad`
 * **Default**, Target Data:
 
 ```json
@@ -1069,5 +1069,3 @@ Change Log
 * First release.
 
 View version tags <a href="https://github.com/playnomics/unity-sdk/tags">here</a>
-
-
