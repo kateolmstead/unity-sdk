@@ -2,13 +2,13 @@ Playnomics PlayRM Unity SDK Integration Guide
 =============================================
 If you're new to PlayRM and/or don't have a PlayRM account and would like to get started using PlayRM please visit   <a href="https://controlpanel.playnomics.com/signup">https://controlpanel.playnomics.com/signup</a> to sign up. Soon after creating an account you will receive a registration confirmation email permitting you access to your PlayRM control panel.
 
-Within the control panel, click the <strong>applications</strong> tab and add your game. Upon doing so, you will receive an <strong>Application ID</strong> and an <strong>API KEY</strong>. These two components will enable you to begin the integration process.
+Within the control panel, click the <strong>applications</strong> tab and add your app. Upon doing so, you will receive an <strong>Application ID</strong> and an <strong>API KEY</strong>. These two components will enable you to begin the integration process.
 
 Our integration has been optimized to be as straight forward and user friendly as possible. If you're feeling unsure or would like to better understand the process before beginning integration, please take a moment to check out the <a href="http://integration.playnomics.com/technical/#integration-getting-started">getting started</a> page. Here you can find an overview of our integration process, and platform specific features, to help you better understand the PlayRM integration process.
 
-## Considerations for Cross-Platform Games
+## Considerations for Cross-Platform Applications
 
-If you want to deploy your game to multiple platforms (eg: Android and the Unity Web player), you'll need to create separate applications in the control panel. Each application must incorporate a separate `<APPID>` particular to that application. In addition, placements and their respective creative uploads will be particular to that app in order to ensure that they are sized appropriately - proportionate to your game screen size.
+If you want to deploy your app to multiple platforms (eg: Android and the Unity Web player), you'll need to create separate applications in the control panel. Each application must incorporate a separate `<APPID>` particular to that application. In addition, placements and their respective creative uploads will be particular to that app in order to ensure that they are sized appropriately - proportionate to your app screen size.
 
 Basic Integration
 =================
@@ -17,11 +17,11 @@ You can install the SDK package by downloading the *PlaynomicsSDK.unitypackage* 
 
 ![Importing the prefab](http://integration.playnomics.com/img/unity/prefab.png)
 
-The package has a prefab with everything you need to work with the SDK. Simply drag the prefab into your first game scene and this will make the SDK available to your game. The `GameObject` for this is called **Playnomics**. You only need to do this once.
+The package has a prefab with everything you need to work with the SDK. Simply drag the prefab into your first app scene and this will make the SDK available to your app. The `GameObject` for this is called **Playnomics**. You only need to do this once.
 
-### Interacting with PlayRM in Your Game
+### Interacting with PlayRM in Your Application
 
-All calls are made through a single `MonoBehavior` script that persists throughout the game (<a href="http://en.wikipedia.org/wiki/Singleton_pattern" target="_blank">singleton</a>). The static instance of the script is accessible throughout your game using this property `Playnomics.instance`. It is instantiated in the `Awake` event of the `Playnomics` script.
+All calls are made through a single `MonoBehavior` script that persists throughout the app (<a href="http://en.wikipedia.org/wiki/Singleton_pattern" target="_blank">singleton</a>). The static instance of the script is accessible throughout your application using this property `Playnomics.instance`. It is instantiated in the `Awake` event of the `Playnomics` script.
 
 When working with the SDK, you'll need to import the SDK namespace to work with the PlayRM SDK in your scripts:
 
@@ -52,7 +52,7 @@ or have PlayRM, generate a *best-effort* unique-identifier for the user:
 Playnomics.instance.startPlaynomics(<APPID>);
 ```
 
-If possible, you should provide your own `<USER-ID>`, especially if your game is cross-platform, since *best-effort* unique identifiers are generated differently depending on the Platform. If you do choose to provide a `<USER-ID>`, this value should be persistent, anonymized, and unique to each user. This is typically discerned dynamically when a user starts the game. Some potential implementations:
+If possible, you should provide your own `<USER-ID>`, especially if your app is cross-platform, since *best-effort* unique identifiers are generated differently depending on the Platform. If you do choose to provide a `<USER-ID>`, this value should be persistent, anonymized, and unique to each user. This is typically discerned dynamically when a user starts the application. Some potential implementations:
 
 * An internal ID (such as a database auto-generated number).
 * A hash of the user’s email address.
@@ -101,7 +101,7 @@ import PlaynomicsPlugin;
 
 import PlaynomicsPlugin;
 function Start(){
-    //in this case there is no user id for the game
+    //in this case there is no user id for the application
 
     var androidApplicationId = <ANDROID-APPID>;
     var iOsApplicationId = <IOS-APPID>;
@@ -122,10 +122,10 @@ function Start(){
 Once started, the SDK will automatically begin collecting basic user information (including geo-location) and engagement data in **test mode** (be sure to switch to [production mode](#switch-sdk-to-production-mode) before deploying your application).
 
 
-Congratulations! You've completed our basic integration. You will now be able to track engagement behaviors (having incorporated the Engagement Module) from the PlayRM dashboard. At this point we recommend that you use our integration validation tool to test your integration of our SDK in order insure that it has been properly incorporated in your game. 
+Congratulations! You've completed our basic integration. You will now be able to track engagement behaviors (having incorporated the Engagement Module) from the PlayRM dashboard. At this point we recommend that you use our integration validation tool to test your integration of our SDK in order insure that it has been properly incorporated into your app. 
 
 
-PlayRM is currently operating in test mode. Be sure you switch to [production mode](#switch-sdk-to-production-mode), by implementing the code call outlined in our Basic Integration before deploying your game on the web or in an app store.
+PlayRM is currently operating in test mode. Be sure you switch to [production mode](#switch-sdk-to-production-mode), by implementing the code call outlined in our Basic Integration before deploying your app on the web or in an app store.
 
 
 # Full Integration
@@ -142,7 +142,7 @@ PlayRM is currently operating in test mode. Be sure you switch to [production mo
                 <a href="#monetization">Monetization</a>
                 <ul>
                     <li>
-                        <a href="#purchases-of-in-game-currency-with-real-currency">Purchases of In-Game Currency with Real Currency</a>
+                        <a href="#purchases-of-in-app-currency-with-real-currency">Purchases of In-App Currency with Real Currency</a>
                     </li>
                     <li>
                         <a href="#purchases-of-items-with-real-currency">Purchases of Items with Real Currency</a>
@@ -179,12 +179,12 @@ If you're reading this it's likely that you've integrated our SDK and are intere
 
 The index on the right provides a holistic overview of the <strong>full integration</strong> process. From it, you can jump to specific points in this document depending on what you're looking to learn and do.
 
-To clarify where you are in the timeline of our integration process, you've completed our basic integration. Doing so will enable you to track engagement behaviors from the PlayRM dashboard (having incorporated the Engagement Module). The following documentation will provide succinct information on how to incorporate additional and more in-depth segmentation functionality by integrating any, or all of the following into your game:
+To clarify where you are in the timeline of our integration process, you've completed our basic integration. Doing so will enable you to track engagement behaviors from the PlayRM dashboard (having incorporated the Engagement Module). The following documentation will provide succinct information on how to incorporate additional and more in-depth segmentation functionality by integrating any, or all of the following into your application:
 
 <ul>
     <li><strong>User Info Module:</strong> - provides basic user information</li>
     <li><strong>Monetization Module:</strong> - tracks various monetization events and transactions</li>
-    <li><strong>Custom Event Module:</strong> - tracks significant user events customized to your game</li>
+    <li><strong>Custom Event Module:</strong> - tracks significant user events customized to your app</li>
 </ul>
 
 
@@ -250,13 +250,13 @@ If any of the parameters are not available, you should pass `null`.
             <td><code>sourceUser</code></td>
             <td>strings</td>
             <td>
-                If the user was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this user into the game.
+                If the user was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this user into the app.
             </td>
         </tr>
         <tr>
             <td><code>installTime</code></td>
             <td>long?</td>
-            <td>Unix epoch time in seconds when the user originally installed the game.</td>
+            <td>Unix epoch time in seconds when the user originally installed the app.</td>
         </tr>
     </tbody>
 </table>
@@ -288,7 +288,7 @@ This event tracks users that have monetized and the amount they have spent in to
 * FBC (Facebook Credits)
 * USD (US Dollars)
 
-or an in-game, *virtual* currency.
+or an in-app, *virtual* currency.
 
 ```csharp
 ApiResultEnum Playnomics.instance.transaction(
@@ -388,13 +388,13 @@ TransactionCurrency TransactionCurrency.createVirtual(double currencyValue, stri
 `type` is a short name (up to 16 characters) for the currency, e.g.: "MonsterBucks."
 
 We highlight three common use-cases below.
-* [Purchases of In-Game Currency with Real Currency](#purchases-of-in-game-currency-with-real-currency)
+* [Purchases of In-App Currency with Real Currency](#purchases-of-in-app-currency-with-real-currency)
 * [Purchases of Items with Real Currency](#purchases-of-items-with-real-currency)
-* [Purchases of Items with In-Game Currency](#purchases-of-items-with-in-game-currency)
+* [Purchases of Items with In-App Currency](#purchases-of-items-with-in-app-currency)
 
-### Purchases of In-Game Currency with Real Currency
+### Purchases of In-App Currency with Real Currency
 
-A very common monetization strategy is to incentivize users to purchase premium, in-game currency with real currency. PlayRM treats this like a currency exchange. This is one of the few cases where multiple `TranactionCurrency` are used in a transaction. `itemId`, `quantity`, and `otherUserId` are left `null`.
+A very common monetization strategy is to incentivize users to purchase premium, in-app  currency with real currency. PlayRM treats this like a currency exchange. This is one of the few cases where multiple `TranactionCurrency` are used in a transaction. `itemId`, `quantity`, and `otherUserId` are left `null`.
 
 ```csharp
 //user purchases 500 MonsterBucks for 10 USD
@@ -428,15 +428,15 @@ Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currenci
 
 ### Purchases of Items with Premium Currency
 
-This event is used to segment monetized users (and potential future monetizers) by collecting information about how and when they spend their premium currency (an in-game currency that is primarily acquired using a *real* currency). This is one level of information deeper than the previous use-cases.
+This event is used to segment monetized users (and potential future monetizers) by collecting information about how and when they spend their premium currency (an in-app currency that is primarily acquired using a *real* currency). This is one level of information deeper than the previous use-cases.
 
 #### Currency Exchanges
 
-This is a continuation on the first currency exchange example. It showcases how to track each purchase of in-game *attention* currency (non-premium virtual currency) paid for with a *premium*:
+This is a continuation on the first currency exchange example. It showcases how to track each purchase of in-app *attention* currency (non-premium virtual currency) paid for with a *premium*:
 
 ```csharp
 
-//In this hypothetical, Energy is an attention currency that is earned over the lifetime of the game. 
+//In this hypothetical, Energy is an attention currency that is earned over the lifetime of the app. 
 //They can also be purchased with the premium MonsterBucks that the user may have purchased earlier.
 
 //user buys 100 Mana with 10 MonsterBucks
@@ -474,7 +474,7 @@ Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currenci
 
 ## Custom Event Tracking
 
-Custom Events may be used in a number of ways.  They can be used to track certain key gameplay events such as finishing a tutorial or receiving a high score. They may also be used to track other important lifecycle events such as level up, zone unlocked, etc.  PlayRM, by default, supports up to five custom events.  You can then use these custom events to create more targeted custom segments.
+Custom Events may be used in a number of ways.  They can be used to track certain key in-app events such as finishing a tutorial or receiving a high score. They may also be used to track other important lifecycle events such as level up, zone unlocked, etc.  PlayRM, by default, supports up to five custom events.  You can then use these custom events to create more targeted custom segments.
 
 Each time a user completes a certain event, track it with this call:
 
@@ -632,7 +632,7 @@ MessagingFrame Playnomics.instance.initMessagingFrame(string frameId, IFrameDele
     </tbody>
 </table>
 
-Placements are loaded asynchronously to keep your game responsive. The `initMessagingFrame` call begins the loading process. However, until you call `show` on the placement, the placement will not be drawn in the UI. This gives you control over when a placement will appear.
+Placements are loaded asynchronously to keep your application responsive. The `initMessagingFrame` call begins the loading process. However, until you call `show` on the placement, the placement will not be drawn in the UI. This gives you control over when a placement will appear.
 
 Placements are destroyed on a scene transition or when closed.
 
@@ -672,7 +672,7 @@ public class Scene : MonoBehavior {
 Depending on your configuration, a variety of actions can take place when a placement’s message is pressed or clicked:
 
 * Redirect the user to a web URL in the platform's browser application
-* Firing a Rich Data callback in your game
+* Firing a Rich Data callback in your app
 * Or in the simplest case, just close the placement, provided that the **Close Button** has been configured correctly.
 
 Rich Data is a JSON message that you associate with your message creative. When the user presses the message, the PlayRM SDK bubbles-up the associated JSON object to an implementation of the interface, `IFrameDelegate` associated with the placement.
@@ -684,17 +684,17 @@ public interface IFrameDelegate
 }
 ```
 
-The actual contents of your message can be delayed until the time of the messaging campaign configuration. However, the structure of your message needs to be decided before you can process it in your game. 
+The actual contents of your message can be delayed until the time of the messaging campaign configuration. However, the structure of your message needs to be decided before you can process it in your app. 
 
 **The Rich Data callback will not fire if the Close button is pressed.**
 
 Here are three common use cases for placements and messaging campaigns:
 
-* [Game Start Placement](#game-start-placement)
-* [Currency Balance Low Placement](#currency-balance-low-placement) for instance, when the user is running low on premium currency
+* [App Start Placement](#app-start-placement)
+* [Currency Balance Low Placement](#currency-balance-low-placement) - for instance, when the user is running low on premium currency
 * [Level Complete Placement](#level-complete-placement)
 
-### Game Start Placement
+### App Start Placement
 
 In this use-case, we want to configure a placement that is always shown to users when they start a new session. The message shown to the user may change based on the desired segments:
 
@@ -722,7 +722,7 @@ In this use-case, we want to configure a placement that is always shown to users
             </td>
             <td>1st</td>
             <td>
-                In this case, we're worried that once-active users are now in danger of leaving the game. We might offer them <strong>50 MonsterBucks</strong> to bring them back.
+                In this case, we're worried that once-active users are now in danger of leaving the app. We might offer them <strong>50 MonsterBucks</strong> to bring them back.
             </td>
             <td>
                 <img src="http://playnomics.com/integration-dev/img/messaging/50-free-monster-bucks.png"/>
@@ -746,7 +746,7 @@ In this use-case, we want to configure a placement that is always shown to users
             </td>
             <td>3rd</td>
             <td>
-                In this case, we can offer a special item to them for returning to the game.
+                In this case, we can offer a special item to them for returning to the app.
             </td>
             <td>
                 <img src="http://playnomics.com/integration-dev/img/messaging/free-bfb.png"/>
@@ -755,7 +755,7 @@ In this use-case, we want to configure a placement that is always shown to users
     </tbody>
 </table>
 
-We want our game to process messages for awarding items to users. We process this data with an implementation of the `IFrameDelegate` interface.
+We want our app to process messages for awarding items to users. We process this data with an implementation of the `IFrameDelegate` interface.
 
 ```csharp
 public class AwardFrameDelegate : IFrameDelegate
@@ -783,7 +783,7 @@ public class AwardFrameDelegate : IFrameDelegate
     }
 }
 ```
-And then attaching this AwardFrameDelegate class to the frame shown in the first game scene:
+And then attaching this AwardFrameDelegate class to the frame shown in the first app scene:
 
 ```csharp
 public class FirstGameScene : MonoBehavior
@@ -843,7 +843,7 @@ Grant Bazooka
 
 ### Currency Balance Low Placement
 
-An advantage of a *dynamic* placement is that it can be triggered by in-game events. For each in-game event you would configure a separate placement. While segmentation may be helpful in deciding what message you show, it may be sufficient to show the same message to all users.
+An advantage of a *dynamic* placement is that it can be triggered by in-app events. For each in-app event you would configure a separate placement. While segmentation may be helpful in deciding what message you show, it may be sufficient to show the same message to all users.
 
 For example, a user may deplete their premium currency and you want to remind them that they can re-up through your store. In this context, we display the same message to all users.
 
@@ -867,11 +867,11 @@ For example, a user may deplete their premium currency and you want to remind th
     <tbody>
         <tr>
             <td>
-                Default - all users, because this message is intended for anyone playing the game.
+                Default - all users, because this message is intended for anyone using the app.
             </td>
             <td>1st</td>
             <td>
-                You notice that the user’s in-game, premium currency drops below a certain threshold, now you can prompt them to re-up with this <strong>message</strong>.
+                You notice that the user’s in-app, premium currency drops below a certain threshold, now you can prompt them to re-up with this <strong>message</strong>.
             </td>
             <td>
                 <img src="http://playnomics.com/integration-dev/img/messaging/running-out-of-monster-bucks.png"/>
@@ -900,7 +900,7 @@ public class StoreFrameDelegate : IFrameDelegate
             if(dataDict.ContainsKey("actionType") &&
                 data["actionType"] == "openStore")
             {
-                //opens the store in our game
+                //opens the store in our app
                 Store.open();
             }
         }
@@ -908,7 +908,7 @@ public class StoreFrameDelegate : IFrameDelegate
 }
 ```
 
-The Default message would be configured in the Control Panel to use this callback by placing this in the **Target Data** for the message :
+The Default message would be configured in the Control Panel to use this callback by placing this in the **Target Data** for the message:
 
 ```json
 {
@@ -941,7 +941,7 @@ In the following example, we wish to generate third-party revenue from users unl
     <tbody>
         <tr>
             <td>
-                Non-Monetizers, in their 5th day of game play
+                Non-Monetizers, in their 5th day of app usage
             </td>
             <td>1st</td>
             <td>Show them a 3rd party ad, because they are unlikely to monetize.</td>
@@ -966,7 +966,7 @@ In the following example, we wish to generate third-party revenue from users unl
 
 This is another continuation on the `AwardFrameDelegate`, with some different data. The related messages would be configured in the Control Panel:
 
-* **Non-monetizers, in their 5th day of game play**, a Target URL: `HTTP URL for Third Party Ad`
+* **Non-monetizers, in their 5th day of app usage**, a Target URL: `HTTP URL for Third Party Ad`
 * **Default**, Target Data:
 
 ```json
@@ -1024,7 +1024,7 @@ By default, iOS does not show push notifications when your app is already in the
 
 When you send push notifications, you can configure a badge number that will be set on your application. iOS defers the responsibility of resetting the badge number to the developer.
 
-We have taken care of the step for you, so that the badge number is cleared when your games goes into the background.
+We have taken care of the step for you, so that the badge number is cleared when your app goes into the background.
 
 Support Issues
 ==============
