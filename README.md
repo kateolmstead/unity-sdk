@@ -1,6 +1,6 @@
 Playnomics PlayRM Unity SDK Integration Guide
 =============================================
-If you're new to PlayRM and/or don't have a PlayRM account and would like to get started using PlayRM please visit   <a href="https://controlpanel.playnomics.com/signup">https://controlpanel.playnomics.com/signup</a>   to sign up. Soon after creating an account you will receive a registration confirmation email permitting you access to your PlayRM control panel.
+If you're new to PlayRM and/or don't have a PlayRM account and would like to get started using PlayRM please visit   <a href="https://controlpanel.playnomics.com/signup">https://controlpanel.playnomics.com/signup</a> to sign up. Soon after creating an account you will receive a registration confirmation email permitting you access to your PlayRM control panel.
 
 Within the control panel, click the <strong>applications</strong> tab and add your game. Upon doing so, you will receive an <strong>Application ID</strong> and an <strong>API KEY</strong>. These two components will enable you to begin the integration process.
 
