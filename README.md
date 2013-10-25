@@ -521,7 +521,7 @@ long GetRandomLong(){
 //...
 //...
 
-//when milestone CUSTOM1 is reached
+//when custom event CUSTOM1 is completed
 var milestoneCustom1Id = GetRandomLong();
 Playnomics.instance.milestone(milestoneCustom1Id, "CUSTOM1");
 ```
@@ -1069,3 +1069,5 @@ Change Log
 * First release.
 
 View version tags <a href="https://github.com/playnomics/unity-sdk/tags">here</a>
+
+
