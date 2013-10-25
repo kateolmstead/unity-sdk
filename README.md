@@ -38,26 +38,26 @@ All public methods, except for messaging specific calls, return an enumeration `
 
 **You always need to start a session before making any other SDK calls.**
 
-### Starting a Player Session
+### Starting a User Session
 
-To start collecting behavior data, you need to initialize the PlayRM session. You can either provide a dynamic `<USER-ID>` to identify each player:
+To start collecting behavior data, you need to initialize the PlayRM session. You can either provide a dynamic `<USER-ID>` to identify each user:
 
 ```csharp
 Playnomics.instance.startPlaynomics(<APPID>, <USER-ID>);
 ```
 
-or have PlayRM, generate a *best-effort* unique-identifier for the player:
+or have PlayRM, generate a *best-effort* unique-identifier for the user:
 
 ```csharp
 Playnomics.instance.startPlaynomics(<APPID>);
 ```
 
-If possible, you should provide your own `<USER-ID>`, especially if your game is cross-platform, since *best-effort* unique identifiers are generated differently depending on the Platform. If you do choose to provide a `<USER-ID>`, this value should be persistent, anonymized, and unique to each player. This is typically discerned dynamically when a player starts the game. Some potential implementations:
+If possible, you should provide your own `<USER-ID>`, especially if your game is cross-platform, since *best-effort* unique identifiers are generated differently depending on the Platform. If you do choose to provide a `<USER-ID>`, this value should be persistent, anonymized, and unique to each user. This is typically discerned dynamically when a user starts the game. Some potential implementations:
 
 * An internal ID (such as a database auto-generated number).
-* A hash of the player's email address.
+* A hash of the user’s email address.
 
-**You cannot use the player's Facebook ID or any personally identifiable information (plain-text email, name, etc) for the `<USER-ID>`.**
+**You cannot use the user’s Facebook ID or any personally identifiable information (plain-text email, name, etc) for the `<USER-ID>`.**
 
 You **MUST** make the initialization call before working with any other PlayRM modules. You only need to call this method once.
 
@@ -86,7 +86,7 @@ public class PlaynomicsInit : MonoBehaviour
     
         Playnomics.instance.TestMode = true;
     
-        //set the hashedUserId from the authenticated player
+        //set the hashedUserId from the authenticated user
         //this value should not include personally identifiable information
     
         Playnomics.instance.start(applicationId, hashedUserId);
@@ -119,7 +119,7 @@ function Start(){
 
 ```
 
-Once started, the SDK will automatically begin collecting basic player information (including geo-location) and engagement data in **test mode** (be sure to switch to [production mode](#switch-sdk-to-production-mode) before deploying your application).
+Once started, the SDK will automatically begin collecting basic user information (including geo-location) and engagement data in **test mode** (be sure to switch to [production mode](#switch-sdk-to-production-mode) before deploying your application).
 
 
 Congratulations! You've completed our basic integration. You will now be able to track engagement behaviors (having incorporated the Engagement Module) from the PlayRM dashboard. At this point we recommend that you use our integration validation tool to test your integration of our SDK in order insure that it has been properly incorporated in your game. 
@@ -184,7 +184,7 @@ To clarify where you are in the timeline of our integration process, you've comp
 <ul>
     <li><strong>User Info Module:</strong> - provides basic user information</li>
     <li><strong>Monetization Module:</strong> - tracks various monetization events and transactions</li>
-    <li><strong>Custom Event Module:</strong> - tracks significant player events customized to your game</li>
+    <li><strong>Custom Event Module:</strong> - tracks significant user events customized to your game</li>
 </ul>
 
 
@@ -195,7 +195,7 @@ Along with integration instructions for our various modules, you will also find 
 
 After the SDK is loaded, the user info module may be called to collect basic demographic and acquisition information. This data is used to segment users based on how/where they were acquired and enables improved targeting with basic demographics, in addition to the behavioral data collected using other events.
 
-Provide each player's information using this call:
+Provide each user’s information using this call:
 
 ```javascript
 ApiResultEnum Playnomics.instance.userInfo(
@@ -238,7 +238,7 @@ If any of the parameters are not available, you should pass `null`.
             <td><code>source</code></td>
             <td>string</td>
             <td>
-                Source of the player, such as "FacebookAds", "UserReferral", "Playnomics", etc. These are only suggestions; any 16-character or shorter string is acceptable.
+                Source of the user, such as "FacebookAds", "UserReferral", "Playnomics", etc. These are only suggestions; any 16-character or shorter string is acceptable.
             </td>
         </tr>
         <tr>
@@ -250,18 +250,18 @@ If any of the parameters are not available, you should pass `null`.
             <td><code>sourceUser</code></td>
             <td>strings</td>
             <td>
-                If the player was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this player into the game.
+                If the user was acquired via a UserReferral (i.e., a viral message), the `userId` of the person who initially brought this user into the game.
             </td>
         </tr>
         <tr>
             <td><code>installTime</code></td>
             <td>long?</td>
-            <td>Unix epoch time in seconds when the player originally installed the game.</td>
+            <td>Unix epoch time in seconds when the user originally installed the game.</td>
         </tr>
     </tbody>
 </table>
 
-Since PlayRM uses the game client's IP address to determine geographic location, country and subdivision should be set to `null`.
+Since PlayRM uses the application client's IP address to determine geographic location, country and subdivision should be set to `null`.
 
 ```csharp
 void Start()
@@ -282,9 +282,9 @@ void Start()
 
 ## Monetization
 
-PlayRM provides a flexible interface for tracking monetization events. This module should be called every time a player triggers a monetization event. 
+PlayRM provides a flexible interface for tracking monetization events. This module should be called every time a user triggers a monetization event. 
 
-This event tracks players that have monetized and the amount they have spent in total, *real* currency:
+This event tracks users that have monetized and the amount they have spent in total, *real* currency:
 * FBC (Facebook Credits)
 * USD (US Dollars)
 
@@ -321,12 +321,12 @@ ApiResultEnum Playnomics.instance.transaction(
             <td>
                 The type of transaction occurring:
                 <ul>
-                    <li>BuyItem: A purchase of virtual item. The <code>quantity</code> is added to the player's inventory</li>
+                    <li>BuyItem: A purchase of virtual item. The <code>quantity</code> is added to the user’s inventory</li>
                     <li>
-                        SellItem: A sale of a virtual item to another player. The item is removed from the player's inventory. Note: a sale of an item will result in two events with the same <code>transactionId</code>, one for the sale with type SellItem, and one for the receipt of that sale, with type BuyItem.
+                        SellItem: A sale of a virtual item to another user. The item is removed from the user’s inventory. Note: a sale of an item will result in two events with the same <code>transactionId</code>, one for the sale with type SellItem, and one for the receipt of that sale, with type BuyItem.
                     </li>
                     <li>
-                        ReturnItem: A return of a virtual item to the store. The item is removed from the player's inventory
+                        ReturnItem: A return of a virtual item to the store. The item is removed from the user’s inventory
                     </li>
                     <li>BuyService: A purchase of a service, e.g., VIP membership </li>
                     <li>SellService: The sale of a service to another user</li>
@@ -334,15 +334,15 @@ ApiResultEnum Playnomics.instance.transaction(
                     <li>
                         CurrencyConvert: A conversion of currency from one form to another, usually in the form of real currency (e.g., US dollars) to virtual currency.  If the type of a transaction is CurrencyConvert, then there should be at least 2 elements in the <code>transactionCurrencies</code> array
                     </li>
-                    <li>Initial: An initial allocation of currency and/or virtual items to a new player</li>
-                    <li>Free: Free currency or item given to a player by the application</li>
+                    <li>Initial: An initial allocation of currency and/or virtual items to a new user</li>
+                    <li>Free: Free currency or item given to a user by the application</li>
                     <li>
-                        Reward: Currency or virtual item given by the application as a reward for some action by the player
+                        Reward: Currency or virtual item given by the application as a reward for some action by the user
                     </li>
                     <li>
-                        GiftSend: A virtual item sent from one player to another. Note: a virtual gift should result in two transaction events with the same <code>transactionId</code>, one with the type GiftSend, and another with the type GiftReceive
+                        GiftSend: A virtual item sent from one user to another. Note: a virtual gift should result in two transaction events with the same <code>transactionId</code>, one with the type GiftSend, and another with the type GiftReceive
                     </li>
-                    <li>GiftReceive: A virtual good received by a player. See note for GiftSend type</li>
+                    <li>GiftReceive: A virtual good received by a user. See note for GiftSend type</li>
                 </ul>
             </td>
         </tr>
@@ -367,7 +367,7 @@ ApiResultEnum Playnomics.instance.transaction(
             <td><code>otherUserId</code></td>
             <td>string</td>
             <td>
-               If applicable, the other player involved in the transaction. A contextual example is a player sending a gift to another player.
+               If applicable, the other user involved in the transaction. A contextual example is a user sending a gift to another user.
             </td>
         </tr>
     </tbody>
@@ -394,10 +394,10 @@ We highlight three common use-cases below.
 
 ### Purchases of In-Game Currency with Real Currency
 
-A very common monetization strategy is to incentivize players to purchase premium, in-game currency with real currency. PlayRM treats this like a currency exchange. This is one of the few cases where multiple `TranactionCurrency` are used in a transaction. `itemId`, `quantity`, and `otherUserId` are left `null`.
+A very common monetization strategy is to incentivize users to purchase premium, in-game currency with real currency. PlayRM treats this like a currency exchange. This is one of the few cases where multiple `TranactionCurrency` are used in a transaction. `itemId`, `quantity`, and `otherUserId` are left `null`.
 
 ```csharp
-//player purchases 500 MonsterBucks for 10 USD
+//user purchases 500 MonsterBucks for 10 USD
 
 TransactionCurrency[] currencies = new TransactionCurrency[2]; 
 
@@ -414,7 +414,7 @@ Playnomics.instance.transaction(transactionId, TransactionType.CurrencyConvert, 
 ### Purchases of Items with Real Currency
 
 ```csharp
-//player purchases a "Monster Trap" for $.99 USD
+//user purchases a "Monster Trap" for $.99 USD
 
 var trapItemId = "Monster Trap"
 var quantity = 1;
@@ -428,7 +428,7 @@ Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currenci
 
 ### Purchases of Items with Premium Currency
 
-This event is used to segment monetized players (and potential future monetizers) by collecting information about how and when they spend their premium currency (an in-game currency that is primarily acquired using a *real* currency). This is one level of information deeper than the previous use-cases.
+This event is used to segment monetized users (and potential future monetizers) by collecting information about how and when they spend their premium currency (an in-game currency that is primarily acquired using a *real* currency). This is one level of information deeper than the previous use-cases.
 
 #### Currency Exchanges
 
@@ -437,9 +437,9 @@ This is a continuation on the first currency exchange example. It showcases how 
 ```csharp
 
 //In this hypothetical, Energy is an attention currency that is earned over the lifetime of the game. 
-//They can also be purchased with the premium MonsterBucks that the player may have purchased earlier.
+//They can also be purchased with the premium MonsterBucks that the user may have purchased earlier.
 
-//player buys 100 Mana with 10 MonsterBucks
+//user buys 100 Mana with 10 MonsterBucks
 //notice that both currencies are virtual
 TransactionCurrency[] currencies = new TransactionCurrency[2]; 
 
@@ -458,7 +458,7 @@ Playnomics.instance.transaction(transactionId, TransactionType.CurrencyConvert, 
 This is a continuation on the first item purchase example, except with premium currency.
 
 ```javascript
-//player buys 20 light armor, for 5 MonsterBucks
+//user buys 20 light armor, for 5 MonsterBucks
 
 var itemQuantity = 20;
 var item = "Light Armor";
@@ -476,7 +476,7 @@ Playnomics.instance.transaction(transactionId, TransactionType.BuyItem, currenci
 
 Custom Events may be used in a number of ways.  They can be used to track certain key gameplay events such as finishing a tutorial or receiving a high score. They may also be used to track other important lifecycle events such as level up, zone unlocked, etc.  PlayRM, by default, supports up to five custom events.  You can then use these custom events to create more targeted custom segments.
 
-Each time a player completes a certain event, track it with this call:
+Each time a user completes a certain event, track it with this call:
 
 ```csharp
 ApiResultEnum Playnomics.instance.milestone(
@@ -507,7 +507,7 @@ ApiResultEnum Playnomics.instance.milestone(
     </tbody>
 </table>
 
-Example client-side calls for players completing events, with generated IDs:
+Example client-side calls for users completing events, with generated IDs:
 
 ```csharp
 long GetRandomLong(){
@@ -548,7 +548,7 @@ public class PlaynomicsInit : MonoBehaviour
     
         Playnomics.instance.TestMode = false;
     
-        //set the hashedUserId from the authenticated player
+        //set the hashedUserId from the authenticated user
         //this value should not include personally identifiable information
     
         Playnomics.instance.start(applicationId, hashedUserId);
@@ -671,11 +671,11 @@ public class Scene : MonoBehavior {
 
 Depending on your configuration, a variety of actions can take place when a placement’s message is pressed or clicked:
 
-* Redirect the player to a web URL in the platform's browser application
+* Redirect the user to a web URL in the platform's browser application
 * Firing a Rich Data callback in your game
 * Or in the simplest case, just close the placement, provided that the **Close Button** has been configured correctly.
 
-Rich Data is a JSON message that you associate with your message creative. When the player presses the message, the PlayRM SDK bubbles-up the associated JSON object to an implementation of the interface, `IFrameDelegate` associated with the placement.
+Rich Data is a JSON message that you associate with your message creative. When the user presses the message, the PlayRM SDK bubbles-up the associated JSON object to an implementation of the interface, `IFrameDelegate` associated with the placement.
 
 ```csharp
 public interface IFrameDelegate
@@ -691,12 +691,12 @@ The actual contents of your message can be delayed until the time of the messagi
 Here are three common use cases for placements and messaging campaigns:
 
 * [Game Start Placement](#game-start-placement)
-* [Currency Balance Low Placement](#currency-balance-low-placement) for instance, when the player is running low on premium currency
+* [Currency Balance Low Placement](#currency-balance-low-placement) for instance, when the user is running low on premium currency
 * [Level Complete Placement](#level-complete-placement)
 
 ### Game Start Placement
 
-In this use-case, we want to configure a placement that is always shown to players when they start a new session. The message shown to the player may change based on the desired segments:
+In this use-case, we want to configure a placement that is always shown to users when they start a new session. The message shown to the user may change based on the desired segments:
 
 <table>
     <thead>
@@ -722,7 +722,7 @@ In this use-case, we want to configure a placement that is always shown to playe
             </td>
             <td>1st</td>
             <td>
-                In this case, we're worried that once-active players are now in danger of leaving the game. We might offer them <strong>50 MonsterBucks</strong> to bring them back.
+                In this case, we're worried that once-active users are now in danger of leaving the game. We might offer them <strong>50 MonsterBucks</strong> to bring them back.
             </td>
             <td>
                 <img src="http://playnomics.com/integration-dev/img/messaging/50-free-monster-bucks.png"/>
@@ -734,7 +734,7 @@ In this use-case, we want to configure a placement that is always shown to playe
             </td>
             <td>2nd</td>
             <td>
-                In this case, we want to thank the player for coming back and incentivize these lapsed players to continue doing so. We might offer them <strong>10 MonsterBucks</strong> to increase their engagement and loyalty.
+                In this case, we want to thank the user for coming back and incentivize these lapsed users to continue doing so. We might offer them <strong>10 MonsterBucks</strong> to increase their engagement and loyalty.
             </td>
             <td> 
                 <img src="http://playnomics.com/integration-dev/img/messaging/10-free-monster-bucks.png"/>
@@ -742,7 +742,7 @@ In this use-case, we want to configure a placement that is always shown to playe
         </tr>
         <tr>
             <td>
-                Default - players who don't fall into either segment.
+                Default - user who don't fall into either segment.
             </td>
             <td>3rd</td>
             <td>
@@ -755,7 +755,7 @@ In this use-case, we want to configure a placement that is always shown to playe
     </tbody>
 </table>
 
-We want our game to process messages for awarding items to players. We process this data with an implementation of the `IFrameDelegate` interface.
+We want our game to process messages for awarding items to users. We process this data with an implementation of the `IFrameDelegate` interface.
 
 ```csharp
 public class AwardFrameDelegate : IFrameDelegate
@@ -843,9 +843,9 @@ Grant Bazooka
 
 ### Currency Balance Low Placement
 
-An advantage of a *dynamic* placement is that it can be triggered by in-game events. For each in-game event you would configure a separate placement. While segmentation may be helpful in deciding what message you show, it may be sufficient to show the same message to all players.
+An advantage of a *dynamic* placement is that it can be triggered by in-game events. For each in-game event you would configure a separate placement. While segmentation may be helpful in deciding what message you show, it may be sufficient to show the same message to all users.
 
-For example, a player may deplete their premium currency and you want to remind them that they can re-up through your store. In this context, we display the same message to all players.
+For example, a user may deplete their premium currency and you want to remind them that they can re-up through your store. In this context, we display the same message to all users.
 
 <table>
     <thead>
@@ -867,11 +867,11 @@ For example, a player may deplete their premium currency and you want to remind 
     <tbody>
         <tr>
             <td>
-                Default - all players, because this message is intended for anyone playing the game.
+                Default - all users, because this message is intended for anyone playing the game.
             </td>
             <td>1st</td>
             <td>
-                You notice that the player's in-game, premium currency drops below a certain threshold, now you can prompt them to re-up with this <strong>message</strong>.
+                You notice that the user’s in-game, premium currency drops below a certain threshold, now you can prompt them to re-up with this <strong>message</strong>.
             </td>
             <td>
                 <img src="http://playnomics.com/integration-dev/img/messaging/running-out-of-monster-bucks.png"/>
@@ -919,7 +919,7 @@ The Default message would be configured in the Control Panel to use this callbac
 
 ### Level Complete Placement
 
-In the following example, we wish to generate third-party revenue from players unlikely to monetize by showing them a segmented message after completing a level or challenge:
+In the following example, we wish to generate third-party revenue from users unlikely to monetize by showing them a segmented message after completing a level or challenge:
 
 <table>
     <thead>
@@ -1069,5 +1069,3 @@ Change Log
 * First release.
 
 View version tags <a href="https://github.com/playnomics/unity-sdk/tags">here</a>
-
-
